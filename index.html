@@ -9,11 +9,9 @@
     <meta property="og:description" content="A scientist's lens on life sciences strategy. Writing about AI in drug discovery, regulatory milestones, competitive dynamics, and the strategic questions behind them.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://suruchisethi6.github.io">
-    <meta property="og:image" content="https://suruchisethi6.github.io/website_launch_banner.png">
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Suruchi Sethi, PhD — Life Sciences Strategy">
     <meta name="twitter:description" content="A scientist's lens on life sciences strategy. Writing about AI in drug discovery, regulatory milestones, and competitive dynamics in pharma and biotech.">
-    <meta name="twitter:image" content="https://suruchisethi6.github.io/website_launch_banner.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -157,7 +155,7 @@
             padding: 80px 32px;
         }
         .section-label {
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 700;
             color: var(--teal);
             text-transform: uppercase;
@@ -590,7 +588,7 @@
 <section class="about-section" id="about">
     <div class="section" style="padding-top:80px; padding-bottom:80px;">
         <div class="section-label">About</div>
-        <div class="section-title">My perspective</div>
+        <div class="section-title">Where I sit</div>
         <div class="about-grid">
             <div class="about-text">
                 <p>
@@ -613,7 +611,7 @@
                         <div class="bridge-icon" style="background:#ede9fe;">🔬</div>
                         <div class="bridge-node-text">
                             <div class="bn-title">Deep Science</div>
-                            <div class="bn-sub">PhD biochemistry</div>
+                            <div class="bn-sub">PhD biochemistry, wet lab research, molecular biology</div>
                         </div>
                     </div>
                     <div class="bridge-node">
@@ -681,32 +679,37 @@
 
 <!-- PROJECTS -->
 <section class="project-section" id="projects">
-    <a href="/tracker" class="project-card" style="margin-top: 32px; text-decoration: none; cursor: pointer;">
-            <div class="project-preview">
-                <div class="project-preview-inner">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                        <span style="font-size: 11px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em;">Live Tracker</span>
-                        <span style="font-size: 12px; color: var(--muted);">27 deals · $23B+ potential value</span>
-                    </div>
-                    <h3 style="font-family: var(--serif); font-size: 20px; color: var(--deep); margin-bottom: 6px;">AI × Pharma Deal & Partnership Tracker</h3>
-                    <p style="font-size: 14px; color: var(--body); line-height: 1.6; margin: 0;">
-                        Tracking how big pharma is embedding AI from drug discovery through enterprise operations. Filterable by category, searchable, with strategic analysis on every deal.
-                    </p>
+    <div class="section" style="padding-top:80px; padding-bottom:80px;">
+        <div class="section-label">Projects</div>
+        <div class="section-title">Tools I'm building</div>
+        <p style="font-size:16px; color:var(--body); max-width:600px;">
+            Applying AI to real problems in life sciences strategy — the same problems I encounter in my consulting work.
+        </p>
+        <div class="projects-grid">
+
+            <!-- Tracker card -->
+            <a href="/tracker" class="insight-card">
+                <div class="insight-tag" style="color: var(--teal);">Live Tracker</div>
+                <h3>AI × Pharma Deal & Partnership Tracker</h3>
+                <p>
+                    27 deals tracked across drug discovery, clinical intelligence, enterprise AI, and infrastructure. Filterable, searchable, with strategic analysis on every deal.
+                </p>
+                <div class="insight-footer">
+                    <span style="width:6px; height:6px; border-radius:50%; background:#10b981; flex-shrink:0;"></span>
+                    Live · Explore the tracker →
+                </div>
+            </a>
+
+            <!-- Coming soon card -->
+            <div class="insight-card" style="border-style: dashed; display: flex; align-items: center; justify-content: center; min-height: 220px;">
+                <div style="text-align: center;">
+                    <div style="font-size: 28px; color: var(--muted); margin-bottom: 12px;">+</div>
+                    <p style="font-size: 14px; color: var(--muted); margin: 0;">More projects coming soon</p>
                 </div>
             </div>
-            <div class="project-info">
-                <div class="project-features">
-                    <div class="project-feature"><div class="pf-dot">✓</div> 27 deals with sourced analysis</div>
-                    <div class="project-feature"><div class="pf-dot">✓</div> Filter by where AI creates value</div>
-                    <div class="project-feature"><div class="pf-dot">✓</div> Company profile views</div>
-                    <div class="project-feature"><div class="pf-dot">✓</div> Community contributions welcome</div>
-                </div>
-                <div style="margin-top: 20px; display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: var(--teal); color: #fff; border-radius: 8px; font-size: 14px; font-weight: 600;">
-                    Explore the tracker →
-                </div>
-            </div>
-        </a>
-</div>
+
+        </div>
+    </div>
 </section>
 
 <!-- EXPERIENCE -->
