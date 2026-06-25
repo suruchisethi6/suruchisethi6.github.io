@@ -2877,6 +2877,42 @@ function App() {
       }, _callee4);
     }))();
   }, []);
+
+  // Browser history management: back button clears filters/views
+  useEffect(function () {
+    function onPopState(e) {
+      var st = e.state;
+      if (st && st.tracker) {
+        setActiveStage(st.activeStage || null);
+        setViewMode(st.viewMode || "list");
+        setSearchTerm(st.searchTerm || "");
+      } else {
+        setActiveStage(null);
+        setViewMode("list");
+        setSearchTerm("");
+      }
+    }
+    window.addEventListener("popstate", onPopState);
+    // Push initial clean state
+    if (!history.state || !history.state.tracker) {
+      history.replaceState({ tracker: true, activeStage: null, viewMode: "list", searchTerm: "" }, "");
+    }
+    return function () { window.removeEventListener("popstate", onPopState); };
+  }, []);
+
+  // Push history when filter/view changes
+  useEffect(function () {
+    var current = history.state;
+    var hasNav = activeStage || viewMode !== "list" || searchTerm;
+    if (hasNav) {
+      var newState = { tracker: true, activeStage: activeStage, viewMode: viewMode, searchTerm: searchTerm };
+      // Only push if state actually changed
+      if (!current || !current.tracker || current.activeStage !== activeStage || JSON.stringify(current.viewMode) !== JSON.stringify(viewMode) || current.searchTerm !== searchTerm) {
+        history.pushState(newState, "");
+      }
+    }
+  }, [activeStage, viewMode, searchTerm]);
+
   var toggleAdmin = useCallback(/*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
     var code;
     return _regenerator().w(function (_context5) {
