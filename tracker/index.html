@@ -2925,7 +2925,7 @@ function App() {
             } catch (_unused9) {}
           } else {
             code = prompt("Enter admin passphrase:");
-            if (code && code.length > 5) {
+            if (code === "suruchi2012") {
               setIsAdmin(true);
               try {
                 localStorage.setItem(ADMIN_KEY, "true");
