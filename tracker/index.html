@@ -1907,9 +1907,7 @@ function DealRow(_ref11) {
       textTransform: "uppercase",
       letterSpacing: "0.04em"
     }
-  }, deal.dealType), deal.evidence && /*#__PURE__*/React.createElement(EvidenceBadge, {
-    level: deal.evidence
-  }), /*#__PURE__*/React.createElement("span", {
+  }, deal.dealType), /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 12,
       color: "#94a3b8"
@@ -1945,22 +1943,12 @@ function DealRow(_ref11) {
       color: "#64748b",
       lineHeight: 1.4
     }
-  }, deal.summary)), /*#__PURE__*/React.createElement(EconomicsDisplay, {
-    economics: deal.economics
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "flex-end",
-      gap: 6,
-      flexShrink: 0
-    }
-  }, /*#__PURE__*/React.createElement("div", {
+  }, deal.summary), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       gap: 4,
       flexWrap: "wrap",
-      justifyContent: "flex-end"
+      marginTop: 6
     }
   }, deal.stages.map(function (s) {
     var cat = CATEGORIES.find(function (c) {
@@ -1977,7 +1965,17 @@ function DealRow(_ref11) {
         fontWeight: 600
       }
     }, cat.short) : null;
-  })), /*#__PURE__*/React.createElement("div", {
+  }))), /*#__PURE__*/React.createElement(EconomicsDisplay, {
+    economics: deal.economics
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "flex-end",
+      gap: 6,
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 18,
       color: "#94a3b8",
@@ -2230,9 +2228,7 @@ function MiniDealCard(_ref13) {
       borderRadius: 3,
       textTransform: "uppercase"
     }
-  }, deal.dealType), deal.evidence && /*#__PURE__*/React.createElement(EvidenceBadge, {
-    level: deal.evidence
-  }), /*#__PURE__*/React.createElement("span", {
+  }, deal.dealType), /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 11,
       color: "#94a3b8"
@@ -2594,9 +2590,7 @@ function PharmaProfile(_ref20) {
     deals: pharmaDeals
   }), /*#__PURE__*/React.createElement(ArchetypeBreakdown, {
     deals: pharmaDeals
-  })), /*#__PURE__*/React.createElement(EvidenceDistribution, {
-    deals: pharmaDeals
-  }), stats.partnerNames.length > 0 && /*#__PURE__*/React.createElement("div", {
+  })), stats.partnerNames.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 20,
       marginBottom: 16
@@ -3178,8 +3172,8 @@ function App() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
+      alignItems: "baseline",
+      gap: 8,
       marginBottom: 12
     }
   }, /*#__PURE__*/React.createElement("h2", {
@@ -3189,12 +3183,14 @@ function App() {
       fontWeight: 700,
       color: "#0f172a"
     }
-  }, "Where AI Creates Value"), /*#__PURE__*/React.createElement("span", {
+  }, "Where AI Creates Value"), " ", /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 12,
-      color: "#94a3b8"
+      color: "#94a3b8",
+      fontStyle: "italic",
+      fontWeight: 400
     }
-  }, "Click to filter by area")), /*#__PURE__*/React.createElement(CategoryBar, {
+  }, "(click to filter by area)")), /*#__PURE__*/React.createElement(CategoryBar, {
     activeStage: activeStage,
     onStageClick: function onStageClick(id) {
       return setActiveStage(activeStage === id ? null : id);
