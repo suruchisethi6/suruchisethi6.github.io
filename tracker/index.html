@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #f8fafc; }
@@ -52,6 +53,37 @@ var _React = React,
   useMemo = _React.useMemo,
   useEffect = _React.useEffect,
   useCallback = _React.useCallback;
+
+// EmailJS configuration for deal submission notifications
+// Setup: 1) Create free account at emailjs.com  2) Add email service (Gmail etc)
+// 3) Create template with variables: {{pharma}}, {{startup}}, {{summary}}, {{source_url}}, {{submitter}}, {{deal_type}}, {{date}}
+// 4) Replace the three values below with your IDs
+var EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+var EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
+var EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+var emailjsReady = false;
+try {
+  if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+    emailjsReady = true;
+  }
+} catch (e) { console.warn("EmailJS init skipped:", e); }
+
+function sendDealNotification(form) {
+  if (!emailjsReady) return;
+  try {
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      pharma: form.pharma,
+      startup: form.startup,
+      summary: form.summary,
+      deal_type: form.dealType,
+      date: form.date,
+      source_url: form.sourceUrl,
+      submitter: form.submitterName || "Anonymous"
+    });
+  } catch (e) { console.warn("Email notification failed:", e); }
+}
+
 var CATEGORIES = [{
   id: "discovery",
   label: "Drug Discovery\n& Design",
@@ -1458,6 +1490,7 @@ function SuggestDealPanel(_ref6) {
     onClick: function onClick() {
       if (canSubmit) {
         onSubmit(form);
+        sendDealNotification(form);
         setSubmitted(true);
       }
     },
@@ -2925,11 +2958,15 @@ function App() {
             } catch (_unused9) {}
           } else {
             code = prompt("Enter admin passphrase:");
-            if (code === "suruchi2012") {
-              setIsAdmin(true);
-              try {
-                localStorage.setItem(ADMIN_KEY, "true");
-              } catch (_unused0) {}
+            if (code) {
+              var msgBuf = new TextEncoder().encode(code);
+              crypto.subtle.digest("SHA-256", msgBuf).then(function (hashBuf) {
+                var hashHex = Array.from(new Uint8Array(hashBuf)).map(function (b) { return b.toString(16).padStart(2, "0"); }).join("");
+                if (hashHex === "be29a7ed964fd12921f5329d9438b4ddf808e2de648753a4a5ad058c585bb59b") {
+                  setIsAdmin(true);
+                  try { localStorage.setItem(ADMIN_KEY, "true"); } catch (_unused0) {}
+                }
+              });
             }
           }
         case 1:
