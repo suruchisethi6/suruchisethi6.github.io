@@ -18,7 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #f8fafc; }
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #F7F5EF; }
         #root { min-height: 100vh; }
     </style>
 </head>
@@ -102,7 +102,7 @@ var CATEGORIES = [{
 }, {
   id: "enterprise",
   label: "Enterprise\nAI",
-  color: "#0891b2",
+  color: "#0E7C86",
   short: "Enterprise AI"
 }, {
   id: "infrastructure",
@@ -129,7 +129,7 @@ var EVIDENCE_LEVELS = [{
 }, {
   id: "funding",
   label: "Funding only",
-  color: "#94a3b8",
+  color: "#5A6169",
   icon: "◌"
 }];
 var ARCHETYPES = ["Acquire capability", "License platform", "Access compute", "Source pipeline", "Build AI workforce", "Co-develop molecules", "Enterprise transformation", "Data partnership", "AI research agent"];
@@ -729,15 +729,37 @@ var SEED_DEALS = [{
   detail: "The Sanofi-Owkin collaboration reflects the move from AI models as standalone tools toward AI-enabled scientific workflows integrated into pharma decision-making. The scope is broader than AstraZeneca's K Pro deployment: Owkin will lead end-to-end development of novel AI-driven agents purpose-built for Sanofi, covering competitive intelligence, landscape forecasting, target evaluation, and clinical decision support. Two major pharma companies licensing the same platform within weeks is a strong validation signal for a privately held AI vendor.",
   source: "Owkin and Sanofi announcement, June 2026; builds on partnership from 2021",
   sourceUrl: "https://www.owkin.com/newsfeed/owkin-and-sanofi-enter-multi-year-collaboration-to-build-ai-native-pharma-workflows"
+}, {
+  id: 28,
+  pharma: "Takeda",
+  startup: "Boltz Bio",
+  startupDesc: "Boltz is a public benefit corporation building open-source biomolecular AI foundation models. Its product suite includes Boltz-1 (structure prediction), Boltz-2 (binding affinity), BoltzGen (protein design), BoltzMol-1, and BoltzProt-1, available via Boltz Lab and the Boltz API.",
+  dealType: "Platform licensing",
+  economics: {
+    upfront: null,
+    milestones: null,
+    totalPotential: null,
+    royalties: false,
+    disclosed: false,
+    displayValue: "Multi-year, org-wide"
+  },
+  date: "June 2026",
+  stages: ["discovery"],
+  evidence: "production",
+  archetype: "License platform",
+  summary: "Org-wide deployment of BoltzMol-1 and BoltzProt-1 across Takeda's research organisation, with platform access, API integration, and program-level fine-tuning on Takeda's proprietary data.",
+  detail: "Takeda's decision to deploy Boltz org-wide rather than on a single program signals confidence in the open-source platform model for structure prediction. Unlike Isomorphic's co-development approach or Chai's licensed commercial models, Boltz provides the base models freely and monetises through hosted compute, custom fine-tuning, and enterprise API access. Takeda retains full compound ownership. The strategic signal: some pharma companies prefer infrastructure they can customise and control over black-box AI partnerships.",
+  source: "Boltz and Takeda announcement, June 2026",
+  sourceUrl: "https://www.boltz.bio"
 }];
 var DEAL_TYPE_COLORS = {
   "Acquisition": "#dc2626",
   "Licensing": "#2563eb",
   "Partnership": "#7c3aed",
-  "Platform licensing": "#0891b2",
+  "Platform licensing": "#0E7C86",
   "Infrastructure": "#ca8a04",
   "Enterprise AI": "#059669",
-  "Collaboration": "#0d9488"
+  "Collaboration": "#0E7C86"
 };
 var DEALS_KEY = "ai-pharma-deals-v5";
 var PENDING_KEY = "ai-pharma-pending-v5";
@@ -1002,17 +1024,17 @@ function DealFormFields(_ref4) {
     width: "100%",
     padding: "10px 12px",
     fontSize: 13,
-    border: "1.5px solid #e2e8f0",
+    border: "1.5px solid #E6E1D6",
     borderRadius: 8,
     outline: "none",
-    color: "#0f172a",
+    color: "#14181D",
     background: "#fff",
     fontFamily: "inherit"
   };
   var labelStyle = {
     fontSize: 12,
     fontWeight: 600,
-    color: "#334155",
+    color: "#14181D",
     marginBottom: 4,
     display: "block"
   };
@@ -1097,7 +1119,7 @@ function DealFormFields(_ref4) {
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
     style: _objectSpread(_objectSpread({}, labelStyle), {}, {
       fontSize: 11,
-      color: "#64748b"
+      color: "#5A6169"
     })
   }, "Upfront ($M)"), /*#__PURE__*/React.createElement("input", {
     style: inputStyle,
@@ -1110,7 +1132,7 @@ function DealFormFields(_ref4) {
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
     style: _objectSpread(_objectSpread({}, labelStyle), {}, {
       fontSize: 11,
-      color: "#64748b"
+      color: "#5A6169"
     })
   }, "Milestones ($M)"), /*#__PURE__*/React.createElement("input", {
     style: inputStyle,
@@ -1123,7 +1145,7 @@ function DealFormFields(_ref4) {
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
     style: _objectSpread(_objectSpread({}, labelStyle), {}, {
       fontSize: 11,
-      color: "#64748b"
+      color: "#5A6169"
     })
   }, "Total potential ($M)"), /*#__PURE__*/React.createElement("input", {
     style: inputStyle,
@@ -1143,7 +1165,7 @@ function DealFormFields(_ref4) {
   }, /*#__PURE__*/React.createElement("label", {
     style: {
       fontSize: 12,
-      color: "#64748b",
+      color: "#5A6169",
       display: "flex",
       alignItems: "center",
       gap: 4
@@ -1157,7 +1179,7 @@ function DealFormFields(_ref4) {
   }), " Royalties"), /*#__PURE__*/React.createElement("label", {
     style: {
       fontSize: 12,
-      color: "#64748b",
+      color: "#5A6169",
       display: "flex",
       alignItems: "center",
       gap: 4
@@ -1175,7 +1197,7 @@ function DealFormFields(_ref4) {
   }, /*#__PURE__*/React.createElement("label", {
     style: _objectSpread(_objectSpread({}, labelStyle), {}, {
       fontSize: 11,
-      color: "#64748b"
+      color: "#5A6169"
     })
   }, "Display value (fallback label)"), /*#__PURE__*/React.createElement("input", {
     style: inputStyle,
@@ -1223,9 +1245,9 @@ function DealFormFields(_ref4) {
         fontWeight: 600,
         borderRadius: 6,
         cursor: "pointer",
-        border: "1.5px solid ".concat(sel ? s.color : "#e2e8f0"),
+        border: "1.5px solid ".concat(sel ? s.color : "#E6E1D6"),
         background: sel ? "".concat(s.color, "18") : "#fff",
-        color: sel ? s.color : "#64748b",
+        color: sel ? s.color : "#5A6169",
         transition: "all 0.15s"
       }
     }, s.short);
@@ -1405,12 +1427,12 @@ function SuggestDealPanel(_ref6) {
         margin: "0 0 8px",
         fontSize: 20,
         fontWeight: 800,
-        color: "#0f172a"
+        color: "#14181D"
       }
     }, "Suggestion submitted"), /*#__PURE__*/React.createElement("p", {
       style: {
         fontSize: 14,
-        color: "#64748b",
+        color: "#5A6169",
         lineHeight: 1.6,
         maxWidth: 360,
         margin: "0 auto 20px"
@@ -1423,7 +1445,7 @@ function SuggestDealPanel(_ref6) {
         fontWeight: 700,
         borderRadius: 8,
         border: "none",
-        background: "#0891b2",
+        background: "#0E7C86",
         color: "#fff",
         cursor: "pointer"
       }
@@ -1443,7 +1465,7 @@ function SuggestDealPanel(_ref6) {
       margin: 0,
       fontSize: 20,
       fontWeight: 800,
-      color: "#0f172a"
+      color: "#14181D"
     }
   }, "Add a deal"), /*#__PURE__*/React.createElement("button", {
     onClick: onClose,
@@ -1452,13 +1474,13 @@ function SuggestDealPanel(_ref6) {
       border: "none",
       fontSize: 24,
       cursor: "pointer",
-      color: "#94a3b8",
+      color: "#5A6169",
       lineHeight: 1
     }
   }, "\xD7")), /*#__PURE__*/React.createElement("p", {
     style: {
       fontSize: 13,
-      color: "#64748b",
+      color: "#5A6169",
       marginBottom: 20,
       lineHeight: 1.5
     }
@@ -1481,9 +1503,9 @@ function SuggestDealPanel(_ref6) {
       fontSize: 13,
       fontWeight: 600,
       borderRadius: 8,
-      border: "1.5px solid #e2e8f0",
+      border: "1.5px solid #E6E1D6",
       background: "#fff",
-      color: "#64748b",
+      color: "#5A6169",
       cursor: "pointer"
     }
   }, "Cancel"), /*#__PURE__*/React.createElement("button", {
@@ -1501,7 +1523,7 @@ function SuggestDealPanel(_ref6) {
       fontWeight: 700,
       borderRadius: 8,
       border: "none",
-      background: canSubmit ? "#0891b2" : "#cbd5e1",
+      background: canSubmit ? "#0E7C86" : "#cbd5e1",
       color: "#fff",
       cursor: canSubmit ? "pointer" : "default"
     }
@@ -1543,7 +1565,7 @@ function AddDealPanel(_ref7) {
       margin: 0,
       fontSize: 20,
       fontWeight: 800,
-      color: "#0f172a"
+      color: "#14181D"
     }
   }, "Add deal (admin)"), /*#__PURE__*/React.createElement("button", {
     onClick: onClose,
@@ -1552,7 +1574,7 @@ function AddDealPanel(_ref7) {
       border: "none",
       fontSize: 24,
       cursor: "pointer",
-      color: "#94a3b8",
+      color: "#5A6169",
       lineHeight: 1
     }
   }, "\xD7")), /*#__PURE__*/React.createElement(DealFormFields, {
@@ -1574,9 +1596,9 @@ function AddDealPanel(_ref7) {
       fontSize: 13,
       fontWeight: 600,
       borderRadius: 8,
-      border: "1.5px solid #e2e8f0",
+      border: "1.5px solid #E6E1D6",
       background: "#fff",
-      color: "#64748b",
+      color: "#5A6169",
       cursor: "pointer"
     }
   }, "Cancel"), /*#__PURE__*/React.createElement("button", {
@@ -1593,7 +1615,7 @@ function AddDealPanel(_ref7) {
       fontWeight: 700,
       borderRadius: 8,
       border: "none",
-      background: canSubmit ? "#0891b2" : "#cbd5e1",
+      background: canSubmit ? "#0E7C86" : "#cbd5e1",
       color: "#fff",
       cursor: canSubmit ? "pointer" : "default"
     }
@@ -1650,11 +1672,11 @@ function ReviewPanel(_ref8) {
       border: "none",
       fontSize: 24,
       cursor: "pointer",
-      color: "#94a3b8"
+      color: "#5A6169"
     }
   }, "\xD7")), pending.length === 0 && /*#__PURE__*/React.createElement("p", {
     style: {
-      color: "#94a3b8",
+      color: "#5A6169",
       fontSize: 14
     }
   }, "No pending suggestions."), pending.map(function (p) {
@@ -1662,7 +1684,7 @@ function ReviewPanel(_ref8) {
       key: p._id,
       style: {
         padding: 16,
-        border: "1px solid #e2e8f0",
+        border: "1px solid #E6E1D6",
         borderRadius: 10,
         marginBottom: 12
       }
@@ -1675,19 +1697,19 @@ function ReviewPanel(_ref8) {
     }, p.pharma, " \xD7 ", p.startup), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 13,
-        color: "#64748b",
+        color: "#5A6169",
         marginBottom: 8
       }
     }, p.summary), p.submitterName && /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 12,
-        color: "#94a3b8",
+        color: "#5A6169",
         marginBottom: 8
       }
     }, "Submitted by: ", p.submitterName), p.sourceUrl && /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 12,
-        color: "#0891b2",
+        color: "#0E7C86",
         marginBottom: 8,
         wordBreak: "break-all"
       }
@@ -1751,7 +1773,7 @@ function CategoryBar(_ref9) {
         padding: "12px 8px",
         borderRadius: 8,
         cursor: "pointer",
-        border: "2px solid ".concat(active ? cat.color : "#e2e8f0"),
+        border: "2px solid ".concat(active ? cat.color : "#E6E1D6"),
         background: active ? "".concat(cat.color, "12") : "#fff",
         transition: "all 0.15s"
       }
@@ -1759,13 +1781,13 @@ function CategoryBar(_ref9) {
       style: {
         fontSize: 18,
         fontWeight: 800,
-        color: active ? cat.color : "#0f172a"
+        color: active ? cat.color : "#14181D"
       }
     }, count), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 11,
         fontWeight: 600,
-        color: active ? cat.color : "#64748b",
+        color: active ? cat.color : "#5A6169",
         whiteSpace: "pre-line",
         lineHeight: 1.2,
         marginTop: 2
@@ -1809,7 +1831,7 @@ function EconomicsDisplay(_ref1) {
     }, /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 12,
-        color: "#94a3b8",
+        color: "#5A6169",
         fontStyle: "italic"
       }
     }, displayValue || "Undisclosed"));
@@ -1825,36 +1847,36 @@ function EconomicsDisplay(_ref1) {
     style: {
       fontSize: 14,
       fontWeight: 800,
-      color: "#0f172a",
+      color: "#14181D",
       lineHeight: 1.2
     }
   }, upfrontStr), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 10,
-      color: "#64748b",
+      color: "#5A6169",
       fontWeight: 500
     }
   }, "committed"), totalStr && totalStr !== upfrontStr && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 11,
-      color: "#94a3b8",
+      color: "#5A6169",
       marginTop: 2
     }
   }, totalStr, " potential")) : totalStr ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 13,
       fontWeight: 700,
-      color: "#0f172a"
+      color: "#14181D"
     }
   }, totalStr), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 10,
-      color: "#94a3b8"
+      color: "#5A6169"
     }
   }, "potential")) : /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 12,
-      color: "#64748b"
+      color: "#5A6169"
     }
   }, displayValue), royalties && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1878,14 +1900,14 @@ function CompanyLink(_ref10) {
     },
     style: _objectSpread({
       cursor: "pointer",
-      borderBottom: "1px dashed #0891b2",
+      borderBottom: "1px dashed #0E7C86",
       transition: "color 0.15s"
     }, extraStyle),
     onMouseEnter: function onMouseEnter(e) {
-      return e.target.style.color = "#0891b2";
+      return e.target.style.color = "#0E7C86";
     },
     onMouseLeave: function onMouseLeave(e) {
-      return e.target.style.color = (extraStyle === null || extraStyle === void 0 ? void 0 : extraStyle.color) || "#0f172a";
+      return e.target.style.color = (extraStyle === null || extraStyle === void 0 ? void 0 : extraStyle.color) || "#14181D";
     }
   }, name);
 }
@@ -1901,11 +1923,11 @@ function DealRow(_ref11) {
   var typeColor = DEAL_TYPE_COLORS[deal.dealType] || "#6b7280";
   return /*#__PURE__*/React.createElement("div", {
     style: {
-      border: "1px solid ".concat(isExpanded ? "#0891b2" : "#e5e7eb"),
+      border: "1px solid ".concat(isExpanded ? "#0E7C86" : "#E6E1D6"),
       borderRadius: 10,
       overflow: "hidden",
       transition: "all 0.2s",
-      background: isExpanded ? "#f0fdfa" : "#fff"
+      background: isExpanded ? "#F7F5EF" : "#fff"
     }
   }, /*#__PURE__*/React.createElement("div", {
     onClick: onToggle,
@@ -1943,13 +1965,13 @@ function DealRow(_ref11) {
   }, deal.dealType), /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 12,
-      color: "#94a3b8"
+      color: "#5A6169"
     }
   }, deal.date)), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 15,
       fontWeight: 600,
-      color: "#0f172a",
+      color: "#14181D",
       marginBottom: 3
     }
   }, /*#__PURE__*/React.createElement(CompanyLink, {
@@ -1959,7 +1981,7 @@ function DealRow(_ref11) {
     },
     style: {
       fontWeight: 600,
-      color: "#0f172a"
+      color: "#14181D"
     }
   }), " × ", /*#__PURE__*/React.createElement(CompanyLink, {
     name: deal.startup,
@@ -1968,12 +1990,12 @@ function DealRow(_ref11) {
     },
     style: {
       fontWeight: 600,
-      color: "#0f172a"
+      color: "#14181D"
     }
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 13,
-      color: "#64748b",
+      color: "#5A6169",
       lineHeight: 1.4
     }
   }, deal.summary), /*#__PURE__*/React.createElement("div", {
@@ -2011,14 +2033,14 @@ function DealRow(_ref11) {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 18,
-      color: "#94a3b8",
+      color: "#5A6169",
       transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
       transition: "transform 0.2s"
     }
   }, "\u25BE"))), isExpanded && /*#__PURE__*/React.createElement("div", {
     style: {
       padding: "0 20px 20px",
-      borderTop: "1px solid #e0f2fe"
+      borderTop: "1px solid #E6E1D6"
     }
   }, deal.archetype && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -2031,8 +2053,8 @@ function DealRow(_ref11) {
       fontWeight: 700,
       padding: "3px 8px",
       borderRadius: 4,
-      background: "#f1f5f9",
-      color: "#475569",
+      background: "#F7F5EF",
+      color: "#5A6169",
       textTransform: "uppercase",
       letterSpacing: "0.05em"
     }
@@ -2040,9 +2062,9 @@ function DealRow(_ref11) {
     style: {
       marginTop: 12,
       padding: "10px 14px",
-      background: "#f8fafc",
+      background: "#F7F5EF",
       borderRadius: 8,
-      border: "1px solid #e2e8f0",
+      border: "1px solid #E6E1D6",
       display: "flex",
       gap: 24,
       flexWrap: "wrap"
@@ -2051,7 +2073,7 @@ function DealRow(_ref11) {
     style: {
       fontSize: 10,
       fontWeight: 600,
-      color: "#64748b",
+      color: "#5A6169",
       textTransform: "uppercase",
       letterSpacing: "0.05em"
     }
@@ -2059,13 +2081,13 @@ function DealRow(_ref11) {
     style: {
       fontSize: 16,
       fontWeight: 800,
-      color: "#0f172a"
+      color: "#14181D"
     }
   }, fmtM(deal.economics.upfront))), deal.economics.milestones != null && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 10,
       fontWeight: 600,
-      color: "#64748b",
+      color: "#5A6169",
       textTransform: "uppercase",
       letterSpacing: "0.05em"
     }
@@ -2073,13 +2095,13 @@ function DealRow(_ref11) {
     style: {
       fontSize: 16,
       fontWeight: 800,
-      color: "#475569"
+      color: "#5A6169"
     }
   }, fmtM(deal.economics.milestones))), deal.economics.totalPotential != null && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 10,
       fontWeight: 600,
-      color: "#64748b",
+      color: "#5A6169",
       textTransform: "uppercase",
       letterSpacing: "0.05em"
     }
@@ -2087,7 +2109,7 @@ function DealRow(_ref11) {
     style: {
       fontSize: 16,
       fontWeight: 800,
-      color: "#475569"
+      color: "#5A6169"
     }
   }, fmtM(deal.economics.totalPotential))), deal.economics.royalties && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -2114,7 +2136,7 @@ function DealRow(_ref11) {
     style: {
       fontSize: 11,
       fontWeight: 700,
-      color: "#0891b2",
+      color: "#0E7C86",
       textTransform: "uppercase",
       letterSpacing: "0.05em",
       marginBottom: 6
@@ -2122,7 +2144,7 @@ function DealRow(_ref11) {
   }, "About ", deal.startup), /*#__PURE__*/React.createElement("p", {
     style: {
       fontSize: 13,
-      color: "#334155",
+      color: "#14181D",
       lineHeight: 1.6,
       margin: 0
     }
@@ -2130,7 +2152,7 @@ function DealRow(_ref11) {
     style: {
       fontSize: 11,
       fontWeight: 700,
-      color: "#0891b2",
+      color: "#0E7C86",
       textTransform: "uppercase",
       letterSpacing: "0.05em",
       marginBottom: 6
@@ -2138,7 +2160,7 @@ function DealRow(_ref11) {
   }, "Strategic Shift"), /*#__PURE__*/React.createElement("p", {
     style: {
       fontSize: 13,
-      color: "#334155",
+      color: "#14181D",
       lineHeight: 1.6,
       margin: 0
     }
@@ -2146,7 +2168,7 @@ function DealRow(_ref11) {
     style: {
       marginTop: 12,
       fontSize: 12,
-      color: "#94a3b8"
+      color: "#5A6169"
     }
   }, deal.source && /*#__PURE__*/React.createElement("span", {
     style: {
@@ -2157,7 +2179,7 @@ function DealRow(_ref11) {
     target: "_blank",
     rel: "noopener noreferrer",
     style: {
-      color: "#0891b2",
+      color: "#0E7C86",
       textDecoration: "none"
     }
   }, "View source \u2197"))), /*#__PURE__*/React.createElement("div", {
@@ -2171,7 +2193,7 @@ function DealRow(_ref11) {
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 11,
-      color: "#64748b",
+      color: "#5A6169",
       marginRight: 4
     }
   }, "AI value area:"), deal.stages.map(function (s) {
@@ -2222,9 +2244,9 @@ function ProfileBackButton(_ref12) {
       fontSize: 13,
       fontWeight: 600,
       borderRadius: 8,
-      border: "1.5px solid #e2e8f0",
+      border: "1.5px solid #E6E1D6",
       background: "#fff",
-      color: "#475569",
+      color: "#5A6169",
       cursor: "pointer",
       marginBottom: 20
     }
@@ -2238,7 +2260,7 @@ function MiniDealCard(_ref13) {
   return /*#__PURE__*/React.createElement("div", {
     style: {
       padding: "14px 16px",
-      border: "1px solid #e5e7eb",
+      border: "1px solid #E6E1D6",
       borderRadius: 8,
       background: "#fff",
       marginBottom: 8
@@ -2264,13 +2286,13 @@ function MiniDealCard(_ref13) {
   }, deal.dealType), /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 11,
-      color: "#94a3b8"
+      color: "#5A6169"
     }
   }, deal.date)), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 14,
       fontWeight: 600,
-      color: "#0f172a",
+      color: "#14181D",
       marginBottom: 3
     }
   }, /*#__PURE__*/React.createElement(CompanyLink, {
@@ -2280,7 +2302,7 @@ function MiniDealCard(_ref13) {
     },
     style: {
       fontWeight: 600,
-      color: "#0f172a"
+      color: "#14181D"
     }
   }), " × ", /*#__PURE__*/React.createElement(CompanyLink, {
     name: deal.startup,
@@ -2289,12 +2311,12 @@ function MiniDealCard(_ref13) {
     },
     style: {
       fontWeight: 600,
-      color: "#0f172a"
+      color: "#14181D"
     }
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 12,
-      color: "#64748b",
+      color: "#5A6169",
       lineHeight: 1.4,
       marginBottom: 6
     }
@@ -2336,9 +2358,9 @@ function StatBox(_ref14) {
   return /*#__PURE__*/React.createElement("div", {
     style: {
       padding: "12px 16px",
-      background: "#f8fafc",
+      background: "#F7F5EF",
       borderRadius: 8,
-      border: "1px solid #e2e8f0",
+      border: "1px solid #E6E1D6",
       flex: "1 1 120px",
       minWidth: 100
     }
@@ -2346,19 +2368,19 @@ function StatBox(_ref14) {
     style: {
       fontSize: 20,
       fontWeight: 800,
-      color: "#0f172a",
+      color: "#14181D",
       lineHeight: 1.2
     }
   }, value), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 11,
-      color: "#64748b",
+      color: "#5A6169",
       fontWeight: 500
     }
   }, label), sub && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 11,
-      color: "#94a3b8",
+      color: "#5A6169",
       marginTop: 2
     }
   }, sub));
@@ -2379,7 +2401,7 @@ function ValueChainHeatmap(_ref15) {
     style: {
       fontSize: 12,
       fontWeight: 700,
-      color: "#334155",
+      color: "#14181D",
       marginBottom: 8
     }
   }, "Value chain focus"), /*#__PURE__*/React.createElement("div", {
@@ -2434,7 +2456,7 @@ function ArchetypeBreakdown(_ref16) {
     style: {
       fontSize: 12,
       fontWeight: 700,
-      color: "#334155",
+      color: "#14181D",
       marginBottom: 8
     }
   }, "Engagement archetypes"), /*#__PURE__*/React.createElement("div", {
@@ -2458,28 +2480,28 @@ function ArchetypeBreakdown(_ref16) {
       style: {
         flex: 1,
         fontSize: 12,
-        color: "#475569",
+        color: "#5A6169",
         fontWeight: 500
       }
     }, arch), /*#__PURE__*/React.createElement("div", {
       style: {
         width: 100,
         height: 6,
-        background: "#e2e8f0",
+        background: "#E6E1D6",
         borderRadius: 3
       }
     }, /*#__PURE__*/React.createElement("div", {
       style: {
         width: "".concat(count / max * 100, "%"),
         height: 6,
-        background: "#0891b2",
+        background: "#0E7C86",
         borderRadius: 3
       }
     })), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 12,
         fontWeight: 700,
-        color: "#0f172a",
+        color: "#14181D",
         width: 20,
         textAlign: "right"
       }
@@ -2499,7 +2521,7 @@ function EvidenceDistribution(_ref19) {
     style: {
       fontSize: 12,
       fontWeight: 700,
-      color: "#334155",
+      color: "#14181D",
       marginBottom: 8
     }
   }, "Evidence maturity"), /*#__PURE__*/React.createElement("div", {
@@ -2581,7 +2603,7 @@ function PharmaProfile(_ref20) {
     style: {
       fontSize: 11,
       fontWeight: 600,
-      color: "#0891b2",
+      color: "#0E7C86",
       textTransform: "uppercase",
       letterSpacing: "0.1em",
       marginBottom: 4
@@ -2591,7 +2613,7 @@ function PharmaProfile(_ref20) {
       margin: 0,
       fontSize: 24,
       fontWeight: 800,
-      color: "#0f172a"
+      color: "#14181D"
     }
   }, pharmaName)), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -2632,7 +2654,7 @@ function PharmaProfile(_ref20) {
     style: {
       fontSize: 12,
       fontWeight: 700,
-      color: "#334155",
+      color: "#14181D",
       marginBottom: 8
     }
   }, "AI partners"), /*#__PURE__*/React.createElement("div", {
@@ -2653,9 +2675,9 @@ function PharmaProfile(_ref20) {
         padding: "4px 10px",
         borderRadius: 6,
         cursor: "pointer",
-        background: "#f0fdfa",
-        color: "#0891b2",
-        border: "1px solid #cffafe"
+        background: "#F7F5EF",
+        color: "#0E7C86",
+        border: "1px solid #E6E1D6"
       }
     }, p);
   }))), /*#__PURE__*/React.createElement("div", {
@@ -2666,7 +2688,7 @@ function PharmaProfile(_ref20) {
     style: {
       fontSize: 12,
       fontWeight: 700,
-      color: "#334155",
+      color: "#14181D",
       marginBottom: 10
     }
   }, "All deals (", sorted.length, ")"), sorted.map(function (d) {
@@ -2732,7 +2754,7 @@ function PartnerProfile(_ref21) {
       margin: 0,
       fontSize: 24,
       fontWeight: 800,
-      color: "#0f172a"
+      color: "#14181D"
     }
   }, partnerName)), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -2772,7 +2794,7 @@ function PartnerProfile(_ref21) {
     style: {
       fontSize: 12,
       fontWeight: 700,
-      color: "#334155",
+      color: "#14181D",
       marginBottom: 8
     }
   }, "Pharma partners"), /*#__PURE__*/React.createElement("div", {
@@ -2793,9 +2815,9 @@ function PartnerProfile(_ref21) {
         padding: "4px 10px",
         borderRadius: 6,
         cursor: "pointer",
-        background: "#f8fafc",
-        color: "#475569",
-        border: "1px solid #e2e8f0"
+        background: "#F7F5EF",
+        color: "#5A6169",
+        border: "1px solid #E6E1D6"
       }
     }, p);
   }))), /*#__PURE__*/React.createElement("div", {
@@ -2806,7 +2828,7 @@ function PartnerProfile(_ref21) {
     style: {
       fontSize: 12,
       fontWeight: 700,
-      color: "#334155",
+      color: "#14181D",
       marginBottom: 10
     }
   }, "All deals (", sorted.length, ")"), sorted.map(function (d) {
@@ -3055,7 +3077,7 @@ function App() {
         alignItems: "center",
         justifyContent: "center",
         minHeight: "100vh",
-        color: "#94a3b8",
+        color: "#5A6169",
         fontSize: 14
       }
     }, "Loading deal tracker\u2026");
@@ -3063,9 +3085,9 @@ function App() {
   return /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-      background: "#f8fafc",
+      background: "#F7F5EF",
       minHeight: "100vh",
-      color: "#0f172a"
+      color: "#14181D"
     }
   }, showSuggest && /*#__PURE__*/React.createElement(SuggestDealPanel, {
     onSubmit: submitSuggestion,
@@ -3086,7 +3108,7 @@ function App() {
     }
   }), /*#__PURE__*/React.createElement("div", {
     style: {
-      background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
+      background: "linear-gradient(135deg, #14181D 0%, #1e2730 100%)",
       padding: "36px 24px 28px",
       color: "#fff"
     }
@@ -3107,7 +3129,7 @@ function App() {
     style: {
       fontSize: 11,
       fontWeight: 600,
-      color: "#22d3ee",
+      color: "#0E7C86",
       textTransform: "uppercase",
       letterSpacing: "0.1em",
       marginBottom: 8
@@ -3128,7 +3150,7 @@ function App() {
     style: {
       margin: "0 0 20px",
       fontSize: 14,
-      color: "#94a3b8",
+      color: "#5A6169",
       lineHeight: 1.5,
       maxWidth: 600
     }
@@ -3163,8 +3185,8 @@ function App() {
       fontWeight: 700,
       borderRadius: 8,
       border: "none",
-      background: "#22d3ee",
-      color: "#0f172a",
+      background: "#0E7C86",
+      color: "#14181D",
       cursor: "pointer",
       whiteSpace: "nowrap"
     }
@@ -3178,8 +3200,8 @@ function App() {
       fontWeight: 700,
       borderRadius: 8,
       border: "none",
-      background: pending.length > 0 ? "#f59e0b" : "#334155",
-      color: pending.length > 0 ? "#0f172a" : "#94a3b8",
+      background: pending.length > 0 ? "#f59e0b" : "#14181D",
+      color: pending.length > 0 ? "#14181D" : "#5A6169",
       cursor: "pointer",
       whiteSpace: "nowrap"
     }
@@ -3211,12 +3233,12 @@ function App() {
       style: {
         fontSize: 22,
         fontWeight: 800,
-        color: "#22d3ee"
+        color: "#0E7C86"
       }
     }, s.n), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 11,
-        color: "#94a3b8",
+        color: "#5A6169",
         fontWeight: 500
       }
     }, s.l));
@@ -3254,12 +3276,12 @@ function App() {
       margin: 0,
       fontSize: 16,
       fontWeight: 700,
-      color: "#0f172a"
+      color: "#14181D"
     }
   }, "Where AI Creates Value"), " ", /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 12,
-      color: "#94a3b8",
+      color: "#5A6169",
       fontStyle: "italic",
       fontWeight: 400
     }
@@ -3273,23 +3295,23 @@ function App() {
     style: {
       marginTop: 12,
       padding: "12px 16px",
-      background: "#f0fdfa",
+      background: "#F7F5EF",
       borderRadius: 8,
-      border: "1px solid #e0f2fe",
+      border: "1px solid #E6E1D6",
       fontSize: 12,
-      color: "#475569",
+      color: "#5A6169",
       lineHeight: 1.6
     }
   }, /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: "#0891b2"
+      color: "#0E7C86"
     }
   }, "Reading the economics:"), " \"Committed\" values are upfront payments or cash paid to date. \"Potential\" values include milestone payments contingent on clinical, regulatory, and commercial success. Historically, fewer than 10% of life sciences milestone payments are ever triggered (", /*#__PURE__*/React.createElement("a", {
     href: "https://www.biospace.com/business/just-9-5-of-life-sciences-m-a-milestones-have-been-paid-since-2008",
     target: "_blank",
     rel: "noopener",
     style: {
-      color: "#0891b2"
+      color: "#0E7C86"
     }
   }, "SRS Acquiom, 2025"), "). No AI-designed drug has yet received regulatory approval. Click any company name to see its full profile."), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -3311,17 +3333,17 @@ function App() {
       minWidth: 200,
       padding: "10px 14px",
       fontSize: 13,
-      border: "1.5px solid #e2e8f0",
+      border: "1.5px solid #E6E1D6",
       borderRadius: 8,
       outline: "none",
-      color: "#0f172a",
+      color: "#14181D",
       background: "#fff"
     },
     onFocus: function onFocus(e) {
-      return e.target.style.borderColor = "#0891b2";
+      return e.target.style.borderColor = "#0E7C86";
     },
     onBlur: function onBlur(e) {
-      return e.target.style.borderColor = "#e2e8f0";
+      return e.target.style.borderColor = "#E6E1D6";
     }
   }), /*#__PURE__*/React.createElement("select", {
     value: sortBy,
@@ -3331,10 +3353,10 @@ function App() {
     style: {
       padding: "10px 14px",
       fontSize: 13,
-      border: "1.5px solid #e2e8f0",
+      border: "1.5px solid #E6E1D6",
       borderRadius: 8,
       outline: "none",
-      color: "#0f172a",
+      color: "#14181D",
       background: "#fff",
       cursor: "pointer"
     }
@@ -3361,7 +3383,7 @@ function App() {
   }, "Clear filters"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 13,
-      color: "#64748b"
+      color: "#5A6169"
     }
   }, "Showing ", filteredDeals.length, " of ", deals.length, " deals")), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -3386,15 +3408,15 @@ function App() {
     style: {
       textAlign: "center",
       padding: "40px 20px",
-      color: "#94a3b8"
+      color: "#5A6169"
     }
   }, "No deals match your current filters.")), /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 40,
       padding: "20px 0",
-      borderTop: "1px solid #e2e8f0",
+      borderTop: "1px solid #E6E1D6",
       fontSize: 12,
-      color: "#94a3b8",
+      color: "#5A6169",
       lineHeight: 1.6,
       display: "flex",
       justifyContent: "space-between",
@@ -3427,8 +3449,8 @@ function App() {
       fontSize: 11,
       padding: "4px 10px",
       background: showReset ? "#fef2f2" : "transparent",
-      color: showReset ? "#dc2626" : "#94a3b8",
-      border: "1px solid ".concat(showReset ? "#fecaca" : "#e2e8f0"),
+      color: showReset ? "#dc2626" : "#5A6169",
+      border: "1px solid ".concat(showReset ? "#fecaca" : "#E6E1D6"),
       borderRadius: 5,
       cursor: "pointer"
     }
