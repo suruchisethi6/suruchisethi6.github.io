@@ -19,18 +19,23 @@
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --deep: #0c1e2e;
-            --slate: #334155;
-            --body: #475569;
-            --muted: #94a3b8;
-            --teal: #0d9488;
-            --teal-dark: #0a7a70;
-            --teal-light: #ccfbf1;
-            --teal-subtle: #f0fdfa;
+            --deep: #14181D;
+            --slate: #14181D;
+            --body: #14181D;
+            --muted: #5A6169;
+            --ink: #14181D;
+            --paper: #F7F5EF;
+            --card: #FFFFFF;
+            --teal: #0E7C86;
+            --teal-dark: #0A5A61;
+            --teal-light: #e0f4f4;
+            --teal-subtle: #F7F5EF;
             --copper: #c2724e;
-            --bg: #fafcfd;
-            --white: #ffffff;
-            --border: #e2e8f0;
+            --bg: #F7F5EF;
+            --white: #FFFFFF;
+            --border: #E6E1D6;
+            --accent: #0E7C86;
+            --hairline: #E6E1D6;
             --serif: 'DM Serif Display', Georgia, serif;
             --sans: 'DM Sans', system-ui, -apple-system, sans-serif;
         }
@@ -84,7 +89,7 @@
 
         /* ---- HERO ---- */
         .hero {
-            background: linear-gradient(160deg, #0c1e2e 0%, #132f46 50%, #0c1e2e 100%);
+            background: linear-gradient(160deg, #14181D 0%, #1e2730 50%, #14181D 100%);
             padding: 120px 32px 64px;
             position: relative;
             overflow: hidden;
@@ -96,7 +101,7 @@
             right: -80px;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(13,148,136,0.08) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(14,124,134,0.08) 0%, transparent 70%);
             pointer-events: none;
         }
         .hero-inner {
@@ -116,7 +121,7 @@
             height: 220px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid rgba(13,148,136,0.3);
+            border: 3px solid rgba(14,124,134,0.3);
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
         }
         .hero-eyebrow {
@@ -137,7 +142,7 @@
         }
         .hero-sub {
             font-size: 17px;
-            color: #94a3b8;
+            color: #5A6169;
             line-height: 1.65;
             max-width: 560px;
             margin-bottom: 32px;
@@ -285,7 +290,7 @@
         }
         .insight-card:hover {
             border-color: var(--teal);
-            box-shadow: 0 4px 24px rgba(13,148,136,0.08);
+            box-shadow: 0 4px 24px rgba(14,124,134,0.08);
             transform: translateY(-2px);
         }
         .insight-tag {
@@ -340,7 +345,7 @@
             margin-top: 32px;
         }
         .project-preview {
-            background: linear-gradient(135deg, #0c1e2e 0%, #132f46 100%);
+            background: linear-gradient(135deg, #14181D 0%, #1e2730 100%);
             padding: 40px 32px;
             position: relative;
         }
@@ -496,7 +501,7 @@
             color: #fff;
         }
         .contact-section p {
-            color: #94a3b8;
+            color: #5A6169;
             font-size: 16px;
             max-width: 480px;
             margin: 0 auto 28px;
@@ -523,7 +528,7 @@
         }
         .contact-link:hover {
             border-color: var(--teal);
-            background: rgba(13,148,136,0.1);
+            background: rgba(14,124,134,0.1);
         }
         .contact-link.primary {
             background: var(--teal);
@@ -696,7 +701,7 @@
 
             <!-- Post 3 -->
             <a href="https://www.linkedin.com/posts/suruchisethi_in-the-first-6-months-of-2026-big-pharma-activity-7469655719420784640-z32N?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAeP6bkBwFH-LYwO3D76CGq-F8XcblFbtUg" class="insight-card" target="_blank" rel="noopener">
-                <div class="insight-tag" style="color:#0891b2;">Deal Tracker</div>
+                <div class="insight-tag" style="color:#0E7C86;">Deal Tracker</div>
                 <h3>H1 2026: The deals that reveal pharma's AI strategy</h3>
                 <p>
                     AstraZeneca's first AI acquisition. Lilly's $2.75B Insilico deal. BMS deploying Claude across 30,000 employees. A timeline of the biggest AI × pharma deals of the year.
@@ -732,7 +737,7 @@
 
             <!-- Structure Prediction Map -->
             <a href="/structure-prediction" class="insight-card">
-                <div class="insight-tag" style="color: #0d9488;">Strategic Analysis</div>
+                <div class="insight-tag" style="color: #0E7C86;">Strategic Analysis</div>
                 <h3>AI Structure Prediction Platforms — Competitive Positioning</h3>
                 <p>
                     Isomorphic Labs, Boltz, and Chai Discovery: pharma partnerships, ecosystem analysis, and market dynamics in biomolecular structure prediction.
