@@ -103,6 +103,21 @@
             max-width: 1060px;
             margin: 0 auto;
             position: relative;
+            display: flex;
+            align-items: center;
+            gap: 48px;
+        }
+        .hero-text {
+            flex: 1;
+        }
+        .hero-photo {
+            flex-shrink: 0;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(13,148,136,0.3);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
         }
         .hero-eyebrow {
             font-size: 12px;
@@ -549,6 +564,9 @@
             .nav-links { gap: 16px; }
             .nav-links a { font-size: 12px; }
             .hero { padding: 120px 20px 60px; }
+            .hero-inner { flex-direction: column-reverse; gap: 32px; text-align: center; }
+            .hero-photo { width: 160px; height: 160px; }
+            .hero-anchors { justify-content: center; }
             .section { padding: 40px 20px; }
             .project-preview { padding: 24px 16px; }
             .project-info { padding: 24px; }
@@ -580,16 +598,19 @@
 <!-- HERO -->
 <section class="hero">
     <div class="hero-inner">
-        <div class="hero-eyebrow">Life Sciences Strategy</div>
-        <h1>A scientist's lens on life sciences strategy.</h1>
-        <p class="hero-sub">
-            I'm Suruchi Sethi, a PhD biochemist and competitive intelligence consultant writing about the forces reshaping pharma and biotech, and building tools to make sense of them.
-        </p>
-        <div class="hero-anchors">
-            <div class="hero-anchor"><span class="dot"></span> CI & Strategy, Eradigm Consulting</div>
-            <div class="hero-anchor"><span class="dot"></span> PhD Biochemistry, Max Planck Institute</div>
-            <div class="hero-anchor"><span class="dot"></span> B.Tech & M.Tech, IIT Delhi</div>
+        <div class="hero-text">
+            <div class="hero-eyebrow">Life Sciences Strategy</div>
+            <h1>A scientist's lens on life sciences strategy.</h1>
+            <p class="hero-sub">
+                I'm Suruchi Sethi, a PhD biochemist and competitive intelligence consultant writing about the forces reshaping pharma and biotech, and building tools to make sense of them.
+            </p>
+            <div class="hero-anchors">
+                <div class="hero-anchor"><span class="dot"></span> CI & Strategy, Eradigm Consulting</div>
+                <div class="hero-anchor"><span class="dot"></span> PhD Biochemistry, Max Planck Institute</div>
+                <div class="hero-anchor"><span class="dot"></span> B.Tech & M.Tech, IIT Delhi</div>
+            </div>
         </div>
+        <img src="/suruchi-sethi.jpg" alt="Suruchi Sethi" class="hero-photo" />
     </div>
 </section>
 
@@ -709,13 +730,18 @@
                 </div>
             </a>
 
-            <!-- Coming soon card -->
-            <div class="insight-card" style="border-style: dashed; display: flex; align-items: center; justify-content: center; min-height: 140px;">
-                <div style="text-align: center;">
-                    <div style="font-size: 22px; color: var(--muted); margin-bottom: 8px;">+</div>
-                    <p style="font-size: 13px; color: var(--muted); margin: 0;">More projects coming soon</p>
+            <!-- Structure Prediction Map -->
+            <a href="/structure-prediction" class="insight-card">
+                <div class="insight-tag" style="color: #0d9488;">Strategic Analysis</div>
+                <h3>AI Structure Prediction Platforms — Competitive Positioning</h3>
+                <p>
+                    Isomorphic Labs, Boltz, and Chai Discovery: pharma partnerships, ecosystem analysis, and market dynamics in biomolecular structure prediction.
+                </p>
+                <div class="insight-footer">
+                    <span style="width:6px; height:6px; border-radius:50%; background:#10b981; flex-shrink:0;"></span>
+                    Live · Explore the map →
                 </div>
-            </div>
+            </a>
 
         </div>
     </div>
