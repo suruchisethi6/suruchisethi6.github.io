@@ -1,166 +1,97 @@
 import { useState, useMemo, useCallback } from "react";
 
-const CATS = [
-  { id: "discovery", label: "Drug Discovery & Design", color: "#7c3aed", short: "Discovery" },
-  { id: "clinical", label: "Clinical Intelligence", color: "#ec4899", short: "Clinical Intel" },
-  { id: "manufacturing", label: "Development & Operations", color: "#f97316", short: "Dev & Ops" },
-  { id: "enterprise", label: "Enterprise AI", color: "#0E7C86", short: "Enterprise AI" },
-  { id: "infrastructure", label: "AI Infrastructure", color: "#6366f1", short: "Infrastructure" },
+const C=[{id:"discovery",l:"Discovery",c:"#7c3aed"},{id:"clinical",l:"Clinical Intel",c:"#ec4899"},{id:"manufacturing",l:"Dev & Ops",c:"#f97316"},{id:"enterprise",l:"Enterprise AI",c:"#0E7C86"},{id:"infrastructure",l:"Infrastructure",c:"#6366f1"}];
+const EV={production:{l:"Production",c:"#059669",i:"●"},pilot:{l:"Pilot",c:"#ca8a04",i:"◐"},research:{l:"Research",c:"#3b82f6",i:"○"},funding:{l:"Funding",c:"#5A6169",i:"◌"}};
+const TC={Acquisition:"#dc2626",Licensing:"#2563eb",Partnership:"#7c3aed","Platform licensing":"#0E7C86",Infrastructure:"#ca8a04","Enterprise AI":"#059669",Collaboration:"#0E7C86"};
+
+const D=[
+{id:1,p:"Roche / Genentech",s:"Recursion",t:"Collaboration",u:150,tp:12150,dd:true,dl:"$150M up, $12B+",dt:"December 2021",st:["discovery"],ev:"production",ar:"Co-develop molecules",sm:"Multi-year AI drug discovery across neuroscience and oncology. $500M+ cumulative milestones achieved.",de:"Pharma increasingly outsources biological data generation to AI-native platforms.",sd:"Clinical-stage TechBio. Recursion OS combines automated biology, chemistry, and ML."},
+{id:2,p:"Sanofi",s:"Earendil Labs",t:"Collaboration",tp:2560,dd:true,dl:"Up to $2.56B",dt:"January 2026",st:["discovery"],ev:"research",ar:"Source pipeline",sm:"Up to $2.56B for AI-driven bispecific antibody discovery across autoimmune and inflammatory diseases.",de:"Sanofi repeatedly returning to an AI-native biologics platform — a repeat discovery partner.",sd:"AI-powered biotech focused on next-generation biologics."},
+{id:3,p:"Eli Lilly",s:"Isomorphic Labs",t:"Partnership",u:45,tp:1745,dd:true,dl:"$45M up / $1.7B milestones",dt:"January 2024",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Multi-target drug discovery using Isomorphic's AI-first drug design engine.",de:"A structural shift from AI-as-tooling to AI-native drug creation.",sd:"Google DeepMind spinout. Raised $2.1B Series B in May 2026."},
+{id:4,p:"J&J / AbbVie / Novo / Bayer",s:"Cradle",t:"Platform licensing",dd:false,dl:"50+ programmes",dt:"2025-2026",st:["discovery","manufacturing"],ev:"production",ar:"License platform",sm:"Protein-engineering platform running 50+ R&D programs across 6+ of the top 25 pharma.",de:"AI making therapeutic molecules easier to build, optimise, and manufacture.",sd:"Enterprise-grade AI for protein engineering."},
+{id:5,p:"GSK",s:"NOETIK",t:"Licensing",u:50,tp:50,dd:true,dl:"$50M upfront",dt:"January 2026",st:["discovery","clinical"],ev:"pilot",ar:"License platform",sm:"Licensed spatial-biology foundation models for lung and colorectal cancer.",de:"Licensing biological foundation models as research infrastructure.",sd:"AI foundation models on spatial biology and multimodal oncology data."},
+{id:6,p:"Eli Lilly",s:"Tamarind Bio",t:"Infrastructure",dd:false,dl:"250+ AI tools",dt:"June 2026",st:["infrastructure"],ev:"production",ar:"Access compute",sm:"Technology partner for Lilly TuneLab 2.0, providing infrastructure for biomolecular AI.",de:"The bottleneck may be deployment, governance, and workflow integration.",sd:"Infrastructure and workflow software for computational biology."},
+{id:7,p:"CSL + others",s:"Perceptic",t:"Enterprise AI",tp:12,dd:true,dl:"$12M seed",dt:"May 2026",st:["enterprise"],ev:"production",ar:"Enterprise transformation",sm:"Emerged from stealth with $12M seed and production deployments across top pharma.",de:"From standalone AI tools to AI operating systems orchestrating enterprise decisions.",sd:"AI operating system for the drug development lifecycle."},
+{id:8,p:"AstraZeneca",s:"Modella AI",t:"Acquisition",dd:false,dl:"Undisclosed",dt:"January 2026",st:["discovery","clinical"],ev:"production",ar:"Acquire capability",sm:"AZ acquired Modella AI — big pharma acquiring an AI-native company rather than licensing.",de:"From partnership to ownership in six months.",sd:"Biomedical AI company building multimodal foundation models for oncology."},
+{id:9,p:"Eli Lilly",s:"NVIDIA",t:"Infrastructure",dd:false,dl:"1,016 GPUs",dt:"October 2025",st:["infrastructure","discovery","manufacturing"],ev:"production",ar:"Access compute",sm:"LillyPod: DGX SuperPOD AI factory powered by 1,016 Blackwell Ultra GPUs.",de:"Lilly treats AI infrastructure as strategic capability.",sd:"NVIDIA accelerated computing for AI training and inference."},
+{id:10,p:"Roche",s:"NVIDIA",t:"Infrastructure",dd:false,dl:"3,500+ GPUs",dt:"March 2026",st:["infrastructure","discovery"],ev:"production",ar:"Access compute",sm:"2,176 Blackwell GPUs added, total 3,500+ — largest announced GPU footprint in pharma.",de:"Roche assembling the broadest AI drug-development stack in industry.",sd:"NVIDIA accelerated computing across Roche R&D and diagnostics."},
+{id:11,p:"Eli Lilly",s:"Insilico Medicine",t:"Collaboration",u:115,tp:2750,dd:true,dl:"$115M up, $2.75B+",dt:"March 2026",st:["discovery"],ev:"research",ar:"Source pipeline",sm:"Exclusive worldwide license to AI-designed preclinical oral therapeutics. Third Lilly-Insilico deal.",de:"Escalation: software licensing → collaboration → $2.75B asset-and-platform partnership.",sd:"End-to-end AI drug discovery with clinical-stage programmes."},
+{id:12,p:"Merck / MSD",s:"Google Cloud",t:"Enterprise AI",tp:1000,dd:true,dl:"Up to $1B",dt:"April 2026",st:["enterprise","manufacturing"],ev:"pilot",ar:"Enterprise transformation",sm:"Deploying Gemini Enterprise across 75,000 employees — R&D, manufacturing, commercial.",de:"AI agents in GxP-regulated workflows create novel compliance questions.",sd:"Google Cloud Gemini Enterprise with embedded engineers."},
+{id:13,p:"Novo Nordisk",s:"OpenAI",t:"Partnership",dd:false,dl:"Undisclosed",dt:"April 2026",st:["enterprise","discovery","manufacturing"],ev:"pilot",ar:"Enterprise transformation",sm:"Integrating OpenAI across discovery, manufacturing, supply chain. Full integration by end 2026.",de:"Multi-vendor strategy: Azure + NVIDIA + OpenAI, hedging against lock-in.",sd:"OpenAI enterprise platform across pharmaceutical operations."},
+{id:14,p:"Daiichi Sankyo",s:"Imagene AI",t:"Collaboration",dd:false,dl:"Undisclosed",dt:"April 2026",st:["clinical"],ev:"research",ar:"Data partnership",sm:"Multimodal biomarker discovery and response prediction in oncology.",de:"Companion diagnostics becoming competitive requirements for ADC leaders.",sd:"Precision oncology AI using CanvOI model and 3.5M+ tissue samples."},
+{id:15,p:"AstraZeneca",s:"OWKIN",t:"Licensing",dd:false,dl:"3-year deal",dt:"May 2026",st:["discovery","enterprise"],ev:"pilot",ar:"AI research agent",sm:"3-year licensing for Owkin's AI Scientist platform — hypothesis generation and research support.",de:"Agentic AI participating in scientific workflow.",sd:"French AI biotech developing agentic AI Scientist platform."},
+{id:16,p:"Bristol Myers Squibb",s:"Anthropic",t:"Enterprise AI",dd:false,dl:"Undisclosed",dt:"May 2026",st:["enterprise","discovery","clinical","manufacturing"],ev:"production",ar:"Enterprise transformation",sm:"Claude deployed across 30,000+ BMS employees — discovery, clinical, regulatory, manufacturing.",de:"Claude Code in engineering, AI agents in R&D/manufacturing, root-cause investigations in GxP.",sd:"Anthropic's Claude as enterprise intelligence platform."},
+{id:17,p:"Incyte",s:"Edison Scientific",t:"Collaboration",dd:false,dl:"Undisclosed",dt:"May 2026",st:["discovery"],ev:"pilot",ar:"AI research agent",sm:"Deploying Kosmos AI scientist platform across Incyte's discovery lifecycle.",de:"Emerging 'AI scientist' category. Outcomes will matter more than capabilities.",sd:"AI platform for scientific R&D decisions and workflows."},
+{id:18,p:"Sanofi",s:"CytoReason",t:"Partnership",tp:16,dd:true,dl:"Up to $16M",dt:"January 2026",st:["discovery","clinical"],ev:"production",ar:"License platform",sm:"Third expansion of Sanofi-CytoReason collaboration for computational disease models.",de:"Repeated expansion: renewals are stronger validation than headline-grabbing first deals.",sd:"AI computational disease models across genes, pathways, cells."},
+{id:19,p:"Pfizer",s:"Chai Discovery",t:"Licensing",dd:false,dl:"Undisclosed",dt:"June 2026",st:["discovery"],ev:"research",ar:"License platform",sm:"Chai-3 access plus custom model trained on Pfizer's proprietary data.",de:"Competitive advantage from proprietary fine-tuning, not the generic model.",sd:"AI drug discovery. Developer of Chai-3."},
+{id:20,p:"Pfizer",s:"Boltz Bio",t:"Collaboration",dd:false,dl:"Multi-year",dt:"January 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Refining Boltz foundation models on Pfizer data for structure prediction and biologics.",de:"Open-source model + proprietary fine-tuning entering molecular biology.",sd:"Public benefit corp building open-source biomolecular AI models."},
+{id:21,p:"Merck / MSD",s:"Protillion Biosciences",t:"Collaboration",tp:510,dd:true,dl:"Up to $510M",dt:"June 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Multi-target discovery collaboration combining Protillion's Prot-MaP platform with Merck.",de:"High-quality experimental data becoming as important as algorithms.",sd:"Lab-in-the-loop AI drug design. Megascale training datasets."},
+{id:22,p:"Boehringer Ingelheim",s:"Variant Bio",t:"Collaboration",tp:120,dd:true,dl:"$120M+",dt:"January 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Target discovery and license agreement for cardiorenal and kidney disease.",de:"AI-driven target discovery meets genetically validated drug targets.",sd:"Genomics-driven AI. Proprietary data from diverse populations."},
+{id:23,p:"Incyte",s:"Genesis Therapeutics",t:"Collaboration",u:120,tp:1000,dd:true,dl:"$120M up; $1B+",dt:"May 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Expanded AI collaboration adding 5+ targets. Incyte shares proprietary data to train GEMS.",de:"Pharma using internal datasets as differentiating assets in AI partnerships.",sd:"Generative and predictive foundation models. GEMS platform."},
+{id:24,p:"Novartis",s:"Isomorphic Labs",t:"Collaboration",u:37.5,tp:1200,dd:true,dl:"$37.5M up, $1.2B",dt:"January 2024",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Strategic collaboration for small-molecule therapeutics. Expanded February 2025.",de:"First to validate Isomorphic's AI-native co-development model.",sd:"Google DeepMind spinout. AI-first drug design engine."},
+{id:25,p:"Johnson & Johnson",s:"Isomorphic Labs",t:"Collaboration",dd:false,dl:"Undisclosed",dt:"January 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Cross-modality, multi-target collaboration expanding into biologics design.",de:"Isomorphic evolving from structure prediction into broader molecular design.",sd:"DeepMind spinout. J&J extends into biologics."},
+{id:26,p:"Eli Lilly",s:"Chai Discovery",t:"Collaboration",dd:false,dl:"Undisclosed",dt:"January 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Biologics discovery using Chai's AI, expanded through Lilly's TuneLab platform.",de:"From 'best model' to 'strongest AI-enabled discovery network.'",sd:"Developer of Chai-3."},
+{id:27,p:"Sanofi",s:"OWKIN",t:"Licensing",dd:false,dl:"5-year licence",dt:"June 2026",st:["discovery","enterprise"],ev:"pilot",ar:"AI research agent",sm:"5-year K Pro licence for research, target evaluation, clinical decisions, and CI.",de:"Two major pharma licensing same platform within weeks: strong validation.",sd:"French AI biotech. K Pro agentic AI Scientist platform."},
+{id:28,p:"Takeda",s:"Boltz Bio",t:"Platform licensing",dd:false,dl:"Org-wide",dt:"June 2026",st:["discovery"],ev:"production",ar:"License platform",sm:"Org-wide BoltzMol-1 and BoltzProt-1 deployment with API integration and fine-tuning.",de:"Some pharma prefer infrastructure they can customise and control.",sd:"Public benefit corp. Open-source biomolecular AI models."},
+{id:29,p:"GSK",s:"Boltz Bio",t:"Collaboration",dd:false,dl:"Undisclosed",dt:"July 2026",st:["discovery"],ev:"research",ar:"License platform",sm:"Boltz foundation models, Lab/API, and LLM agent workflows across GSK's discovery pipeline.",de:"Third top-20 pharma deal in six months. LLM agents for natural-language workflows.",sd:"Boltz Lab, API, and LLM agent workflows."},
+{id:30,p:"Takeda",s:"Iambic Therapeutics",t:"Collaboration",tp:1700,dd:true,dl:"$1.7B+ + royalties",dt:"February 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"AI platform and wet lab for small molecule programs in oncology, GI, inflammation. Broader NeuralPLexer access.",de:"Takeda assembling one of the most diversified AI discovery portfolios in pharma.",sd:"Clinical-stage. NeuralPLexer + Enchant with automated wet lab."},
+{id:31,p:"Eli Lilly",s:"Profluent",t:"Collaboration",tp:2250,dd:true,dl:"Up to $2.25B",dt:"April 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"AI-designed site-specific recombinases for genetic medicine. Lilly gets exclusive worldwide rights.",de:"Generative AI designing entirely new therapeutic proteins for kilobase-scale DNA editing.",sd:"Protein language models for novel recombinases. $106M from Altimeter, Bezos."},
+{id:32,p:"Novartis",s:"Orionis Biosciences",t:"Collaboration",u:40,tp:1400,dd:true,dl:"$40M up, $1.4B+",dt:"June 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Second collaboration expanding AI-driven Allo-Glue platform for molecular glue drugs.",de:"Novartis returning to a 2020 partner — repeat deal signals delivered value.",sd:"Clinical-stage. Proximity-induced therapeutics with AI-driven molecular glue design."},
+{id:33,p:"SK Biopharmaceuticals",s:"Insilico Medicine",t:"Collaboration",u:18,tp:2500,dd:true,dl:"$18M up, $2.5B+",dt:"June 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"AI drug discovery for neuroimmune CNS disorders. Insilico's largest APAC partnership.",de:"Insilico's deal velocity: Lilly ($2.75B), SK ($2.5B), Takeda (~$600M) in four months.",sd:"Generative AI drug discovery (HKEX: 3696). Pharma.AI platform."},
+{id:34,p:"Bayer",s:"Iambic Therapeutics",t:"Collaboration",dd:false,dl:"Upfront + miles + royalties",dt:"June 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"AI platform for novel drug entry points and small molecules against hard-to-drug targets.",de:"Second major pharma deal (after Takeda $1.7B) validates Iambic's positioning.",sd:"NeuralPLexer and Enchant with automated wet lab."},
+{id:35,p:"Takeda",s:"Insilico Medicine",t:"Collaboration",u:60,tp:600,dd:true,dl:"$60M up, ~$600M+",dt:"July 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Pharma.AI to discover clinically differentiated candidates across Takeda's therapeutic areas.",de:"Takeda's CSO: transitioning to 'AI-native discovery model.' Insilico's 4th major deal in 18 months.",sd:"End-to-end Pharma.AI platform (HKEX: 3696)."},
 ];
 
-const EVL = [
-  { id: "production", label: "Production", color: "#059669", icon: "●" },
-  { id: "pilot", label: "Pilot", color: "#ca8a04", icon: "◐" },
-  { id: "research", label: "Research", color: "#3b82f6", icon: "○" },
-  { id: "funding", label: "Funding only", color: "#5A6169", icon: "◌" },
-];
+function fm(v){if(v==null)return null;return v>=1000?"$"+(v/1000).toFixed(1).replace(/\.0$/,"")+"B":"$"+Math.round(v)+"M"}
+function pd(s){if(!s)return 0;const m={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};const l=s.toLowerCase();let y=2025,mo=6;const ym=l.match(/(\d{4})/);if(ym)y=+ym[1];for(const[k,v] of Object.entries(m))if(l.includes(k)){mo=v;break}return y*100+mo}
+function nn(s){return s.split(/[\/+]/).map(x=>x.trim()).filter(Boolean)}
 
-const DTC = { Acquisition:"#dc2626", Licensing:"#2563eb", Partnership:"#7c3aed", "Platform licensing":"#0E7C86", Infrastructure:"#ca8a04", "Enterprise AI":"#059669", Collaboration:"#0E7C86" };
-
-const D = [
-  {id:1,p:"Roche / Genentech",s:"Recursion",t:"Collaboration",e:{u:150,tp:12150,d:true,l:"$150M upfront, up to $12B+"},dt:"December 2021 (active 2026)",st:["discovery"],ev:"production",ar:"Co-develop molecules",sm:"Multi-year AI drug discovery collaboration across neuroscience and oncology, allowing up to 40 programs. $500M+ cumulative milestones achieved.",de:"One of the largest AI drug discovery collaborations. Recursion generates maps of human cellular biology. Pharma increasingly outsources biological data generation to AI-native platforms.",sd:"Clinical-stage TechBio operating the Recursion OS — AI-native platform combining automated biology, chemistry, and ML.",su:"https://ir.recursion.com/news-releases/news-release-details/recursion-reports-fourth-quarter-and-full-year-2025-financial"},
-  {id:2,p:"Sanofi",s:"Earendil Labs",t:"Collaboration",e:{u:null,tp:2560,d:true,l:"Up to $2.56B"},dt:"January 2026",st:["discovery"],ev:"research",ar:"Source pipeline",sm:"Second major Sanofi–Earendil agreement: up to $2.56B for AI-driven bispecific antibody discovery across autoimmune and inflammatory diseases.",de:"Sanofi repeatedly returning to an external AI-native biologics platform — not a one-off, but a repeat discovery partner.",sd:"AI-powered biotech focused on next-generation biologics for autoimmune diseases, cancer, and other areas.",su:"https://www.fiercebiotech.com/biotech/sanofis-latest-autoimmune-bispecific-pact-ai-biotech-could-reach-25b"},
-  {id:3,p:"Eli Lilly",s:"Isomorphic Labs",t:"Partnership",e:{u:45,tp:1745,d:true,l:"$45M up / $1.7B milestones"},dt:"January 2024",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Multi-target drug discovery using Isomorphic's AI-first drug design engine. One of three major pharma partnerships (alongside Novartis and J&J).",de:"A structural shift from AI-as-tooling to AI-native drug creation. Does pharma source molecules from AI-native biotechs rather than building internally?",sd:"Google DeepMind spinout building an AI-first drug design engine. Raised $2.1B Series B in May 2026.",su:"https://www.isomorphiclabs.com/partnerships"},
-  {id:4,p:"J&J / AbbVie / Novo Nordisk / Bayer",s:"Cradle",t:"Platform licensing",e:{u:null,tp:null,d:false,l:"50+ programmes"},dt:"2025-2026",st:["discovery","manufacturing"],ev:"production",ar:"License platform",sm:"Protein-engineering platform running 50+ R&D programs across 6+ of the top 25 pharma companies.",de:"AI creating value by making therapeutic molecules easier to build, optimise, and manufacture — not just finding new biology.",sd:"Enterprise-grade AI software for protein engineering.",su:"https://www.bayer.com/en/us/news-stories/ai-enabled-antibody-discovery-and-optimization"},
-  {id:5,p:"GSK",s:"NOETIK",t:"Licensing",e:{u:50,tp:50,d:true,l:"$50M upfront + fees"},dt:"January 2026",st:["discovery","clinical"],ev:"pilot",ar:"License platform",sm:"Licensed NOETIK's spatial-biology foundation models for lung and colorectal cancer under a five-year collaboration.",de:"A shift from licensing software tools to licensing biological foundation models as research infrastructure.",sd:"AI foundation models trained on spatial biology and multimodal oncology data.",su:"https://www.genengnews.com/topics/artificial-intelligence/pharma-bets-big-on-ai-platforms-with-flurry-of-new-year-deals/"},
-  {id:6,p:"Eli Lilly",s:"Tamarind Bio",t:"Infrastructure",e:{u:null,tp:null,d:false,l:"250+ molecular AI tools"},dt:"June 2026",st:["infrastructure"],ev:"production",ar:"Access compute",sm:"Selected as technology partner for Lilly TuneLab 2.0, providing scalable infrastructure for biomolecular AI models.",de:"The future bottleneck may not be model availability — it may be deployment, governance, and workflow integration.",sd:"Infrastructure and workflow software for computational biology.",su:"https://investor.lilly.com/news-releases/news-release-details/lilly-launches-tunelab-platform-give-biotechnology-companies"},
-  {id:7,p:"CSL + others",s:"Perceptic",t:"Enterprise AI",e:{u:null,tp:12,d:true,l:"$12M seed"},dt:"May 2026",st:["enterprise"],ev:"production",ar:"Enterprise transformation",sm:"Emerged from stealth with $12M seed and paid production deployments across top pharma companies.",de:"A shift from standalone AI tools toward AI operating systems that orchestrate decisions across the enterprise.",sd:"AI operating system connecting data, decisions, and workflows across drug development.",su:"https://fortune.com/2026/05/26/exclusive-perceptic-a-startup-automating-drug-discovery-end-to-end-for-big-pharma-emerges-from-stealth-with-12-million-in-seed-funding/"},
-  {id:8,p:"AstraZeneca",s:"Modella AI",t:"Acquisition",e:{u:null,tp:null,d:false,l:"Undisclosed"},dt:"January 2026",st:["discovery","clinical"],ev:"production",ar:"Acquire capability",sm:"AstraZeneca acquired Modella AI — one of the first major examples of big pharma acquiring an AI-native company.",de:"A shift from partnership to ownership. Moved from July 2025 research agreement to full acquisition in six months.",sd:"Boston-based biomedical AI company building multimodal foundation models for oncology.",su:"https://finance.yahoo.com/news/modella-ai-announces-acquisition-astrazeneca-170200809.html"},
-  {id:9,p:"Eli Lilly",s:"NVIDIA",t:"Infrastructure",e:{u:null,tp:null,d:false,l:"1,016 Blackwell Ultra GPUs"},dt:"October 2025",st:["infrastructure","discovery","manufacturing"],ev:"production",ar:"Access compute",sm:"Partnered with NVIDIA to build LillyPod, a DGX SuperPOD AI factory powered by 1,016 Blackwell Ultra GPUs.",de:"Lilly treats AI infrastructure as strategic capability. Pharma AI is becoming a compute race.",sd:"NVIDIA provides accelerated computing infrastructure for AI training and inference.",su:"https://www.biopharmadive.com/news/lilly-nvidia-ai-drug-discovery-lab/812022/"},
-  {id:10,p:"Roche",s:"NVIDIA",t:"Infrastructure",e:{u:null,tp:null,d:false,l:"3,500+ GPUs"},dt:"March 2026",st:["infrastructure","discovery"],ev:"production",ar:"Access compute",sm:"Added 2,176 Blackwell GPUs on-premises, bringing total to 3,500+ — the largest announced GPU footprint in pharma.",de:"Combined with Recursion and internal AI under Aviv Regev, Roche is assembling the broadest AI stack in the industry.",sd:"NVIDIA accelerated computing across Roche's global R&D and diagnostics.",su:"https://www.roche.com/media/releases/med-cor-2026-03-16"},
-  {id:11,p:"Eli Lilly",s:"Insilico Medicine",t:"Collaboration",e:{u:115,tp:2750,d:true,l:"$115M upfront, up to $2.75B + royalties"},dt:"March 2026",st:["discovery"],ev:"research",ar:"Source pipeline",sm:"Exclusive worldwide license to AI-designed preclinical oral therapeutics. Third Lilly-Insilico deal in three years.",de:"Escalation: software licensing (2023) to collaboration (2025) to asset-and-platform partnership ($2.75B, 2026). This may become the template.",sd:"End-to-end AI drug discovery platform with clinical-stage programmes.",su:"https://www.cnbc.com/2026/03/29/eli-lilly-reaches-deal-to-bring-ai-developed-drugs-to-global-market.html"},
-  {id:12,p:"Merck / MSD",s:"Google Cloud",t:"Enterprise AI",e:{u:null,tp:1000,d:true,l:"Up to $1B"},dt:"April 2026",st:["enterprise","manufacturing"],ev:"pilot",ar:"Enterprise transformation",sm:"Multi-year enterprise AI partnership deploying Gemini Enterprise across 75,000 employees.",de:"AI agents in GxP-regulated pharma workflows create novel compliance questions the industry hasn't fully resolved.",sd:"Google Cloud's Gemini Enterprise agent platform with embedded engineers.",su:"https://www.merck.com/news/merck-and-google-cloud-partner-to-accelerate-agentic-ai-enterprise-transformation/"},
-  {id:13,p:"Novo Nordisk",s:"OpenAI",t:"Partnership",e:{u:null,tp:null,d:false,l:"Undisclosed"},dt:"April 2026",st:["enterprise","discovery","manufacturing"],ev:"pilot",ar:"Enterprise transformation",sm:"Strategic partnership integrating OpenAI across discovery, manufacturing, supply chain, and enterprise. Full integration by end 2026.",de:"Adding OpenAI to existing Azure and NVIDIA relationships signals a multi-vendor strategy, hedging against lock-in.",sd:"OpenAI enterprise platform applied across pharmaceutical operations.",su:"https://www.biospace.com/press-releases/novo-nordisk-and-openai-partner-to-transform-how-medicines-are-discovered-and-delivered"},
-  {id:14,p:"Daiichi Sankyo",s:"Imagene AI",t:"Collaboration",e:{u:null,tp:null,d:false,l:"Undisclosed"},dt:"April 2026",st:["clinical"],ev:"research",ar:"Data partnership",sm:"Multimodal biomarker discovery and response prediction in oncology using Imagene's OI Suite.",de:"For Daiichi Sankyo's ADC leadership, companion diagnostics are becoming competitive requirements, not optional extras.",sd:"Precision oncology AI company using CanvOI foundation model and 3.5M+ tissue samples.",su:"https://www.newswire.com/news/imagene-ai-announces-collaboration-with-daiichi-sankyo-to-advance-22758923"},
-  {id:15,p:"AstraZeneca",s:"OWKIN",t:"Licensing",e:{u:null,tp:null,d:false,l:"3-year deal"},dt:"May 2026",st:["discovery","enterprise"],ev:"pilot",ar:"AI research agent",sm:"3-year licensing for Owkin's AI Scientist platform — hypothesis generation, experiment planning, research decision support.",de:"Growing interest in agentic AI that participates in scientific workflow. Can AI Scientist platforms materially accelerate discovery?",sd:"French AI biotech developing an agentic AI Scientist platform.",su:"https://www.owkin.com/newsfeed/owkin-to-build-ai-agents-as-part-of-a-multi-year-k-pro-license-agreement-with-astrazeneca"},
-  {id:16,p:"Bristol Myers Squibb",s:"Anthropic",t:"Enterprise AI",e:{u:null,tp:null,d:false,l:"Undisclosed"},dt:"May 2026",st:["enterprise","discovery","clinical","manufacturing"],ev:"production",ar:"Enterprise transformation",sm:"Claude deployed across 30,000+ BMS employees — discovery, clinical, regulatory, manufacturing, commercial, with agentic capabilities.",de:"Claude Code in engineering, AI agents in R&D and manufacturing, applied to root-cause investigations and CAPA in GxP-regulated environments.",sd:"Anthropic's Claude as enterprise intelligence platform connected to thousands of internal data sources.",su:"https://news.bms.com/news/details/2026/Bristol-Myers-Squibb-Announces-Strategic-Agreement-with-Anthropic-to-Position-Claude-Enterprise-as-the-Shared-Intelligence-Platform-Across-Its-Global-Operations/default.aspx"},
-  {id:17,p:"Incyte",s:"Edison Scientific",t:"Collaboration",e:{u:null,tp:null,d:false,l:"Undisclosed"},dt:"May 2026",st:["discovery"],ev:"pilot",ar:"AI research agent",sm:"Deploying Edison Scientific's AI scientist platform, Kosmos, across Incyte's discovery and development lifecycle.",de:"Part of the emerging 'AI scientist' category. Still early-stage — outcomes will matter more than capabilities.",sd:"AI platform for scientific R&D. Kosmos supports research decisions and workflows.",su:"https://investor.incyte.com/news-releases/news-release-details/incyte-and-edison-scientific-announce-strategic-collaboration"},
-  {id:18,p:"Sanofi",s:"CytoReason",t:"Partnership",e:{u:null,tp:16,d:true,l:"Up to $16M"},dt:"January 2026",st:["discovery","clinical"],ev:"production",ar:"License platform",sm:"Third expansion of Sanofi-CytoReason collaboration for AI-powered computational disease models.",de:"Repeated expansion is the signal. Renewals may be a stronger validation than headline-grabbing first-time partnerships.",sd:"AI-powered computational disease models across genes, pathways, cells, and patient subpopulations.",su:"https://cytoreason.com/resources/cytoreason-extends-its-collaboration-with-sanofi-to-advance-ai-driven-drug-discovery/"},
-  {id:19,p:"Pfizer",s:"Chai Discovery",t:"Licensing",e:{u:null,tp:null,d:false,l:"Undisclosed"},dt:"June 2026",st:["discovery"],ev:"research",ar:"License platform",sm:"Licensing giving Pfizer access to Chai-3 plus a custom model trained on Pfizer's proprietary data.",de:"Foundation model + proprietary fine-tuning: competitive advantage from the custom version, not the generic model.",sd:"AI drug discovery company. Developer of Chai-3.",su:"https://www.businesswire.com/news/home/20260602498831/en/Chai-Discovery-Announces-License-Agreement-with-Pfizer-to-Accelerate-Drug-Discovery-with-AI"},
-  {id:20,p:"Pfizer",s:"Boltz Bio",t:"Collaboration",e:{u:null,tp:null,d:false,l:"Multi-year"},dt:"January 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Multi-year collaboration refining Boltz foundation models on Pfizer's data for structure prediction and biologics design.",de:"Open-source foundation model + proprietary fine-tuning entering molecular biology.",sd:"Public benefit corporation building open-source biomolecular AI foundation models.",su:"https://www.prnewswire.com/news-releases/boltz-and-pfizer-announce-strategic-collaboration-to-develop-and-deploy-state-of-the-art-biomolecular-ai-foundation-models-302656405.html"},
-  {id:21,p:"Merck / MSD",s:"Protillion Biosciences",t:"Collaboration",e:{u:null,tp:510,d:true,l:"Up to $510M"},dt:"June 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Multi-target discovery collaboration worth up to $510M combining Protillion's Prot-MaP platform with Merck's expertise.",de:"High-quality experimental data may become as important as algorithms in AI drug discovery.",sd:"Lab-in-the-loop AI drug design company. Prot-MaP generates megascale training datasets.",su:"https://www.businesswire.com/news/home/20260616813644/en/Protillion-Biosciences-and-Merck-Announce-Multi-Target-Discovery-Collaboration-and-License-Agreement"},
-  {id:22,p:"Boehringer Ingelheim",s:"Variant Bio",t:"Collaboration",e:{u:null,tp:120,d:true,l:"$120M+"},dt:"January 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Multi-year target discovery and license agreement for cardiorenal and kidney disease.",de:"At the intersection of AI-driven target discovery and genetically validated drug targets, which show higher clinical success rates.",sd:"Genomics-driven AI drug discovery. Inference platform integrates proprietary genomic data from diverse populations.",su:"https://www.fiercebiotech.com/biotech/boehringer-continues-kidney-disease-dealmaking-run-120m-variant-bio-pact"},
-  {id:23,p:"Incyte",s:"Genesis Therapeutics",t:"Collaboration",e:{u:120,tp:1000,d:true,l:"$120M upfront; $1B+ potential"},dt:"May 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Expanded molecular AI collaboration adding 5+ new targets, with Incyte retaining exclusive rights and sharing proprietary data.",de:"Pharma using internal datasets as differentiating assets in AI partnerships — creating partner-specific capabilities.",sd:"Generative and predictive foundation models for molecular design. GEMS platform.",su:"https://www.genesis.ml/news/incyte-and-genesis-molecular-ai-expand-collaboration"},
-  {id:24,p:"Novartis",s:"Isomorphic Labs",t:"Collaboration",e:{u:37.5,tp:1200,d:true,l:"$37.5M up, up to $1.2B"},dt:"January 2024 (expanded February 2025)",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Strategic collaboration for small-molecule therapeutics. Expanded in February 2025.",de:"One of the first to validate Isomorphic's model of AI-native co-development.",sd:"Google DeepMind spinout. AI-first drug design engine.",su:"https://www.isomorphiclabs.com/partnerships"},
-  {id:25,p:"Johnson & Johnson",s:"Isomorphic Labs",t:"Collaboration",e:{u:null,tp:null,d:false,l:"Undisclosed"},dt:"January 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Cross-modality, multi-target research collaboration expanding beyond small molecules into biologics.",de:"Signals Isomorphic's evolution from structure prediction into broader molecular design.",sd:"Google DeepMind spinout. J&J collaboration extends into biologics.",su:"https://www.isomorphiclabs.com/partnerships"},
-  {id:26,p:"Eli Lilly",s:"Chai Discovery",t:"Collaboration",e:{u:null,tp:null,d:false,l:"Undisclosed"},dt:"January 2026 (expanded June 2026)",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Biologics discovery using Chai's molecular AI, expanded through Lilly's TuneLab platform.",de:"The question shifts from 'who has the best model?' to 'who builds the strongest AI-enabled discovery network?'",sd:"AI drug discovery company. Developer of Chai-3.",su:"https://www.businesswire.com/news/home/20260616911559/en/Chai-Discovery-Collaborates-with-Lilly-TuneLab-to-Offer-AI-Capabilities-to-Select-Biotechs"},
-  {id:27,p:"Sanofi",s:"OWKIN",t:"Licensing",e:{u:null,tp:null,d:false,l:"5-year licence"},dt:"June 2026",st:["discovery","enterprise"],ev:"pilot",ar:"AI research agent",sm:"Multi-year collaboration with 5-year K Pro licence for research, target evaluation, clinical decisions, and CI.",de:"Broader than AstraZeneca's deployment. Two major pharma licensing the same platform within weeks is strong validation.",sd:"French AI biotech developing K Pro agentic AI Scientist platform.",su:"https://www.owkin.com/newsfeed/owkin-and-sanofi-enter-multi-year-collaboration-to-build-ai-native-pharma-workflows"},
-  {id:28,p:"Takeda",s:"Boltz Bio",t:"Platform licensing",e:{u:null,tp:null,d:false,l:"Multi-year, org-wide"},dt:"June 2026",st:["discovery"],ev:"production",ar:"License platform",sm:"Org-wide deployment of BoltzMol-1 and BoltzProt-1 across Takeda's research with API integration and fine-tuning.",de:"Some pharma companies prefer infrastructure they can customise and control over black-box partnerships.",sd:"Public benefit corporation building open-source biomolecular AI foundation models.",su:"https://www.boltz.bio"},
-  {id:29,p:"GSK",s:"Boltz Bio",t:"Collaboration",e:{u:null,tp:null,d:false,l:"Undisclosed"},dt:"July 2026",st:["discovery"],ev:"research",ar:"License platform",sm:"Deploying Boltz foundation models, Boltz Lab/API, and LLM agent workflows across GSK's discovery pipeline.",de:"Third top-20 pharma collaboration in six months. LLM agents let scientists orchestrate design workflows in natural language.",sd:"Public benefit corporation. Boltz Lab, API, and LLM agent workflows.",su:"https://boltz.bio/gsk-partnership"},
-  {id:30,p:"Takeda",s:"Iambic Therapeutics",t:"Collaboration",e:{u:null,tp:1700,d:true,l:"Up to $1.7B+ + royalties"},dt:"February 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Multi-year technology and discovery collaboration using Iambic's AI platform and wet lab for small molecule programs in oncology, GI, and inflammation.",de:"Takeda gains access to Iambic's integrated computational and experimental platform. Combined with Insilico, Boltz, and Nabla Bio, Takeda is building one of the most diversified AI discovery portfolios.",sd:"Clinical-stage AI drug discovery. NeuralPLexer + Enchant models with automated wet lab enabling weekly DMTA cycles.",su:"https://www.businesswire.com/news/home/20260209143930/en/Iambic-Announces-Collaboration-with-Takeda-to-Advance-AI-Driven-Design-of-Small-Molecules"},
-  {id:31,p:"Eli Lilly",s:"Profluent",t:"Collaboration",e:{u:null,tp:2250,d:true,l:"Up to $2.25B"},dt:"April 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Multi-program research collaboration to develop AI-designed site-specific recombinases for genetic medicine. Lilly receives exclusive worldwide rights.",de:"Profluent uses generative AI to design novel therapeutic proteins — recombinases for kilobase-scale DNA editing. Extends Lilly's AI strategy into genetic medicine.",sd:"Frontier AI company building protein language models. Novel site-specific recombinases for DNA editing. Raised $106M from Altimeter and Bezos Expeditions.",su:"https://www.businesswire.com/news/home/20260428698315/en/Profluent-Announces-Strategic-Partnership-with-Lilly-to-Develop-AI-Designed-Recombinases-for-Genetic-Medicine"},
-  {id:32,p:"Novartis",s:"Orionis Biosciences",t:"Collaboration",e:{u:40,tp:1400,d:true,l:"$40M upfront, up to $1.4B + royalties"},dt:"June 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Second multi-year collaboration expanding Orionis's Allo-Glue platform and AI-driven discovery for molecular glue drugs.",de:"Novartis returning to a partner from 2020 — signalling delivered value. Molecular glues target previously undruggable proteins.",sd:"Clinical-stage company pioneering proximity-induced therapeutics with AI-driven molecular glue design.",su:"https://orionisbio.com/2026/06/novartis-collaboration-2026/"},
-  {id:33,p:"SK Biopharmaceuticals",s:"Insilico Medicine",t:"Collaboration",e:{u:18,tp:2500,d:true,l:"$18M upfront, up to $2.5B + royalties"},dt:"June 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"AI-powered drug discovery for neuroimmune CNS disorders. Insilico's largest APAC partnership by potential value.",de:"Insilico's accelerating deal velocity: Lilly ($2.75B), SK ($2.5B), Takeda (~$600M) in under four months — no other AI drug discovery company is signing at this pace.",sd:"Clinical-stage generative AI drug discovery company (HKEX: 3696). Pharma.AI platform.",su:"https://insilico.com/news/zm8me18st1-insilico-medicine-and-sk-biopharmaceutic"},
-  {id:34,p:"Bayer",s:"Iambic Therapeutics",t:"Collaboration",e:{u:null,tp:null,d:false,l:"Upfront + milestones + royalties"},dt:"June 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Drug discovery collaboration using Iambic's AI platform for novel drug entry points and differentiated small molecules against hard-to-drug targets.",de:"Second major pharma partnership (after Takeda $1.7B) validates Iambic's positioning in small molecule discovery.",sd:"Clinical-stage AI drug discovery. NeuralPLexer and Enchant models with automated wet lab.",su:"https://www.bayer.com/en/us/news-stories/advancing-drug-discovery-with-ai"},
-  {id:35,p:"Takeda",s:"Insilico Medicine",t:"Collaboration",e:{u:60,tp:600,d:true,l:"$60M upfront/near-term, ~$600M + royalties"},dt:"July 2026",st:["discovery"],ev:"research",ar:"Co-develop molecules",sm:"Strategic collaboration using Pharma.AI to discover clinically differentiated candidates across Takeda's therapeutic areas.",de:"Takeda's CSO described this as supporting transition to an 'AI-native discovery model.' For Insilico, the fourth major pharma deal in 18 months.",sd:"Clinical-stage generative AI drug discovery company (HKEX: 3696). End-to-end Pharma.AI platform.",su:"https://insilico.com/news/4ifuiaal01-insilico-medicine-announces-collaboratio"},
-];
-
-function getUp(d) { return d.e?.u ?? null; }
-function getTot(d) { return d.e?.tp ?? null; }
-function fmtM(v) { if (v == null) return null; return v >= 1000 ? "$" + (v / 1000).toFixed(1).replace(/\.0$/, "") + "B" : "$" + Math.round(v) + "M"; }
-function pds(s) {
-  if (!s) return 0;
-  const ms = {january:1,february:2,march:3,april:4,may:5,june:6,july:7,august:8,september:9,october:10,november:11,december:12};
-  const l = s.toLowerCase(); let y = 2025, m = 6;
-  const ym = l.match(/(\d{4})/); if (ym) y = parseInt(ym[1]);
-  for (const [n, v] of Object.entries(ms)) { if (l.includes(n)) { m = v; break; } }
-  return y * 100 + m;
-}
-function pvs(d) { return getUp(d) ?? getTot(d) ?? 0; }
-function nn(s) { return s.split(/[\/+]/).map(x => x.trim().replace(/ \+ others/, "").replace(/ others/, "")).filter(Boolean); }
-
-function Eco({ e }) {
-  if (!e) return null;
-  if (!e.d) return (
-    <div style={{textAlign:"right"}}>
-      <div style={{fontSize:12,color:"#5A6169",fontStyle:"italic"}}>{e.l || "Undisclosed"}</div>
-    </div>
-  );
-  const u = fmtM(e.u), t = fmtM(e.tp);
-  return (
-    <div style={{textAlign:"right",minWidth:90}}>
-      {u ? (
-        <>
-          <div style={{fontSize:14,fontWeight:800,color:"#14181D",lineHeight:1.2}}>{u}</div>
-          <div style={{fontSize:10,color:"#5A6169"}}>committed</div>
-          {t && t !== u && <div style={{fontSize:11,color:"#5A6169",marginTop:2}}>{t} potential</div>}
-        </>
-      ) : t ? (
-        <>
-          <div style={{fontSize:13,fontWeight:700,color:"#14181D"}}>{t}</div>
-          <div style={{fontSize:10,color:"#5A6169"}}>potential</div>
-        </>
-      ) : (
-        <div style={{fontSize:12,color:"#5A6169"}}>{e.l}</div>
-      )}
-    </div>
-  );
+function Eco({d}){
+  if(!d.dd)return(<span style={{fontSize:12,color:"#5A6169",fontStyle:"italic"}}>{d.dl||"Undisclosed"}</span>);
+  const u=fm(d.u),t=fm(d.tp);
+  if(u)return(<div style={{textAlign:"right",minWidth:80}}><div style={{fontSize:14,fontWeight:800,color:"#14181D"}}>{u}</div><div style={{fontSize:10,color:"#5A6169"}}>committed</div>{t&&t!==u&&<div style={{fontSize:11,color:"#5A6169"}}>{t} potential</div>}</div>);
+  if(t)return(<div style={{textAlign:"right"}}><div style={{fontSize:13,fontWeight:700,color:"#14181D"}}>{t}</div><div style={{fontSize:10,color:"#5A6169"}}>potential</div></div>);
+  return(<span style={{fontSize:12,color:"#5A6169"}}>{d.dl}</span>);
 }
 
-function EvB({ lv }) {
-  const ev = EVL.find(x => x.id === lv) || EVL[2];
-  return (
-    <span style={{fontSize:10,fontWeight:700,padding:"2px 7px",borderRadius:4,background:ev.color + "15",color:ev.color,whiteSpace:"nowrap"}}>
-      {ev.icon} {ev.label}
-    </span>
-  );
-}
+function Badge({lv}){const e=EV[lv]||EV.research;return(<span style={{fontSize:10,fontWeight:700,padding:"2px 7px",borderRadius:4,background:e.c+"15",color:e.c}}>{e.i} {e.l}</span>)}
 
-function Row({ d, ex, tog, gP, gS }) {
-  const tc = DTC[d.t] || "#6b7280";
-  return (
-    <div style={{border:"1px solid " + (ex ? "#0E7C86" : "#E6E1D6"),borderRadius:10,overflow:"hidden",transition:"all 0.2s",background:ex ? "#F7F5EF" : "#fff"}}>
-      <div onClick={tog} style={{padding:"16px 20px",cursor:"pointer",display:"flex",alignItems:"center",gap:16}}>
+function Row({d,open,tog,gP,gS}){
+  const tc=TC[d.t]||"#6b7280";
+  return(
+    <div style={{border:"1px solid "+(open?"#0E7C86":"#E6E1D6"),borderRadius:10,overflow:"hidden",background:open?"#FAFAF5":"#fff"}}>
+      <div onClick={tog} style={{padding:"14px 18px",cursor:"pointer",display:"flex",alignItems:"center",gap:14}}>
         <div style={{flex:1,minWidth:0}}>
-          <div style={{display:"flex",alignItems:"center",gap:8,flexWrap:"wrap",marginBottom:4}}>
-            <span style={{fontSize:11,fontWeight:700,color:tc,background:tc+"12",padding:"2px 8px",borderRadius:4,textTransform:"uppercase",letterSpacing:"0.04em"}}>{d.t}</span>
-            {d.ev && <EvB lv={d.ev} />}
-            <span style={{fontSize:12,color:"#5A6169"}}>{d.dt}</span>
+          <div style={{display:"flex",alignItems:"center",gap:6,flexWrap:"wrap",marginBottom:4}}>
+            <span style={{fontSize:10,fontWeight:700,color:tc,background:tc+"12",padding:"2px 7px",borderRadius:4,textTransform:"uppercase"}}>{d.t}</span>
+            {d.ev&&<Badge lv={d.ev}/>}
+            <span style={{fontSize:11,color:"#5A6169"}}>{d.dt}</span>
           </div>
-          <div style={{fontSize:15,fontWeight:600,color:"#14181D",marginBottom:3}}>
-            <span onClick={ev => { ev.stopPropagation(); gP(d.p); }} style={{cursor:"pointer",borderBottom:"1px dashed #0E7C86"}}>{d.p}</span>
+          <div style={{fontSize:15,fontWeight:600,color:"#14181D",marginBottom:2}}>
+            <span onClick={e=>{e.stopPropagation();gP(d.p)}} style={{cursor:"pointer",borderBottom:"1px dashed #0E7C86"}}>{d.p}</span>
             {" × "}
-            <span onClick={ev => { ev.stopPropagation(); gS(d.s); }} style={{cursor:"pointer",borderBottom:"1px dashed #0E7C86"}}>{d.s}</span>
+            <span onClick={e=>{e.stopPropagation();gS(d.s)}} style={{cursor:"pointer",borderBottom:"1px dashed #0E7C86"}}>{d.s}</span>
           </div>
           <div style={{fontSize:13,color:"#5A6169",lineHeight:1.4}}>{d.sm}</div>
-          <div style={{display:"flex",gap:4,flexWrap:"wrap",marginTop:6}}>
-            {d.st.map(s => { const c = CATS.find(x => x.id === s); return c ? <span key={s} style={{fontSize:10,padding:"2px 6px",background:c.color+"15",color:c.color,borderRadius:3,fontWeight:600}}>{c.short}</span> : null; })}
+          <div style={{display:"flex",gap:4,flexWrap:"wrap",marginTop:5}}>
+            {d.st.map(s=>{const c=C.find(x=>x.id===s);return c?<span key={s} style={{fontSize:9,padding:"2px 5px",background:c.c+"15",color:c.c,borderRadius:3,fontWeight:600}}>{c.l}</span>:null})}
           </div>
         </div>
-        <Eco e={d.e} />
-        <div style={{fontSize:18,color:"#5A6169",transform:ex ? "rotate(180deg)" : "rotate(0deg)",transition:"transform 0.2s",flexShrink:0}}>▾</div>
+        <Eco d={d}/>
+        <span style={{fontSize:16,color:"#5A6169",transform:open?"rotate(180deg)":"none",transition:"transform 0.2s"}}>▾</span>
       </div>
-      {ex && (
-        <div style={{padding:"0 20px 20px",borderTop:"1px solid #E6E1D6"}}>
-          {d.ar && <div style={{marginTop:12,marginBottom:4}}><span style={{fontSize:10,fontWeight:700,padding:"3px 8px",borderRadius:4,background:"#F7F5EF",color:"#5A6169",textTransform:"uppercase",letterSpacing:"0.05em"}}>{d.ar}</span></div>}
-          {d.e?.d && (d.e.u != null || d.e.tp != null) && (
-            <div style={{marginTop:12,padding:"10px 14px",background:"#F7F5EF",borderRadius:8,border:"1px solid #E6E1D6",display:"flex",gap:24,flexWrap:"wrap"}}>
-              {d.e.u != null && <div><div style={{fontSize:10,fontWeight:600,color:"#5A6169",textTransform:"uppercase",letterSpacing:"0.05em"}}>Upfront</div><div style={{fontSize:16,fontWeight:800,color:"#14181D"}}>{fmtM(d.e.u)}</div></div>}
-              {d.e.tp != null && <div><div style={{fontSize:10,fontWeight:600,color:"#5A6169",textTransform:"uppercase",letterSpacing:"0.05em"}}>Total potential</div><div style={{fontSize:16,fontWeight:800,color:"#5A6169"}}>{fmtM(d.e.tp)}</div></div>}
+      {open&&(
+        <div style={{padding:"0 18px 16px",borderTop:"1px solid #E6E1D6"}}>
+          {d.ar&&<div style={{marginTop:10}}><span style={{fontSize:10,fontWeight:700,padding:"3px 7px",borderRadius:4,background:"#F7F5EF",color:"#5A6169",textTransform:"uppercase"}}>{d.ar}</span></div>}
+          {d.dd&&(d.u!=null||d.tp!=null)&&(
+            <div style={{marginTop:10,padding:"8px 12px",background:"#F7F5EF",borderRadius:8,border:"1px solid #E6E1D6",display:"flex",gap:20}}>
+              {d.u!=null&&<div><div style={{fontSize:9,fontWeight:600,color:"#5A6169",textTransform:"uppercase"}}>Upfront</div><div style={{fontSize:15,fontWeight:800,color:"#14181D"}}>{fm(d.u)}</div></div>}
+              {d.tp!=null&&<div><div style={{fontSize:9,fontWeight:600,color:"#5A6169",textTransform:"uppercase"}}>Total potential</div><div style={{fontSize:15,fontWeight:800,color:"#5A6169"}}>{fm(d.tp)}</div></div>}
             </div>
           )}
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,marginTop:12}}>
-            {d.sd && (
-              <div>
-                <div style={{fontSize:11,fontWeight:700,color:"#0E7C86",textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:6}}>About {d.s}</div>
-                <p style={{fontSize:13,color:"#14181D",lineHeight:1.6,margin:0}}>{d.sd}</p>
-              </div>
-            )}
-            {d.de && (
-              <div>
-                <div style={{fontSize:11,fontWeight:700,color:"#0E7C86",textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:6}}>Strategic Shift</div>
-                <p style={{fontSize:13,color:"#14181D",lineHeight:1.6,margin:0}}>{d.de}</p>
-              </div>
-            )}
-          </div>
-          {d.su && (
-            <div style={{marginTop:12,fontSize:12}}>
-              <a href={d.su} target="_blank" rel="noopener noreferrer" style={{color:"#0E7C86",textDecoration:"none"}}>View source ↗</a>
-            </div>
-          )}
-          <div style={{marginTop:14,display:"flex",gap:4,flexWrap:"wrap",alignItems:"center"}}>
-            <span style={{fontSize:11,color:"#5A6169",marginRight:4}}>AI value area:</span>
-            {d.st.map(s => { const c = CATS.find(x => x.id === s); return c ? <span key={s} style={{fontSize:11,padding:"3px 8px",background:c.color,color:"#fff",borderRadius:4,fontWeight:600}}>{c.short}</span> : null; })}
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginTop:10}}>
+            {d.sd&&<div><div style={{fontSize:10,fontWeight:700,color:"#0E7C86",textTransform:"uppercase",marginBottom:4}}>About {d.s}</div><p style={{fontSize:12,color:"#14181D",lineHeight:1.5,margin:0}}>{d.sd}</p></div>}
+            {d.de&&<div><div style={{fontSize:10,fontWeight:700,color:"#0E7C86",textTransform:"uppercase",marginBottom:4}}>Strategic Shift</div><p style={{fontSize:12,color:"#14181D",lineHeight:1.5,margin:0}}>{d.de}</p></div>}
           </div>
         </div>
       )}
@@ -168,176 +99,113 @@ function Row({ d, ex, tog, gP, gS }) {
   );
 }
 
-function CBar({ ac, oc, bs }) {
-  return (
-    <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
-      {CATS.map(c => {
-        const n = (bs[c.id] || []).length;
-        const a = ac === c.id;
-        return (
-          <button key={c.id} onClick={() => oc(c.id)} style={{flex:"1 1 0",minWidth:100,padding:"12px 8px",borderRadius:8,cursor:"pointer",border:"2px solid " + (a ? c.color : "#E6E1D6"),background:a ? c.color + "12" : "#fff",transition:"all 0.15s"}}>
-            <div style={{fontSize:18,fontWeight:800,color:a ? c.color : "#14181D"}}>{n}</div>
-            <div style={{fontSize:11,fontWeight:600,color:a ? c.color : "#5A6169",lineHeight:1.2,marginTop:2}}>{c.label}</div>
-          </button>
-        );
-      })}
-    </div>
-  );
-}
+const SORTS=[{id:"newest",l:"Newest"},{id:"oldest",l:"Oldest"},{id:"value",l:"Value ↓"}];
 
-function Prof({ title, lbl, lc, deals, onB, gP, gS }) {
-  const sorted = useMemo(() => [...deals].sort((a, b) => pds(b.dt) - pds(a.dt)), [deals]);
-  const st = useMemo(() => {
-    let u = 0, p = 0;
-    deals.forEach(d => { u += getUp(d) || 0; p += getTot(d) || 0; });
-    return { u, p, n: deals.length };
-  }, [deals]);
-  return (
-    <div>
-      <button onClick={onB} style={{display:"inline-flex",alignItems:"center",gap:6,padding:"8px 14px",fontSize:13,fontWeight:600,borderRadius:8,border:"1.5px solid #E6E1D6",background:"#fff",color:"#5A6169",cursor:"pointer",marginBottom:20}}>← Back to all deals</button>
-      <div style={{marginBottom:24}}>
-        <div style={{fontSize:11,fontWeight:600,color:lc,textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:4}}>{lbl}</div>
-        <h2 style={{margin:0,fontSize:24,fontWeight:800,color:"#14181D"}}>{title}</h2>
-      </div>
-      <div style={{display:"flex",gap:10,flexWrap:"wrap",marginBottom:24}}>
-        {[{l:"Deals",v:st.n},{l:"Committed",v:st.u > 0 ? fmtM(st.u) : "—"},{l:"Potential",v:st.p > 0 ? fmtM(st.p) : "—"}].map(s => (
-          <div key={s.l} style={{padding:"12px 16px",background:"#F7F5EF",borderRadius:8,border:"1px solid #E6E1D6",flex:"1 1 120px",minWidth:100}}>
-            <div style={{fontSize:20,fontWeight:800,color:"#14181D"}}>{s.v}</div>
-            <div style={{fontSize:11,color:"#5A6169"}}>{s.l}</div>
+export default function App(){
+  const[ac,setAc]=useState(null);
+  const[ex,setEx]=useState(null);
+  const[sr,setSr]=useState("");
+  const[so,setSo]=useState("newest");
+  const[vw,setVw]=useState("list");
+
+  const bs=useMemo(()=>{const m={};C.forEach(c=>m[c.id]=[]);D.forEach(d=>d.st.forEach(s=>{if(m[s])m[s].push(d)}));return m},[]);
+  const fd=useMemo(()=>{
+    let r=[...D];
+    if(ac)r=r.filter(d=>d.st.includes(ac));
+    if(sr.trim()){const q=sr.toLowerCase();r=r.filter(d=>d.p.toLowerCase().includes(q)||d.s.toLowerCase().includes(q)||d.sm.toLowerCase().includes(q)||(d.ar||"").toLowerCase().includes(q))}
+    if(so==="newest")r.sort((a,b)=>pd(b.dt)-pd(a.dt));
+    else if(so==="oldest")r.sort((a,b)=>pd(a.dt)-pd(b.dt));
+    else r.sort((a,b)=>(b.u??b.tp??0)-(a.u??a.tp??0));
+    return r;
+  },[ac,sr,so]);
+
+  const uP=useMemo(()=>new Set(D.flatMap(d=>nn(d.p))).size,[]);
+  const uS=useMemo(()=>new Set(D.map(d=>d.s)).size,[]);
+  const tt=useMemo(()=>{let c=0,p=0;D.forEach(d=>{c+=d.u||0;p+=d.tp||0});return{c:fm(c)+"+",p:fm(p)+"+"}},[]);
+
+  const gP=useCallback(n=>setVw({t:"p",n}),[]);
+  const gS=useCallback(n=>setVw({t:"s",n}),[]);
+
+  if(vw!=="list"){
+    const isP=vw.t==="p";
+    const deals=D.filter(d=>isP?(d.p===vw.n||nn(d.p).some(x=>x===vw.n||vw.n.includes(x)||x.includes(vw.n))):d.s===vw.n);
+    const sorted=[...deals].sort((a,b)=>pd(b.dt)-pd(a.dt));
+    let tu=0,tp=0;deals.forEach(d=>{tu+=d.u||0;tp+=d.tp||0});
+    return(
+      <div style={{fontFamily:"'Inter',system-ui,sans-serif",background:"#F7F5EF",minHeight:"100vh",padding:24,maxWidth:960,margin:"0 auto"}}>
+        <button onClick={()=>setVw("list")} style={{padding:"8px 14px",fontSize:13,fontWeight:600,borderRadius:8,border:"1.5px solid #E6E1D6",background:"#fff",color:"#5A6169",cursor:"pointer",marginBottom:20}}>← Back</button>
+        <div style={{fontSize:11,fontWeight:600,color:isP?"#0E7C86":"#7c3aed",textTransform:"uppercase",marginBottom:4}}>{isP?"Pharma Company":"AI Partner"}</div>
+        <h2 style={{margin:"0 0 16px",fontSize:24,fontWeight:800,color:"#14181D"}}>{vw.n}</h2>
+        <div style={{display:"flex",gap:10,flexWrap:"wrap",marginBottom:20}}>
+          {[{l:"Deals",v:deals.length},{l:"Committed",v:tu>0?fm(tu):"—"},{l:"Potential",v:tp>0?fm(tp):"—"}].map(s=>(
+            <div key={s.l} style={{padding:"10px 14px",background:"#fff",borderRadius:8,border:"1px solid #E6E1D6",flex:"1 1 100px"}}>
+              <div style={{fontSize:18,fontWeight:800,color:"#14181D"}}>{s.v}</div><div style={{fontSize:11,color:"#5A6169"}}>{s.l}</div>
+            </div>
+          ))}
+        </div>
+        {sorted.map(d=>(
+          <div key={d.id} style={{padding:"12px 14px",border:"1px solid #E6E1D6",borderRadius:8,background:"#fff",marginBottom:8}}>
+            <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:3}}>
+              <span style={{fontSize:10,fontWeight:700,color:TC[d.t]||"#6b7280",background:(TC[d.t]||"#6b7280")+"12",padding:"2px 6px",borderRadius:3,textTransform:"uppercase"}}>{d.t}</span>
+              <span style={{fontSize:11,color:"#5A6169"}}>{d.dt}</span>
+            </div>
+            <div style={{fontSize:14,fontWeight:600,color:"#14181D",marginBottom:3}}>
+              <span onClick={()=>gP(d.p)} style={{cursor:"pointer",borderBottom:"1px dashed #0E7C86"}}>{d.p}</span>{" × "}<span onClick={()=>gS(d.s)} style={{cursor:"pointer",borderBottom:"1px dashed #0E7C86"}}>{d.s}</span>
+            </div>
+            <div style={{fontSize:12,color:"#5A6169",marginBottom:4}}>{d.sm}</div>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+              <div style={{display:"flex",gap:3}}>{d.st.map(s=>{const c=C.find(x=>x.id===s);return c?<span key={s} style={{fontSize:9,padding:"2px 5px",background:c.c+"15",color:c.c,borderRadius:3,fontWeight:600}}>{c.l}</span>:null})}</div>
+              <Eco d={d}/>
+            </div>
           </div>
         ))}
       </div>
-      <div style={{fontSize:12,fontWeight:700,color:"#14181D",marginBottom:10}}>All deals ({sorted.length})</div>
-      {sorted.map(d => (
-        <div key={d.id} style={{padding:"14px 16px",border:"1px solid #E6E1D6",borderRadius:8,background:"#fff",marginBottom:8}}>
-          <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4,flexWrap:"wrap"}}>
-            <span style={{fontSize:10,fontWeight:700,color:DTC[d.t]||"#6b7280",background:(DTC[d.t]||"#6b7280")+"12",padding:"2px 6px",borderRadius:3,textTransform:"uppercase"}}>{d.t}</span>
-            <span style={{fontSize:11,color:"#5A6169"}}>{d.dt}</span>
-          </div>
-          <div style={{fontSize:14,fontWeight:600,color:"#14181D",marginBottom:3}}>
-            <span onClick={() => gP(d.p)} style={{cursor:"pointer",borderBottom:"1px dashed #0E7C86"}}>{d.p}</span>
-            {" × "}
-            <span onClick={() => gS(d.s)} style={{cursor:"pointer",borderBottom:"1px dashed #0E7C86"}}>{d.s}</span>
-          </div>
-          <div style={{fontSize:12,color:"#5A6169",lineHeight:1.4,marginBottom:6}}>{d.sm}</div>
-          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-            <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
-              {d.st.map(s => { const c = CATS.find(x => x.id === s); return c ? <span key={s} style={{fontSize:9,padding:"2px 5px",background:c.color+"15",color:c.color,borderRadius:3,fontWeight:600}}>{c.short}</span> : null; })}
-            </div>
-            <Eco e={d.e} />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
+    );
+  }
 
-const SORTS = [{id:"newest",l:"Newest first"},{id:"oldest",l:"Oldest first"},{id:"value-desc",l:"Highest value"}];
-
-export default function App() {
-  const [ac, setAc] = useState(null);
-  const [ex, setEx] = useState(null);
-  const [sr, setSr] = useState("");
-  const [so, setSo] = useState("newest");
-  const [vw, setVw] = useState("list");
-
-  const bs = useMemo(() => {
-    const m = {};
-    CATS.forEach(c => { m[c.id] = []; });
-    D.forEach(d => d.st.forEach(s => { if (m[s]) m[s].push(d); }));
-    return m;
-  }, []);
-
-  const fd = useMemo(() => {
-    let r = [...D];
-    if (ac) r = r.filter(d => d.st.includes(ac));
-    if (sr.trim()) {
-      const q = sr.toLowerCase();
-      r = r.filter(d => d.p.toLowerCase().includes(q) || d.s.toLowerCase().includes(q) || d.t.toLowerCase().includes(q) || d.sm.toLowerCase().includes(q) || (d.de || "").toLowerCase().includes(q) || (d.ar || "").toLowerCase().includes(q));
-    }
-    if (so === "newest") r.sort((a, b) => pds(b.dt) - pds(a.dt));
-    else if (so === "oldest") r.sort((a, b) => pds(a.dt) - pds(b.dt));
-    else r.sort((a, b) => pvs(b) - pvs(a));
-    return r;
-  }, [ac, sr, so]);
-
-  const uP = useMemo(() => new Set(D.flatMap(d => nn(d.p))).size, []);
-  const uS = useMemo(() => new Set(D.map(d => d.s)).size, []);
-  const tt = useMemo(() => {
-    let c = 0, p = 0;
-    D.forEach(d => { c += getUp(d) || 0; p += getTot(d) || 0; });
-    return {
-      c: c >= 1000 ? "$" + (c / 1000).toFixed(1).replace(/\.0$/, "") + "B+" : "$" + Math.round(c) + "M+",
-      p: p >= 1000 ? "$" + (p / 1000).toFixed(1).replace(/\.0$/, "") + "B+" : "$" + Math.round(p) + "M+"
-    };
-  }, []);
-
-  const gP = useCallback(n => { setVw({type:"pharma",name:n}); }, []);
-  const gS = useCallback(n => { setVw({type:"partner",name:n}); }, []);
-  const gL = useCallback(() => setVw("list"), []);
-
-  return (
-    <div style={{fontFamily:"'Inter',system-ui,-apple-system,sans-serif",background:"#F7F5EF",minHeight:"100vh",color:"#14181D"}}>
-      <div style={{background:"linear-gradient(135deg,#14181D 0%,#1e2730 100%)",padding:"36px 24px 28px",color:"#fff"}}>
+  return(
+    <div style={{fontFamily:"'Inter',system-ui,sans-serif",background:"#F7F5EF",minHeight:"100vh",color:"#14181D"}}>
+      <div style={{background:"linear-gradient(135deg,#14181D,#1e2730)",padding:"32px 24px 24px",color:"#fff"}}>
         <div style={{maxWidth:960,margin:"0 auto"}}>
-          <div>
-            <div style={{fontSize:11,fontWeight:600,color:"#0E7C86",textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:8}}>AI × Pharma Intelligence</div>
-            <h1 style={{margin:"0 0 8px",fontSize:26,fontWeight:800,letterSpacing:"-0.03em",lineHeight:1.2,cursor:vw !== "list" ? "pointer" : "default"}} onClick={() => vw !== "list" && gL()}>Deal & Partnership Tracker</h1>
-            <p style={{margin:"0 0 20px",fontSize:14,color:"#94a3b8",lineHeight:1.5,maxWidth:600}}>Tracking how big pharma is embedding AI — from molecule creation through enterprise operations. Editorially curated with strategic analysis.</p>
-          </div>
-          <div style={{display:"flex",gap:24,flexWrap:"wrap"}}>
-            {[{n:D.length,l:"Deals tracked"},{n:uP + "+",l:"Pharma companies"},{n:String(uS),l:"AI partners"},{n:tt.c,l:"Total committed"},{n:tt.p,l:"Total potential"}].map(s => (
-              <div key={s.l}>
-                <div style={{fontSize:22,fontWeight:800,color:"#0E7C86"}}>{s.n}</div>
-                <div style={{fontSize:11,color:"#94a3b8",fontWeight:500}}>{s.l}</div>
-              </div>
+          <div style={{fontSize:11,fontWeight:600,color:"#0E7C86",textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:6}}>AI × Pharma Intelligence</div>
+          <h1 style={{margin:"0 0 6px",fontSize:24,fontWeight:800,letterSpacing:"-0.03em"}}>Deal & Partnership Tracker</h1>
+          <p style={{margin:"0 0 18px",fontSize:13,color:"#94a3b8",maxWidth:560}}>Tracking how big pharma embeds AI — from molecule creation through enterprise operations.</p>
+          <div style={{display:"flex",gap:20,flexWrap:"wrap"}}>
+            {[{n:D.length,l:"Deals"},{n:uP+"+",l:"Pharma cos"},{n:uS,l:"AI partners"},{n:tt.c,l:"Committed"},{n:tt.p,l:"Potential"}].map(s=>(
+              <div key={s.l}><div style={{fontSize:20,fontWeight:800,color:"#0E7C86"}}>{s.n}</div><div style={{fontSize:10,color:"#94a3b8"}}>{s.l}</div></div>
             ))}
           </div>
         </div>
       </div>
-      <div style={{maxWidth:960,margin:"0 auto",padding:"24px 24px 60px"}}>
-        {vw !== "list" && vw.type === "pharma" && (
-          <Prof title={vw.name} lbl="Pharma Company Profile" lc="#0E7C86"
-            deals={D.filter(d => d.p === vw.name || nn(d.p).some(n => n === vw.name || vw.name.includes(n) || n.includes(vw.name)))}
-            onB={gL} gP={gP} gS={gS} />
-        )}
-        {vw !== "list" && vw.type === "partner" && (
-          <Prof title={vw.name} lbl="AI Partner Profile" lc="#7c3aed"
-            deals={D.filter(d => d.s === vw.name)}
-            onB={gL} gP={gP} gS={gS} />
-        )}
-        {vw === "list" && (
-          <>
-            <div style={{marginBottom:8}}>
-              <div style={{display:"flex",alignItems:"baseline",gap:8,marginBottom:12}}>
-                <h2 style={{margin:0,fontSize:16,fontWeight:700,color:"#14181D"}}>Where AI Creates Value</h2>
-                <span style={{fontSize:12,color:"#5A6169",fontStyle:"italic"}}>(click to filter)</span>
-              </div>
-              <CBar ac={ac} oc={id => setAc(ac === id ? null : id)} bs={bs} />
-            </div>
-            <div style={{marginTop:12,padding:"12px 16px",background:"#F7F5EF",borderRadius:8,border:"1px solid #E6E1D6",fontSize:12,color:"#5A6169",lineHeight:1.6}}>
-              <strong style={{color:"#0E7C86"}}>Reading the economics:</strong> "Committed" = upfront payments or cash paid. "Potential" = milestone payments contingent on success. Historically, fewer than 10% of life sciences milestones are triggered. No AI-designed drug has yet received regulatory approval. Click any company name for its profile.
-            </div>
-            <div style={{display:"flex",gap:10,alignItems:"center",margin:"20px 0 16px",flexWrap:"wrap"}}>
-              <input type="text" value={sr} onChange={ev => setSr(ev.target.value)} placeholder="Search by company, partner, archetype, or keyword..."
-                style={{flex:1,minWidth:200,padding:"10px 14px",fontSize:13,border:"1.5px solid #E6E1D6",borderRadius:8,outline:"none",color:"#14181D",background:"#fff"}} />
-              <select value={so} onChange={ev => setSo(ev.target.value)} style={{padding:"10px 14px",fontSize:13,border:"1.5px solid #E6E1D6",borderRadius:8,outline:"none",color:"#14181D",background:"#fff",cursor:"pointer"}}>
-                {SORTS.map(o => <option key={o.id} value={o.id}>{o.l}</option>)}
-              </select>
-              {(ac || sr) && <button onClick={() => { setAc(null); setSr(""); }} style={{fontSize:12,padding:"8px 14px",background:"#fee2e2",color:"#dc2626",border:"none",borderRadius:6,cursor:"pointer",fontWeight:600}}>Clear filters</button>}
-              <span style={{fontSize:13,color:"#5A6169"}}>Showing {fd.length} of {D.length} deals</span>
-            </div>
-            <div style={{display:"flex",flexDirection:"column",gap:10}}>
-              {fd.map(d => (
-                <Row key={d.id} d={d} ex={ex === d.id} tog={() => setEx(ex === d.id ? null : d.id)} gP={gP} gS={gS} />
-              ))}
-            </div>
-            {fd.length === 0 && <div style={{textAlign:"center",padding:"40px 20px",color:"#5A6169"}}>No deals match your current filters.</div>}
-            <div style={{marginTop:40,padding:"20px 0",borderTop:"1px solid #E6E1D6",fontSize:12,color:"#5A6169",lineHeight:1.6}}>
-              Curated by Suruchi Sethi, PhD · Data from public announcements and press releases · Deal values are maximum potential including milestones
-            </div>
-          </>
-        )}
+      <div style={{maxWidth:960,margin:"0 auto",padding:"20px 24px 50px"}}>
+        <div style={{display:"flex",gap:5,flexWrap:"wrap",marginBottom:12}}>
+          {C.map(c=>{const n=(bs[c.id]||[]).length;const a=ac===c.id;return(
+            <button key={c.id} onClick={()=>setAc(a?null:c.id)} style={{flex:"1 1 0",minWidth:90,padding:"10px 6px",borderRadius:8,cursor:"pointer",border:"2px solid "+(a?c.c:"#E6E1D6"),background:a?c.c+"12":"#fff"}}>
+              <div style={{fontSize:16,fontWeight:800,color:a?c.c:"#14181D"}}>{n}</div>
+              <div style={{fontSize:10,fontWeight:600,color:a?c.c:"#5A6169"}}>{c.l}</div>
+            </button>
+          )})}
+        </div>
+        <div style={{padding:"10px 14px",background:"#F7F5EF",borderRadius:8,border:"1px solid #E6E1D6",fontSize:11,color:"#5A6169",lineHeight:1.5,marginBottom:16}}>
+          <strong style={{color:"#0E7C86"}}>Reading the economics:</strong> "Committed" = upfront cash paid. "Potential" = milestone payments contingent on success. Fewer than 10% of life sciences milestones are triggered. No AI-designed drug has yet received regulatory approval.
+        </div>
+        <div style={{display:"flex",gap:8,alignItems:"center",marginBottom:14,flexWrap:"wrap"}}>
+          <input value={sr} onChange={e=>setSr(e.target.value)} placeholder="Search deals..." style={{flex:1,minWidth:180,padding:"9px 12px",fontSize:13,border:"1.5px solid #E6E1D6",borderRadius:8,outline:"none",background:"#fff"}}/>
+          <select value={so} onChange={e=>setSo(e.target.value)} style={{padding:"9px 12px",fontSize:13,border:"1.5px solid #E6E1D6",borderRadius:8,background:"#fff",cursor:"pointer"}}>
+            {SORTS.map(o=><option key={o.id} value={o.id}>{o.l}</option>)}
+          </select>
+          {(ac||sr)&&<button onClick={()=>{setAc(null);setSr("")}} style={{fontSize:11,padding:"7px 12px",background:"#fee2e2",color:"#dc2626",border:"none",borderRadius:6,cursor:"pointer",fontWeight:600}}>Clear</button>}
+          <span style={{fontSize:12,color:"#5A6169"}}>{fd.length}/{D.length}</span>
+        </div>
+        <div style={{display:"flex",flexDirection:"column",gap:8}}>
+          {fd.map(d=>(
+            <Row key={d.id} d={d} open={ex===d.id} tog={()=>setEx(ex===d.id?null:d.id)} gP={gP} gS={gS}/>
+          ))}
+        </div>
+        {fd.length===0&&<div style={{textAlign:"center",padding:"30px",color:"#5A6169"}}>No deals match.</div>}
+        <div style={{marginTop:32,paddingTop:16,borderTop:"1px solid #E6E1D6",fontSize:11,color:"#5A6169"}}>
+          Curated by Suruchi Sethi, PhD · Data from public announcements · Deal values are maximum potential including milestones
+        </div>
       </div>
     </div>
   );
