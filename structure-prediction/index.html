@@ -132,10 +132,10 @@ const companies = [{
   tagline: "The hybrid play: open enough to attract, closed enough to monetise",
   founded: "2024, San Francisco",
   founders: "Joshua Meier (ex-Meta FAIR, Absci, OpenAI), Jack Dent (ex-Stripe)",
-  funding: "$230M+ total ($25M Seed, $70M Series A, $130M Series B Dec 2025). Reportedly in talks for $400M at $3.4B valuation.",
-  fundingNum: 230,
-  valuation: "$1.3B (Dec 2025). Reportedly raising at $3.4B",
-  investors: "OpenAI, Oak HC/FT, General Catalyst, Thrive Capital, Menlo Ventures, Dimension, Emerson Collective",
+  funding: "$630M+ total ($25M Seed, $70M Series A, $130M Series B Dec 2025, $400M Series C Jul 2026)",
+  fundingNum: 630,
+  valuation: "$3.8B (Jul 2026)",
+  investors: "Index Ventures (Series C lead), Kleiner Perkins, Sequoia Capital, Dimension, OpenAI, Oak HC/FT, General Catalyst, Thrive Capital, Menlo Ventures, Emerson Collective",
   product: "Chai-1 (multimodal structure prediction, free), Chai-2 (zero-shot antibody design, ~20% hit rates), Chai-3 (latest model, doubled prior success rates, licensed to pharma)",
   model: "Hybrid (Chai-1 free for research, Chai-2/3 commercial licence)",
   modelType: "hybrid",
@@ -153,6 +153,11 @@ const companies = [{
     terms: "License agreement for Chai-3 + custom platform instance on Pfizer data. Biologics discovery focus.",
     date: "Jun 2026",
     type: "Licensing + Custom Models (Biologics)"
+  }, {
+    partner: "Novartis",
+    terms: "Collaboration to advance AI-driven antibody discovery using Chai's molecular design platform.",
+    date: "Jul 2026",
+    type: "Collaboration (Antibody Discovery)"
   }],
   pipeline: "Not a drug company; sells tools. In talks with 15+ additional pharma companies.",
   strategy: "Middle ground between fully open and fully closed. The free tier (Chai-1) gets scientists to try the platform and de-risks adoption for pharma procurement teams. Premium models (Chai-2, Chai-3) are commercially licensed with custom fine-tuning on each partner's proprietary data. This is the classic SaaS freemium playbook adapted for computational biology. Best positioned financially among the challengers, with enough capital to compete for top-tier partnerships while maintaining model development velocity. Key risk: defending against both Boltz (free and open, broader platform) and Isomorphic (far better resourced) while proving that AI-designed antibodies can translate to clinical-grade molecules.",
@@ -380,8 +385,8 @@ const pharmaDeals = [{
   color: "#8B5CF6"
 }, {
   pharma: "Novartis",
-  partners: ["Isomorphic Labs"],
-  insight: "Exclusive with Isomorphic since Jan 2024 ($37.5M upfront). Partnership expanded Feb 2025, which typically signals early checkpoints were met. Three undisclosed small-molecule targets.",
+  partners: ["Isomorphic Labs", "Chai Discovery"],
+  insight: "Modality-split strategy emerging. Isomorphic for small molecule co-development since Jan 2024 ($37.5M upfront, expanded Feb 2025). Chai for AI-driven antibody discovery (Jul 2026). Second pharma company (after Lilly) to use both Isomorphic and Chai for different modalities.",
   color: "#F59E0B"
 }, {
   pharma: "Johnson & Johnson",
@@ -535,7 +540,7 @@ function NetworkMap() {
     fill: "#5A6169",
     fontSize: "11",
     fontFamily: "DM Sans, sans-serif"
-  }, "$230M+ raised"), /*#__PURE__*/React.createElement("text", {
+  }, "$630M+ raised"), /*#__PURE__*/React.createElement("text", {
     x: "561",
     y: "92",
     textAnchor: "middle",
@@ -562,6 +567,12 @@ function NetworkMap() {
     opacity: "0.35"
   }), /*#__PURE__*/React.createElement("path", {
     d: "M 300 72 C 270 130, 185 150, 185 180",
+    fill: "none",
+    stroke: C.chai,
+    strokeWidth: "2",
+    opacity: "0.35"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M 341 72 C 341 130, 295 150, 295 180",
     fill: "none",
     stroke: C.chai,
     strokeWidth: "2",
@@ -603,8 +614,8 @@ function NetworkMap() {
   }, {
     x: 228,
     name: "Novartis",
-    sub: "Small molecules",
-    dots: [C.iso]
+    sub: "2 AI partners",
+    dots: [C.iso, C.chai]
   }, {
     x: 355,
     name: "Pfizer",
@@ -677,13 +688,22 @@ function NetworkMap() {
     fontFamily: "DM Sans, sans-serif",
     opacity: "0.7"
   }, "Biologics ~$50M/yr"), /*#__PURE__*/React.createElement("text", {
-    x: "278",
+    x: "260",
     y: "252",
-    textAnchor: "middle",
-    fill: "#5A6169",
+    textAnchor: "start",
+    fill: C.iso,
     fontSize: "9",
-    fontFamily: "DM Sans, sans-serif"
-  }, "$37.5M up, expanded"), /*#__PURE__*/React.createElement("text", {
+    fontFamily: "DM Sans, sans-serif",
+    opacity: "0.7"
+  }, "Small mol $37.5M up"), /*#__PURE__*/React.createElement("text", {
+    x: "260",
+    y: "264",
+    textAnchor: "start",
+    fill: C.chai,
+    fontSize: "9",
+    fontFamily: "DM Sans, sans-serif",
+    opacity: "0.7"
+  }, "Antibodies, Jul 2026"), /*#__PURE__*/React.createElement("text", {
     x: "387",
     y: "252",
     textAnchor: "start",
@@ -1224,7 +1244,7 @@ function PharmaView() {
       lineHeight: "1.5",
       fontFamily: "DM Sans, sans-serif"
     }
-  }, "Five top-20 pharma companies have publicly announced structure prediction partnerships. The emerging pattern is modality-specific procurement, with different AI platforms for small molecules vs. biologics, rather than winner-take-all vendor selection."), pharmaDeals.map((d, i) => /*#__PURE__*/React.createElement("div", {
+  }, "Seven top-20 pharma companies have publicly announced structure prediction partnerships. The emerging pattern is modality-specific procurement, with different AI platforms for small molecules vs. biologics, rather than winner-take-all vendor selection."), pharmaDeals.map((d, i) => /*#__PURE__*/React.createElement("div", {
     key: i,
     style: {
       background: "#FFFFFF",
@@ -1585,7 +1605,7 @@ The "undruggable" ~30% of the proteome represents a distinct challenge from the 
 
 Deal values cited throughout this analysis represent maximum contingent milestone payments, not committed or transferred capital. Upfront payments are the only confirmed economics. The absence of a pharma company from this dataset reflects the scope of the analysis (structure prediction specifically), not the absence of AI activity at that company.
 
-All data sourced from public announcements, SEC filings, press releases, and credible reporting as of June 2026.`
+All data sourced from public announcements, SEC filings, press releases, and credible reporting as of July 2026.`
   }];
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1696,7 +1716,7 @@ function App() {
       fontSize: "12px",
       margin: "0"
     }
-  }, "Last updated June 2026"))), /*#__PURE__*/React.createElement("div", {
+  }, "Last updated July 2026"))), /*#__PURE__*/React.createElement("div", {
     style: {
       background: "#FFFFFF",
       borderBottom: "1px solid #E6E1D6",
@@ -1770,7 +1790,7 @@ function App() {
       fontSize: "12px",
       lineHeight: "1.5"
     }
-  }, "Data sourced from public announcements, SEC filings, and press releases. June 2026."))));
+  }, "Data sourced from public announcements, SEC filings, and press releases. July 2026."))));
 }
 ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App));
     </script>
