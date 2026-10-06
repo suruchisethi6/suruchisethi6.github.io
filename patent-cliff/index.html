@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pharma's Patent Cliff Is Coming. Here's What Drugmakers Are Doing About It. | Suruchi Sethi, PhD</title>
+
+<!-- ================================================================
+     DATA: edit this block to update the page.
+     Revenue = FY2025, USD bn unless the label says otherwise.
+     loe_year = year of US patent loss, used to place the drug on the
+     timeline (null = not plotted). status: eroding | pending | safe
+     ================================================================ -->
+<script>
+const CLIFF = {
+  data_as_of: "2026-09-30",
+
+  drugs: [
+    { drug: "Keytruda (+ Qlex)", company: "Merck", modality: "Biologic", rev_bn: 31.68, rev_label: "$31.7bn", loe_year: 2028,
+      loe_label: "2028 (Merck expects biosimilars from Dec 2028, when the compound patent expires; EU 2031)",
+      loe_source: { label: "Merck FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/310158/000031015826000063/mrk-20251231.htm" },
+      status: "pending",
+      defense: "Under-the-skin Keytruda Qlex (FDA approval Sep 2025), whose own US protection runs to 2043; MK-2010 (LM-299), an experimental PD-1/VEGF antibody licensed from China's LaNova Medicines, in early-to-mid-stage trials.",
+      commentary: "Nearly half (48.7%) of Merck's 2025 sales.",
+      flag: null,
+      sources: [{ label: "Merck FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/310158/000031015826000063/mrk-20251231.htm" }] },
+
+    { drug: "Eliquis", company: "Bristol Myers Squibb / Pfizer", modality: "Small molecule (chemical drug)", rev_bn: 14.44, rev_label: "$14.4bn (Bristol Myers-reported)", loe_year: 2028,
+      loe_label: "1 Apr 2028 (settled generic entry). Three filers that litigated are barred until 2031",
+      loe_source: { label: "Pfizer FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm" },
+      status: "pending",
+      defense: "No new formulation. Medicare's negotiated price took effect in Jan 2026.",
+      commentary: null,
+      flag: "Earlier entry is possible: Pfizer's 10-K says the composition-of-matter patent expires in Nov 2026, and if the formulation patent is later invalidated, generics could launch from 21 Nov 2026. Bristol Myers books $14.4bn and Pfizer $8.0bn separately; the two are not additive.",
+      sources: [{ label: "Pfizer FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm" }, { label: "Bristol Myers FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm" }] },
+
+    { drug: "Opdivo (+ Qvantig)", company: "Bristol Myers Squibb", modality: "Biologic", rev_bn: 10.05, rev_label: "$10.0bn", loe_year: 2028,
+      loe_label: "2028 (EU 2030, Japan 2031)",
+      loe_source: { label: "Bristol Myers FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm" },
+      status: "pending",
+      defense: "Under-the-skin Opdivo Qvantig (FDA approval Dec 2024; $238m in 2025 sales).",
+      commentary: "Bristol Myers ties Qvantig's protection to Opdivo's own dates, 2028 in the US and 2030 in the EU.",
+      flag: null,
+      sources: [{ label: "Bristol Myers FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm" }] },
+
+    { drug: "Ibrance", company: "Pfizer", modality: "Small molecule (chemical drug)", rev_bn: 4.12, rev_label: "$4.1bn", loe_year: 2027,
+      loe_label: "2027 (EU and Japan 2028)",
+      loe_source: { label: "Pfizer FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm" },
+      status: "pending", defense: null, commentary: null, flag: null,
+      sources: [{ label: "Pfizer FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm" }] },
+
+    { drug: "Xtandi", company: "Pfizer / Astellas", modality: "Small molecule (chemical drug)", rev_bn: 2.19, rev_label: "$2.2bn (Pfizer US alliance revenue)", loe_year: 2027,
+      loe_label: "2027",
+      loe_source: { label: "Pfizer FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm" },
+      status: "pending", defense: null, commentary: null,
+      flag: "Global sales are booked by Astellas (¥960.8bn, fiscal year to Mar 2026), so they aren't shown on a like-for-like basis.",
+      sources: [{ label: "Pfizer FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm" }] },
+
+    { drug: "Stelara", company: "J&amp;J", modality: "Biologic", rev_bn: 6.08, rev_label: "$6.1bn", loe_year: 2025,
+      loe_label: "Biosimilars launched Jan 2025 (Amgen's Wezlana first, six more followed during 2025)",
+      loe_source: { label: "Amgen FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm" },
+      status: "eroding",
+      defense: null,
+      commentary: "Sales fell 41% in 2025, from $10.4bn.",
+      flag: "Amgen's filing confirms a 2025 launch; the exact 1 January date comes from trade and IP coverage of the 2023 settlement.",
+      sources: [{ label: "J&amp;J FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/jnj-20251228.htm" }, { label: "Amgen FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm" }] },
+
+    { drug: "Darzalex (+ Faspro)", company: "J&amp;J", modality: "Biologic", rev_bn: 14.35, rev_label: "$14.4bn", loe_year: 2029,
+      loe_label: "2029 (both Genmab-licensed patent families)",
+      loe_source: { label: "J&amp;J FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/jnj-20251228.htm" },
+      status: "pending",
+      defense: "Under-the-skin Darzalex Faspro. J&amp;J says it owns separate patent portfolios for Faspro and the IV version.",
+      commentary: "Sales rose 23% in 2025.",
+      flag: "J&amp;J discloses no expiry year for the Faspro-specific patents, so they can't be assumed to run past 2029.",
+      sources: [{ label: "J&amp;J FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/jnj-20251228.htm" }] },
+
+    { drug: "Semaglutide (Ozempic, Wegovy, Rybelsus)", company: "Novo Nordisk", modality: "Peptide (injectable)", rev_bn: 34.49, rev_label: "≈$34.5bn (DKK 228.3bn)", loe_year: 2032,
+      loe_label: "2032 US compound patent. Generics already launched in India (Mar 2026) and Canada (May 2026)",
+      loe_source: { label: "Novo Nordisk FY2025 20-F", url: "https://www.sec.gov/Archives/edgar/data/353278/000035327826000012/nvo-20251231.htm" },
+      status: "pending",
+      defense: null,
+      commentary: null,
+      flag: "Converted at Novo Nordisk's 2025 average rate. The Canadian launch is confirmed by Apotex's own release; the Indian launches rest on trade press.",
+      sources: [{ label: "Novo Nordisk FY2025 20-F", url: "https://www.sec.gov/Archives/edgar/data/353278/000035327826000012/nvo-20251231.htm" }, { label: "Apotex (Canada launch)", url: "https://www.apotex.com/ca/en/news/news-release/2026/05/14/apotex-launches-apo-semaglutide-injection-a-generic-equivalent-of-ozempic-in-canada" }] },
+
+    { drug: "Tirzepatide (Mounjaro, Zepbound)", company: "Eli Lilly", modality: "Peptide (injectable)", rev_bn: 36.51, rev_label: "$36.5bn", loe_year: 2036,
+      loe_label: "2036 compound patent (US data protection ends 2027)",
+      loe_source: { label: "Lilly FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/59478/000005947826000013/lly-20251231.htm" },
+      status: "safe",
+      defense: null,
+      commentary: "56% of Lilly's 2025 revenue.",
+      flag: null,
+      sources: [{ label: "Lilly FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/59478/000005947826000013/lly-20251231.htm" }] },
+
+    { drug: "Jardiance", company: "Boehringer Ingelheim / Lilly", modality: "Small molecule (chemical drug)", rev_bn: 8.8, rev_label: "€8.8bn (Boehringer)", loe_year: 2029,
+      loe_label: "2029 compound patent (Medicare negotiated price since Jan 2026)",
+      loe_source: { label: "Lilly FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/59478/000005947826000013/lly-20251231.htm" },
+      status: "pending", defense: null, commentary: null,
+      flag: "Reported in euros; USD conversion pending. The bubble is sized on the euro value.",
+      sources: [{ label: "Boehringer Ingelheim FY2025 results", url: "https://www.globenewswire.com/news-release/2026/03/25/3261930/0/en/boehringer-ingelheim-delivers-on-late-stage-pipeline-with-two-key-launches-grows-sales-by-7-3-in-a-successful-2025.html" }, { label: "CMS negotiated prices", url: "https://www.cms.gov/files/document/fact-sheet-negotiated-prices-initial-price-applicability-year-2026.pdf" }] },
+
+    { drug: "Farxiga", company: "AstraZeneca", modality: "Small molecule (chemical drug)", rev_bn: 8.40, rev_label: "$8.4bn", loe_year: 2026,
+      loe_label: "Generics approved 7 Apr 2026 and launched 10 Apr 2026",
+      loe_source: { label: "FDA first-generic notice", url: "https://www.fda.gov/drugs/drug-alerts-and-statements/fda-approves-first-generic-dapagliflozin-tablets" },
+      status: "eroding",
+      defense: null,
+      commentary: "Sales still grew 10% in 2025, so the decline lands in 2026 results.",
+      flag: null,
+      sources: [{ label: "AstraZeneca FY2025 20-F", url: "https://www.sec.gov/Archives/edgar/data/901832/000110465926019130/azn-20251231x20f.htm" }, { label: "FDA", url: "https://www.fda.gov/drugs/drug-alerts-and-statements/fda-approves-first-generic-dapagliflozin-tablets" }] },
+
+    { drug: "Entresto", company: "Novartis", modality: "Small molecule (chemical drug)", rev_bn: 7.75, rev_label: "$7.7bn", loe_year: 2025,
+      loe_label: "Generics launched at risk from 22 Jul 2025, after courts declined to block them",
+      loe_source: { label: "Novartis FY2025 20-F", url: "https://www.sec.gov/Archives/edgar/data/1114448/000111444826000004/nvs-20251231.htm" },
+      status: "eroding", defense: null, commentary: null, flag: null,
+      sources: [{ label: "Novartis FY2025 20-F", url: "https://www.sec.gov/Archives/edgar/data/1114448/000111444826000004/nvs-20251231.htm" }] },
+
+    { drug: "Cosentyx", company: "Novartis", modality: "Biologic", rev_bn: 6.67, rev_label: "$6.7bn", loe_year: 2029,
+      loe_label: "2029 (EU 2030)",
+      loe_source: { label: "Novartis FY2025 20-F", url: "https://www.sec.gov/Archives/edgar/data/1114448/000111444826000004/nvs-20251231.htm" },
+      status: "pending", defense: null, commentary: null, flag: null,
+      sources: [{ label: "Novartis FY2025 20-F", url: "https://www.sec.gov/Archives/edgar/data/1114448/000111444826000004/nvs-20251231.htm" }] },
+
+    { drug: "Ocrevus", company: "Roche", modality: "Biologic", rev_bn: 8.45, rev_label: "≈$8.5bn (CHF 7.0bn)", loe_year: 2029,
+      loe_label: "US exclusivity to 28 Mar 2029 (12-year biologic exclusivity from FDA approval in Mar 2017)",
+      loe_source: { label: "Genentech, FDA approval of Ocrevus", url: "https://www.gene.com/media/press-releases/14657/2017-03-28/fda-approves-genentechs-ocrevus-ocrelizu" },
+      status: "pending", defense: null,
+      commentary: null,
+      flag: "Roche is not an SEC registrant and publishes no patent-expiry table, so this is the statutory exclusivity period rather than a disclosed patent expiry. Converted at Roche's 2025 average rate.",
+      sources: [{ label: "Roche FY2025 results", url: "https://www.roche.com/investors/updates/inv-update-2026-01-29" }] },
+
+    { drug: "Prolia / Xgeva", company: "Amgen", modality: "Biologic", rev_bn: 6.50, rev_label: "$6.5bn", loe_year: 2025,
+      loe_label: "Biosimilars launched 2 Jun 2025, under a settlement allowing entry from 31 May 2025",
+      loe_source: { label: "Sandoz settlement release", url: "https://www.sandoz.com/us-en/news/sandoz-reaches-agreement-amgen-resolving-all-patent-litigation-related-its-us-denosumab-biosimilars/" },
+      status: "eroding", defense: null, commentary: null, flag: null,
+      sources: [{ label: "Amgen FY2025 results", url: "https://www.amgen.com/newsroom/press-releases/2026/02/amgen-reports-fourth-quarter-and-full-year-2025-financial-results" }, { label: "Sandoz settlement", url: "https://www.sandoz.com/us-en/news/sandoz-reaches-agreement-amgen-resolving-all-patent-litigation-related-its-us-denosumab-biosimilars/" }] },
+
+    { drug: "Eylea (+ HD)", company: "Regeneron", modality: "Biologic", rev_bn: 4.39, rev_label: "$4.4bn (US)", loe_year: 2024,
+      loe_label: "Biosimilar competition began 30 Oct 2024 (Amgen's Pavblu, launched at risk). Biocon's Yesafili followed on 3 Aug 2026, with four more due between Q4 2026 and Jan 2027",
+      loe_source: { label: "Amgen Q3 2024 results (Pavblu launch)", url: "https://www.sec.gov/Archives/edgar/data/318154/000031815424000042/amgn-20240930earningsrelea.htm" },
+      status: "eroding",
+      defense: "Eylea HD, the high-dose version ($1.6bn of the US total), is a separate approval that no biosimilar references.",
+      commentary: "US sales fell 27% in 2025.",
+      flag: "Pavblu launched without a settlement and Regeneron's litigation continues. The four pending launch dates come from company announcements; the settlement terms are confidential. Global sales including Bayer's ex-US sales: $7.9bn.",
+      sources: [{ label: "Regeneron Q4/FY2025 results", url: "https://www.sec.gov/Archives/edgar/data/872589/000087258926000004/exhibit991q42025.htm" }, { label: "Biocon (Yesafili launch)", url: "https://bioconbiologicsus.com/news/press-releases/biocon-announces-u-s-commercial-launch-of-yesafili-a-biosimilar-to-regenerons-eylea-2-mg/" }] },
+
+    { drug: "Revlimid", company: "Bristol Myers Squibb", modality: "Small molecule (chemical drug)", rev_bn: 2.95, rev_label: "$3.0bn", loe_year: 2026,
+      loe_label: "Unlimited generic supply from 31 Jan 2026, when volume limits in the 2015 settlement ended",
+      loe_source: { label: "Celgene settlement (SEC exhibit)", url: "https://www.sec.gov/Archives/edgar/data/816284/000157104915010171/t1503008_ex99-1.htm" },
+      status: "eroding",
+      defense: null, commentary: "Sales roughly halved in 2025, from $5.8bn.", flag: null,
+      sources: [{ label: "Bristol Myers FY2025 10-K", url: "https://www.sec.gov/Archives/edgar/data/14272/000001427226000004/bmy-20251231.htm" }] }
+  ],
+
+  company_exposure_pct: [
+    { company: "Novo Nordisk", value: "77%", note: "of 2025 sales losing protection by 2033" },
+    { company: "Merck", value: "&gt;65%", note: "of 2025 sales exposed" },
+    { company: "Bristol Myers Squibb", value: "&gt;65%", note: "of 2025 sales exposed" }
+  ],
+  company_exposure_source: "Norstella, as reported by the WSJ (28 Aug 2026)",
+
+  company_growth_gap: [
+    { company: "Bristol Myers Squibb", value: "≈$38bn" },
+    { company: "Merck", value: "≈$23bn" },
+    { company: "Pfizer", value: "≈$21bn" }
+  ],
+  company_growth_gap_source: { label: "Evaluate, via PharmaVoice (30 Jan 2026)", url: "https://www.pharmavoice.com/news/big-pharma-navigating-patent-cliff-300-billion-jnj-merck-abbvie/810915/" }
+};
+</script>
+
+<meta name="description" content="Pharma faces its biggest wave of patent expirations in decades. Which companies are exposed, how fast sales really fall, and whether the defenses will hold.">
+<meta property="og:title" content="Pharma's Patent Cliff Is Coming. Here's What Drugmakers Are Doing About It.">
+<meta property="og:description" content="The industry faces its biggest wave of patent expirations in decades. The headline numbers show where the pressure is building, but the real question is whether the defenses will hold. Analysis by Suruchi Sethi, PhD.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://suruchisethi6.github.io/patent-cliff/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pharma's Patent Cliff Is Coming. Here's What Drugmakers Are Doing About It.">
+<meta name="twitter:description" content="Which drugmakers are exposed to the 2026–2033 patent cliff, how fast sales really fall, and whether the defenses will hold.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2314181D'/><path d='M6 10h9v6h5v8h6' stroke='%230E7C86' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ink: #14181D;
+  --muted: #5A6169;
+  --paper: #F7F5EF;
+  --card: #FFFFFF;
+  --teal: #0E7C86;
+  --teal-dark: #0A5A61;
+  --teal-light: #e0f4f4;
+  --border: #E6E1D6;
+  --eroding: #B4532A;
+  --eroding-bg: #f8ebe4;
+  --pending: #0E7C86;
+  --pending-bg: #e0f4f4;
+  --safe: #5A6169;
+  --safe-bg: #eeece6;
+  --band: rgba(14,124,134,0.08);
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--teal); }
+a:hover { color: var(--teal-dark); }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(12, 30, 46, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nav-inner {
+  max-width: 1060px; margin: 0 auto; padding: 0 32px;
+  display: flex; align-items: center; justify-content: space-between; height: 56px;
+}
+.nav-name { font-family: var(--serif); color: #fff; font-size: 18px; text-decoration: none; }
+.nav-links { display: flex; gap: 24px; }
+.nav-links a { color: #aab1b9; text-decoration: none; font-size: 13px; font-weight: 500; }
+.nav-links a:hover { color: #fff; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(160deg, #14181D 0%, #1e2730 50%, #14181D 100%);
+  padding: 120px 32px 56px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; top: -120px; right: -80px; width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(14,124,134,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-inner { max-width: 760px; margin: 0 auto; position: relative; }
+.eyebrow {
+  font-size: 12px; font-weight: 600; color: #3fb7c1;
+  text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 16px;
+}
+.hero h1 {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(32px, 4.6vw, 48px); color: #fff; line-height: 1.14; margin-bottom: 20px;
+}
+.lede { font-size: 18px; color: #c3c9cf; line-height: 1.6; margin-bottom: 28px; font-style: italic; }
+.meta { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; font-size: 13px; color: #aab1b9; }
+.asof {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(14,124,134,0.16); border: 1px solid rgba(63,183,193,0.35);
+  color: #d6f1f3; padding: 4px 12px; border-radius: 999px; font-weight: 600; font-size: 12px;
+}
+.asof .dot { width: 6px; height: 6px; border-radius: 50%; background: #3fb7c1; }
+
+/* ARTICLE */
+.article { max-width: 760px; margin: 0 auto; padding: 56px 32px 24px; }
+.article h2 {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(25px, 3.4vw, 31px); line-height: 1.25; margin: 56px 0 18px;
+}
+.article h2 .num { color: var(--teal); margin-right: 6px; }
+.article h3 {
+  font-family: var(--serif); font-weight: 400; font-size: 22px; line-height: 1.3; margin: 36px 0 12px;
+}
+.article p { font-size: 17px; margin-bottom: 18px; }
+.article p.first { font-size: 19px; line-height: 1.55; }
+.article ul { margin: 0 0 20px 20px; }
+.article li { font-size: 17px; margin-bottom: 10px; padding-left: 4px; }
+.article li::marker { color: var(--teal); }
+.article strong { font-weight: 700; }
+.table-src { font-size: 13px; color: var(--muted); margin-top: -8px; }
+
+sup.cite { font-size: 11px; line-height: 0; vertical-align: super; margin-left: 1px; }
+sup.cite a { text-decoration: none; font-weight: 700; }
+sup.cite a::before { content: "["; }
+sup.cite a::after { content: "]"; }
+
+.callout {
+  background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--teal);
+  border-radius: 0 10px 10px 0; padding: 18px 22px; margin: 24px 0;
+}
+.callout .k {
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--teal); margin-bottom: 6px;
+}
+.callout p { font-size: 16px; margin-bottom: 0; }
+.callout p + p { margin-top: 10px; }
+
+/* Exposure lenses */
+.lenses { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0 28px; }
+.lens { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; }
+.lens h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 4px; }
+.lens .q { font-size: 14px; color: var(--muted); margin-bottom: 12px; }
+.lens-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 8px 0; border-top: 1px solid var(--border); }
+.lens-row .c { font-weight: 600; font-size: 15px; }
+.lens-row .n { font-size: 12px; color: var(--muted); }
+.lens-row .val { font-family: var(--serif); font-size: 22px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.lens .src { font-size: 12px; color: var(--muted); margin-top: 10px; }
+
+/* Deals table */
+.deals { width: 100%; border-collapse: collapse; margin: 16px 0 16px; font-size: 15px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.deals th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); padding: 10px 14px; border-bottom: 1px solid var(--border); }
+.deals td { padding: 10px 14px; border-top: 1px solid var(--border); vertical-align: top; }
+.deals td.r, .deals th.r { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* WIDE BLOCK (timeline + drug list) */
+.wide { max-width: 1060px; margin: 8px auto 0; padding: 0 32px; }
+.figure { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px 24px 18px; }
+.fig-label { font-size: 11px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.12em; }
+.fig-title { font-family: var(--serif); font-size: 24px; line-height: 1.25; margin: 4px 0 6px; }
+.fig-sub { font-size: 14px; color: var(--muted); margin-bottom: 16px; max-width: 720px; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; font-size: 13px; color: var(--ink); margin-bottom: 14px; }
+.legend .item { display: inline-flex; align-items: center; gap: 7px; }
+.sw { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.sw.eroding { background: var(--eroding); }
+.sw.pending { background: var(--pending); }
+.sw.safe { background: #fff; border: 2px solid var(--safe); }
+.legend .size { color: var(--muted); }
+
+.tl { position: relative; }
+.tl-row { display: grid; grid-template-columns: 210px 1fr; align-items: center; min-height: 40px; }
+.tl-label { padding-right: 14px; line-height: 1.25; }
+.tl-label .d { font-size: 14px; font-weight: 600; display: block; }
+.tl-label .c { font-size: 12px; color: var(--muted); }
+.tl-track { position: relative; height: 40px; border-top: 1px solid #f0ede5; }
+.tl-row:first-of-type .tl-track { border-top: 0; }
+.tl-cols { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(10, 1fr); pointer-events: none; }
+.tl-cols span { border-left: 1px dashed #ece8df; }
+.tl-cols span.peak { background: var(--band); border-left-color: transparent; }
+.tl-axis .tl-track { height: auto; border-top: 0; }
+.tl-axis .tl-cols { position: static; }
+.tl-axis .tl-cols span { border: 0; font-size: 12px; color: var(--muted); text-align: center; padding: 0 0 8px; font-variant-numeric: tabular-nums; }
+.tl-axis .tl-cols span.peak { background: var(--band); color: var(--teal-dark); font-weight: 700; border-radius: 6px 6px 0 0; padding-top: 4px; }
+.tl-foot .tl-cols span.peak { border-radius: 0 0 6px 6px; }
+.tl-foot .tl-track { height: 30px; }
+.ys { display: none; }
+.peak-note { position: absolute; top: 4px; font-size: 12px; font-weight: 600; color: var(--teal-dark); white-space: nowrap; transform: translateX(-50%); }
+
+.bub {
+  position: absolute; top: 50%; border-radius: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid #fff; cursor: pointer; padding: 0;
+  box-shadow: 0 0 0 0 transparent; transition: box-shadow .15s;
+}
+.bub.eroding { background: var(--eroding); }
+.bub.pending { background: var(--pending); }
+.bub.safe { background: #fff; border: 2px solid var(--safe); }
+.bub:hover, .bub:focus-visible { box-shadow: 0 0 0 3px rgba(20,24,29,0.18); outline: none; }
+.bub::before { content: ''; position: absolute; inset: -8px; border-radius: 50%; }
+.beyond { position: absolute; top: 50%; transform: translate(-100%, -50%); font-size: 11px; color: var(--muted); font-weight: 600; white-space: nowrap; }
+
+.tip {
+  position: fixed; z-index: 200; pointer-events: none;
+  background: var(--ink); color: #fff; border-radius: 8px; padding: 10px 12px;
+  font-size: 13px; line-height: 1.45; max-width: 280px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.2); opacity: 0; transition: opacity .1s;
+}
+.tip.on { opacity: 1; }
+.tip b { display: block; font-size: 14px; }
+.tip .t-rev { font-family: var(--serif); font-size: 18px; }
+.tip .t-sub { color: #c3c9cf; }
+
+.fig-notes { font-size: 12px; color: var(--muted); margin-top: 10px; }
+
+/* Drug list */
+.list-head { display: flex; justify-content: space-between; align-items: end; flex-wrap: wrap; gap: 12px; margin: 40px 0 14px; }
+.list-head h2 { font-family: var(--serif); font-weight: 400; font-size: 26px; }
+.list-head p { font-size: 14px; color: var(--muted); }
+.cards { display: flex; flex-direction: column; gap: 8px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; transition: border-color .2s; }
+.card.flash { border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-light); }
+.card-head {
+  width: 100%; background: none; border: 0; font: inherit; color: inherit; text-align: left; cursor: pointer;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(96px, auto) 92px 18px;
+  gap: 20px; align-items: center; padding: 14px 18px;
+}
+.card-head:focus-visible { outline: 2px solid var(--teal); outline-offset: -2px; border-radius: 10px; }
+.ch-drug { font-weight: 700; font-size: 15px; line-height: 1.3; }
+.ch-co { font-size: 13px; color: var(--muted); font-weight: 400; display: block; }
+.ch-rev { font-family: var(--serif); font-size: 18px; font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.ch-loe { font-size: 13px; color: var(--ink); }
+.ch-rev small, .ch-loe small { display: block; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; font-family: var(--sans); }
+.datasrc { display: inline-block; font-size: 12px; margin-left: 6px; white-space: nowrap; }
+.chev { color: var(--muted); transition: transform .2s; font-size: 14px; }
+.card.open .chev { transform: rotate(90deg); }
+.status {
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+  padding: 3px 9px; border-radius: 999px; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; justify-self: start;
+}
+.status::before { content: ''; width: 7px; height: 7px; border-radius: 50%; }
+.status.eroding { background: var(--eroding-bg); color: #8a3d1d; }
+.status.eroding::before { background: var(--eroding); }
+.status.pending { background: var(--pending-bg); color: var(--teal-dark); }
+.status.pending::before { background: var(--pending); }
+.status.safe { background: var(--safe-bg); color: var(--ink); }
+.status.safe::before { background: #fff; border: 1.5px solid var(--safe); }
+
+.detail { display: none; padding: 4px 18px 18px; border-top: 1px solid var(--border); }
+.card.open .detail { display: block; }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; padding-top: 14px; }
+.field.full { grid-column: 1 / -1; }
+.field .k { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 2px; }
+.field .v { font-size: 14px; }
+.field.read .k { color: var(--teal); }
+.flagnote { background: #fbf6e9; border: 1px solid #efe2bf; border-radius: 8px; padding: 8px 12px; font-size: 13px; }
+.srcs { font-size: 13px; }
+.srcs a, .srcs span { margin-right: 12px; white-space: nowrap; }
+
+/* References */
+.sources { border-top: 1px solid var(--border); margin-top: 48px; padding-top: 28px; }
+.sources h2 { margin-top: 0; }
+.reflist { margin: 0 0 0 20px; }
+.reflist li { font-size: 14px; margin-bottom: 10px; line-height: 1.55; }
+.reflist li:target { background: #fff7d1; border-radius: 4px; box-shadow: 0 0 0 6px #fff7d1; }
+.disclaimer { font-size: 13px; color: var(--muted); margin-top: 20px; font-style: italic; }
+
+footer { background: var(--ink); color: #aab1b9; margin-top: 64px; }
+.foot-inner { max-width: 1060px; margin: 0 auto; padding: 28px 32px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; }
+footer a { color: #fff; text-decoration: none; }
+
+/* Proofreading overlay: add ?review to the URL */
+.review-banner { display: none; }
+body.review .review-banner {
+  display: block; position: sticky; top: 56px; z-index: 90;
+  background: #fff4c2; color: #5c4700; font-size: 13px; font-weight: 600; text-align: center; padding: 6px 16px;
+  border-bottom: 1px solid #f0dd8a;
+}
+body.review .proof { background: #fff7d1; box-shadow: 0 0 0 8px #fff7d1; border-radius: 2px; }
+body.review .proof-note { display: block; }
+.proof-note { display: none; font-size: 13px; font-weight: 600; color: #7a5d00; margin: 0 0 12px; }
+
+@media print {
+  @page { margin: 14mm 12mm; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: #fff; font-size: 11pt; line-height: 1.5; }
+  nav, .review-banner, .tip, footer { display: none !important; }
+  .hero { background: #fff; padding: 0 0 18px; border-bottom: 2px solid var(--ink); }
+  .hero::before { display: none; }
+  .hero h1 { color: var(--ink); font-size: 26pt; }
+  .hero .lede { color: #333; font-size: 12pt; }
+  .hero .meta, .hero .asof { color: #444; background: none; border: 0; padding: 0; }
+  .eyebrow { color: var(--teal-dark); }
+  .article, .wide, .hero-inner { max-width: 100%; padding-left: 0; padding-right: 0; }
+  .article { padding-top: 14px; }
+  .article h2 { margin-top: 22px; font-size: 16pt; page-break-after: avoid; }
+  .article h3 { font-size: 13pt; page-break-after: avoid; }
+  .article p, .article li { font-size: 11pt; margin-bottom: 9px; }
+  .article p.first { font-size: 12pt; }
+  .callout, .lens, .figure, .card, .deals, .tl-row { page-break-inside: avoid; }
+  .figure { border: 1px solid var(--border); padding: 12px; }
+  .fig-title { font-size: 14pt; }
+  .tl-label .d { font-size: 9pt; }
+  .tl-label .c { font-size: 8pt; }
+  .card .detail { display: block !important; }
+  .card .chev { display: none; }
+  .card-head { padding-bottom: 6px; }
+  .cards { gap: 6px; }
+  .reflist li { font-size: 9pt; margin-bottom: 6px; }
+  .reflist a { color: var(--ink); text-decoration: none; }
+  .datasrc, .srcs a { color: #555; }
+  .list-head { margin-top: 20px; page-break-before: always; }
+  #references { page-break-before: always; }
+}
+
+@media (max-width: 760px) {
+  .nav-inner { padding: 0 16px; }
+  .nav-links .hide-sm { display: none; }
+  .hero { padding: 96px 16px 40px; }
+  .article { padding: 40px 16px 16px; }
+  .wide { padding: 0 16px; }
+  .figure { padding: 18px 14px 14px; }
+  .lenses { grid-template-columns: 1fr; }
+  .tl-row { grid-template-columns: 1fr; min-height: 0; }
+  .tl-label { padding: 6px 0 0; }
+  .tl-label .d { font-size: 13px; display: inline; }
+  .tl-label .c { margin-left: 6px; font-size: 11px; }
+  .tl-track { border-top: 0; height: 34px; }
+  .tl-axis .tl-label, .tl-foot .tl-label { display: none; }
+  .tl-axis .tl-cols span { font-size: 11px; }
+  .yl { display: none; }
+  .ys { display: inline; }
+  .peak-note { font-size: 11px; }
+  .card-head { grid-template-columns: 1fr auto 16px; row-gap: 6px; padding: 12px 14px; }
+  .ch-drug { grid-column: 1 / 2; }
+  .ch-rev { grid-column: 2 / 3; grid-row: 1; text-align: right; font-size: 16px; }
+  .chev { grid-column: 3; grid-row: 1; }
+  .status { grid-column: 1 / 2; grid-row: 2; }
+  .ch-loe { grid-column: 2 / 4; grid-row: 2; text-align: right; }
+  .ch-loe small { display: none; }
+  .detail { padding: 4px 14px 14px; }
+  .detail-grid { grid-template-columns: 1fr; }
+  .deals { font-size: 13px; }
+  .deals th, .deals td { padding: 8px 10px; }
+  .article p, .article li { font-size: 16px; }
+  .article p.first { font-size: 17px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-name">Suruchi Sethi</a>
+    <div class="nav-links">
+      <a href="#timeline" class="hide-sm">Timeline</a>
+      <a href="#drugs" class="hide-sm">Drug data</a>
+      <a href="../index.html#insights">← All insights</a>
+    </div>
+  </div>
+</nav>
+<div class="review-banner">Proofreading view: highlighted passages need your review. Remove <code>?review</code> from the URL to see the page as published.</div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Article · Patent Cliff</div>
+    <h1>Pharma's Patent Cliff Is Coming. Here's What Drugmakers Are Doing About It.</h1>
+    <p class="lede">The industry faces its biggest wave of patent expirations in decades. The headline numbers show where the pressure is building, but the real question is whether the defenses will hold.</p>
+    <div class="meta">
+      <span>By Suruchi Sethi, PhD</span>
+      <span class="asof"><span class="dot"></span>Data as of <span id="asof-date">—</span></span>
+    </div>
+  </div>
+</header>
+
+<main>
+<article class="article">
+
+  <p class="first">A blockbuster drug can lose most of its sales in a single year. The day a medicine wins approval, a second clock starts ticking toward the day its patents expire, cheaper copies arrive, and revenue that took a decade to build begins to drain away.</p>
+  <p>That clock is now about to strike for more of the industry at once than at any point in its history. Merck's cancer immunotherapy Keytruda brought in $31.7 billion last year<sup class="cite"><a href="#ref-1">1</a></sup> and loses U.S. protection in 2028. It is not alone. Nearly every major drugmaker has at least one blockbuster going off patent this decade, and many are bracing for the same few years.</p>
+  <p>More than $400 billion in cumulative prescription drug sales are at risk from patent expiry through 2030, according to Evaluate's <em>World Preview 2026</em>.<sup class="cite"><a href="#ref-2">2</a></sup> Extend the horizon to 2033, capturing Keytruda in 2028 and Novo Nordisk's semaglutide in 2032, and the figure rises to more than $500 billion.<sup class="cite"><a href="#ref-3">3</a></sup></p>
+  <p>Those numbers measure exposure, not losses. They add up the full sales of drugs losing protection, not the revenue that actually disappears once copies launch. The real question isn't how big the cliff is. It's who falls off it, and who has built something to break the fall.</p>
+
+  <h2><span class="num">1.</span>Not every drug falls at the same speed</h2>
+  <p class="proof-note">▲ Proofread this section: tone, and whether you agree with the interpretation.</p>
+  <p class="proof">How quickly sales vanish depends mostly on what kind of drug it is.</p>
+  <p class="proof">Small molecules, the chemically made pills that fill most medicine cabinets, tend to collapse. A 2021 study of 356 such drugs found that brands kept only about 23% of their prescriptions a year after generics launched, and about 18% for drugs that had sold more than $250 million a year.<sup class="cite"><a href="#ref-4">4</a></sup> When six or more generic makers compete, prices fall more than 95%, according to the FDA.<sup class="cite"><a href="#ref-5">5</a></sup> And a pharmacist can usually swap in a generic automatically.</p>
+  <p class="proof">Biologics, the more complex drugs made from living cells, have historically faded more slowly. Their copies, called biosimilars, cost more than $100 million and take years to develop, against a few million dollars for a typical generic.<sup class="cite"><a href="#ref-6">6</a></sup> Pharmacists generally can't substitute them without a special FDA designation, so doctors and insurers switch more gradually.</p>
+  <p class="proof">AbbVie's Humira shows how far a company can push that advantage. Rather than rely on the original molecule patent, AbbVie built a dense thicket around the drug, filing 247 U.S. patent applications, 89% of them after approval, according to the patent-reform group I-MAK.<sup class="cite"><a href="#ref-7">7</a></sup> The strategy delayed the first U.S. biosimilar until January 2023, years after the core patent expired.</p>
+  <p class="proof">That cushion is thinning. Johnson &amp; Johnson's Stelara lost 41% of its sales in 2025, its first full year against U.S. biosimilars, falling to $6.1 billion from $10.4 billion.<sup class="cite"><a href="#ref-8">8</a></sup> The combined U.S. franchise of Regeneron's eye drug Eylea fell 27%.<sup class="cite"><a href="#ref-9">9</a></sup> The erosion is also running faster than Humira's did: a year after Humira's first U.S. biosimilars arrived, they held only about 2% of its market, and it took until late 2025 for branded Humira to be pushed down to about 40%. Stelara, whose biosimilars launched at much steeper discounts, fell to roughly 70% within its first year.<sup class="cite"><a href="#ref-10">10</a></sup></p>
+  <p class="proof">The belief that biologics erode gently is becoming a riskier bet. Medicare's first negotiated prices took effect in January 2026 for ten high-spending drugs, among them Stelara, Eliquis, Farxiga, Jardiance and Entresto,<sup class="cite"><a href="#ref-11">11</a></sup> and insurers are more willing to steer patients toward cheaper copies. The headline figures still overstate how fast the money leaves. But a company planning for a gentle decline should test what happens if it instead gets a first year like Stelara's, where sales fell by two-fifths.</p>
+
+  <h2><span class="num">2.</span>Some companies are already over the edge</h2>
+  <p>For several drugmakers, the cliff isn't a forecast. It's in the results.</p>
+  <p>J&amp;J is losing Stelara sales. Amgen's osteoporosis and bone-cancer drugs Prolia and Xgeva have faced biosimilars since June 2025;<sup class="cite"><a href="#ref-12">12</a></sup> Novartis's heart drug Entresto has had generic rivals since July 2025.<sup class="cite"><a href="#ref-13">13</a></sup> AstraZeneca's diabetes drug Farxiga got its first U.S. generics in April, and Bristol Myers's blood-cancer drug Revlimid lost the last limits on generic supply in January 2026, and is now eroding.<sup class="cite"><a href="#ref-14">14</a></sup></p>
+  <p>Novo Nordisk sits in both camps: generic semaglutide went on sale in India and Canada this year, while its main U.S. patent runs to 2032.</p>
+  <p>Others are still bracing. Pfizer loses U.S. protection for the breast-cancer drug Ibrance and the prostate-cancer drug Xtandi in 2027. Then comes 2028, the year three giants face competition at once: Keytruda ($31.7 billion in 2025 sales); the blood thinner Eliquis, sold by Bristol Myers and Pfizer ($14.4 billion); and Opdivo ($10 billion). Together they brought in about <strong>$56 billion</strong> last year. Norstella flags 2028 as the peak, with roughly $100 billion of sales at risk across the industry.<sup class="cite"><a href="#ref-3">3</a></sup></p>
+</article>
+
+<section class="wide" id="timeline">
+  <div class="figure">
+    <div class="fig-label">Timeline</div>
+    <div class="fig-title">Who's losing sales now, and who's bracing for 2028</div>
+    <p class="fig-sub">Each drug sits at the year it loses U.S. patent protection. The bigger the bubble, the bigger its 2025 sales. Hover or tap a bubble for details; click it to jump to that drug below.</p>
+    <div class="legend" aria-hidden="true">
+      <span class="item"><span class="sw eroding"></span>Losing sales now</span>
+      <span class="item"><span class="sw pending"></span>Patent loss ahead</span>
+      <span class="item"><span class="sw safe"></span>Safe for now</span>
+      <span class="item size">Bubble size = 2025 sales</span>
+    </div>
+    <div class="tl" id="tl" role="list" aria-label="Drugs by year of U.S. patent loss"></div>
+    <p class="fig-notes" id="tl-notes"></p>
+  </div>
+</section>
+
+<article class="article">
+  <h2><span class="num">3.</span>Two ways to measure the damage</h2>
+  <p>Keytruda is the single biggest exposure. The immunotherapy brought in $31.7 billion last year, <strong>48.7% of Merck's total revenue</strong> and about 55% of its pharmaceutical sales.<sup class="cite"><a href="#ref-1">1</a></sup> Merck's annual report says U.S. biosimilars could arrive as early as December 2028; in Europe, its key patent runs to 2031.</p>
+  <p>There are two common ways to rank who is most exposed, and they point in different directions.</p>
+
+  <div class="lenses">
+    <div class="lens">
+      <h4>By share of sales</h4>
+      <div class="q">Share of 2025 sales losing protection by 2033</div>
+      <div id="lens-pct"></div>
+      <div class="src" id="lens-pct-src"></div>
+    </div>
+    <div class="lens">
+      <h4>By dollars</h4>
+      <div class="q">Revenue at stake through 2030</div>
+      <div id="lens-gap"></div>
+      <div class="src" id="lens-gap-src"></div>
+    </div>
+  </div>
+
+  <p>Measured by share of sales, Novo Nordisk looks most exposed, but demand for semaglutide is still climbing, and its U.S. patent is years off. In dollar terms, Bristol Myers ranks first, because Eliquis, Opdivo and Revlimid all lose protection within a few years of each other. That view understates how heavily Merck leans on a single drug.</p>
+  <p>The two measures describe different problems. Bristol Myers has more revenue to replace, spread across several products. Merck has less in dollar terms, but nearly all of it rides on one drug. That makes Keytruda's defense the single biggest swing factor in the industry.</p>
+  <p>Eli Lilly sits apart. Its tirzepatide, sold as Mounjaro and Zepbound, brought in $36.5 billion last year, 56% of Lilly's revenue,<sup class="cite"><a href="#ref-16">16</a></sup> and its main patent runs to 2036. Lilly's risk is dependence on one drug, not an approaching cliff.</p>
+
+  <h2><span class="num">4.</span>How drugmakers are fighting back</h2>
+  <p>Companies facing the cliff are pulling three levers at once.</p>
+
+  <h3>Switching patients to shots</h3>
+  <p>Many cancer drugs are given by IV infusion. Newer versions injected under the skin are quicker to administer, and drugmakers are betting that patients who switch will stay with the brand when cheaper IV copies arrive.</p>
+  <p>The FDA approved Keytruda Qlex, a subcutaneous version, in September 2025 for most of the drug's adult solid-tumor uses.<sup class="cite"><a href="#ref-17">17</a></sup> It brought in $40 million in its first few months.<sup class="cite"><a href="#ref-1">1</a></sup> Merck expects 30% to 40% of patients to switch, according to trade-press reports, and Evaluate's consensus forecast calls for about $7.1 billion in Qlex sales by 2032.<sup class="cite"><a href="#ref-18">18</a></sup></p>
+  <p>Bristol Myers has Opdivo Qvantig, approved in December 2024, which sold $238 million last year. J&amp;J's Darzalex shows how well the play can work: sales rose 23% to $14.4 billion in 2025, helped by its under-the-skin version, Darzalex Faspro, whose patents J&amp;J holds separately from the ones expiring in 2029.</p>
+  <p>The shots protect part of the business, not all of it. Faspro worked because doctors adopted it years before patents ran out. Qlex arrived about three years before Keytruda copies can launch in the U.S., and every patient still on the IV version is a potential biosimilar customer. Even at the top of Merck's target, most of the franchise stays exposed. The number to watch is Qlex's share of Keytruda sales each quarter through 2027. Opdivo's shot offers thinner cover, because its patent protection expires around the same time as Opdivo's own, in 2028, so it buys little extra runway.</p>
+  <p>One asset does buy Merck time: Qlex carries its own U.S. protection to 2043.<sup class="cite"><a href="#ref-1">1</a></sup> That matters for Merck's other recent win. In August, the Phase 3 INTerpath-001 trial of intismeran autogene, the personalised cancer vaccine it developed with Moderna, met its main endpoints in resected melanoma when given with Keytruda; detailed results are due at the ESMO congress on 24 October.<sup class="cite"><a href="#ref-23">23</a></sup> A positive readout also supports Keytruda itself, since the vaccine is given alongside it. That helps most before 2028. Afterwards, a cheaper pembrolizumab could take Keytruda's place in the regimen, unless Merck pairs the vaccine with Qlex, whose patents run to 2043.</p>
+
+  <h3>Buying growth</h3>
+  <p>Drugmakers have struck big deals, but none comes close to replacing Keytruda.</p>
+  <table class="deals">
+    <thead><tr><th>Buyer – target</th><th class="r">Value</th><th class="r">Closed</th></tr></thead>
+    <tbody>
+      <tr><td>Bristol Myers – Karuna</td><td class="r">$14.0bn</td><td class="r">Mar 2024</td></tr>
+      <tr><td>J&amp;J – Intra-Cellular</td><td class="r">≈$14.6bn</td><td class="r">Apr 2025</td></tr>
+      <tr><td>Merck – Verona</td><td class="r">≈$10bn</td><td class="r">Oct 2025</td></tr>
+      <tr><td>Pfizer – Metsera</td><td class="r">≈$7.0bn + milestones</td><td class="r">Nov 2025</td></tr>
+    </tbody>
+  </table>
+  <p class="table-src">Sources: company deal announcements.<sup class="cite"><a href="#ref-19">19</a></sup></p>
+  <p>No single acquisition replaces a drug selling $10 billion to $30 billion a year. The math works only if several midsize products take off at the right time, which is why exposed companies keep dealing, and why dealmaking is unlikely to slow before 2028. The risk is timing: drugs that peak in the early 2030s won't fill a hole that opens in 2028.</p>
+
+  <h3>Shopping in China</h3>
+  <p>Western drugmakers increasingly look to China for new medicines. Chinese companies were the source of 28% of the experimental drugs big pharma licensed in 2024, according to GlobalData.<sup class="cite"><a href="#ref-20">20</a></sup> Among larger 2025 deals, those with at least $50 million upfront, the share was 38%, according to DealForma.<sup class="cite"><a href="#ref-21">21</a></sup> Evaluate expects Chinese drugs to account for more than two-thirds of licensing-deal value this year, up from less than 5% five years ago.<sup class="cite"><a href="#ref-2">2</a></sup></p>
+  <p>Merck is the clearest example. In November 2024 it licensed global rights to LM-299, an experimental cancer antibody from China's LaNova Medicines that blocks two targets, PD-1 and VEGF, paying $588 million upfront and up to $2.7 billion more in milestones.<sup class="cite"><a href="#ref-22">22</a></sup> The drug, now MK-2010, is in early-to-mid-stage trials. It is Merck's bid to own what comes after Keytruda.</p>
+  <p>Licensing from China is cheaper and faster than discovering drugs from scratch, and dual PD-1/VEGF antibodies are among the most contested ideas in cancer research. But a drug in early trials in 2026 is unlikely to generate meaningful sales before the 2030s. It protects Merck's place in cancer immunotherapy after Keytruda, not its revenue through the cliff. The milestone to watch is a move into late-stage trials. Until then, LM-299 is a hedge, not a bridge.</p>
+
+  <h2><span class="num">5.</span>What to watch</h2>
+  <ul>
+    <li><strong>Keytruda's shot.</strong> Qlex's share of Keytruda sales, quarter by quarter.</li>
+    <li><strong>Biosimilar speed.</strong> Whether copies of Eylea, which faces more rivals before year-end, and Stelara erode slowly, as Humira's did, or move faster.</li>
+    <li><strong>Washington.</strong> The EPIC Act (H.R.1492 / S.832) would give small molecules the same 13 years biologics get before Medicare-negotiated prices apply. The REMEDY Act (S.2620) would limit how many patents a brand can use to trigger an automatic 30-month delay of generic approval. Both are introduced but not passed.</li>
+    <li><strong>Semaglutide abroad.</strong> How quickly copies win share in Canada and India, an early read on what 2032 could bring in the U.S.</li>
+    <li><strong>China.</strong> Whether licensed drugs reach late-stage trials, and whether politics slows the flow.</li>
+  </ul>
+  <p>The size of the cliff will keep changing with every new forecast. The more useful question is whose defenses are working, and the next two years of sales figures will start to answer it.</p>
+</article>
+
+<section class="wide" id="drugs">
+  <div class="list-head">
+    <h2>The drugs, one by one</h2>
+    <p>Sorted by the year each drug loses U.S. patent protection. Tap a row for defenses, my read and sources.</p>
+  </div>
+  <div class="cards" id="cards"></div>
+</section>
+
+<article class="article">
+  <section class="sources" id="references">
+    <h2>References</h2>
+    <ol class="reflist">
+      <li id="ref-1">Merck &amp; Co., <em>Fourth-Quarter and Full-Year 2025 Financial Results</em>, Feb 2026, and <a href="https://www.sec.gov/Archives/edgar/data/310158/000031015826000063/mrk-20251231.htm" target="_blank" rel="noopener">FY2025 Form 10-K</a>. (Keytruda incl. Qlex $31.68bn, of which Qlex $40m; total company sales $65.01bn; Keytruda = 48.7% of total, 54.5% of pharmaceutical sales.)</li>
+      <li id="ref-2">Evaluate, <a href="https://www.evaluate.com/thought-leadership/world-preview-2026/" target="_blank" rel="noopener"><em>World Preview 2026</em></a>, 23 Jun 2026. (More than $400bn of cumulative prescription sales at risk through 2030; China share of licensing-deal value.)</li>
+      <li id="ref-3">"Pharma Industry Stares Down Biggest Patent Cliff in Decades," <em>The Wall Street Journal</em>, 28 Aug 2026 (Norstella data), and <a href="https://www.norstella.com/pharma-outlook/" target="_blank" rel="noopener">Norstella pharma outlook</a> (2028 peak, ~$100bn).</li>
+      <li id="ref-4">Grabowski et al., "Continuing trends in U.S. brand-name and generic drug competition," <a href="https://www.tandfonline.com/doi/full/10.1080/13696998.2021.1952795" target="_blank" rel="noopener"><em>Journal of Medical Economics</em>, 2021</a>.</li>
+      <li id="ref-5">U.S. Food and Drug Administration, <a href="https://www.fda.gov/about-fda/center-drug-evaluation-and-research-cder/generic-competition-and-drug-prices" target="_blank" rel="noopener">"Generic Competition and Drug Prices."</a></li>
+      <li id="ref-6">Pagani et al., <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6388725/" target="_blank" rel="noopener">"Biosimilars: development costs and pathway," <em>Einstein</em>, 2019</a>, and <a href="https://www.fda.gov/drugs/biosimilars/biosimilar-and-interchangeable-biologics-more-treatment-choices" target="_blank" rel="noopener">FDA on biosimilar and interchangeable biologics</a>.</li>
+      <li id="ref-7">I-MAK, <a href="https://www.i-mak.org/2018/12/18/report-finds-89-of-total-u-s-patent-applications-on-humira-were-filed-after-fda-approval-pointing-to-a-deliberate-strategy-to-delay-competition/" target="_blank" rel="noopener">"Overpatented, Overpriced: Humira"</a> (247 U.S. patent applications, 89% filed after approval).</li>
+      <li id="ref-8">Johnson &amp; Johnson, <a href="https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/jnj-20251228.htm" target="_blank" rel="noopener">FY2025 Form 10-K</a> (Stelara $6.08bn, −41% from $10.36bn; Darzalex $14.35bn, +23%).</li>
+      <li id="ref-9">Regeneron, <a href="https://www.sec.gov/Archives/edgar/data/872589/000087258926000004/exhibit991q42025.htm" target="_blank" rel="noopener">Fourth Quarter and Full Year 2025 Financial Results</a> (Eylea + Eylea HD U.S. −27% to $4.39bn).</li>
+      <li id="ref-10">Samsung Bioepis, <a href="https://m.samsungbioepis.com/upload/attach/SB+Biosimilar+Market+Report+Q2+2026.pdf" target="_blank" rel="noopener">Biosimilar Market Report, Q2 2026</a> (13th ed.), and <a href="https://biosimilarsrr.com/2026/05/01/more-on-the-dynamics-of-the-biosimilar-marketplace/" target="_blank" rel="noopener">Biosimilars Review &amp; Report</a>, May 2026, citing IQVIA data: branded Humira at ~40% share by early 2026; branded Stelara "knocked down to approximately 70%" as of Q4 2025. Humira biosimilars at about 2% share at the end of 2023: Samsung Bioepis market report, via <a href="https://www.biospace.com/article/abbvie-s-humira-maintains-market-dominance-amid-biosimilar-launches-report" target="_blank" rel="noopener">BioSpace</a>. Launch discounts of 20–40% for Stelara biosimilars, against 5–10% for early Humira biosimilars, are <a href="https://visionlifesciences.com/insights/biosimilars-patent-cliff-licensing-2026" target="_blank" rel="noopener">Vision Life Sciences</a>' own analysis.</li>
+      <li id="ref-11">KFF, <a href="https://www.kff.org/medicare/key-facts-about-medicare-drug-price-negotiation/" target="_blank" rel="noopener">"Key Facts About Medicare Drug Price Negotiation,"</a> and <a href="https://www.cms.gov/files/document/fact-sheet-negotiated-prices-initial-price-applicability-year-2026.pdf" target="_blank" rel="noopener">CMS negotiated-price fact sheet</a> (first 10 drugs, prices effective 1 Jan 2026).</li>
+      <li id="ref-12">Amgen, <a href="https://www.amgen.com/newsroom/press-releases/2026/02/amgen-reports-fourth-quarter-and-full-year-2025-financial-results" target="_blank" rel="noopener">FY2025 results</a> (Prolia + Xgeva $6.50bn), and <a href="https://www.globenewswire.com/news-release/2024/04/30/2871801/0/en/sandoz-reaches-agreement-with-amgen-resolving-all-patent-litigation-related-to-its-us-denosumab-biosimilars.html" target="_blank" rel="noopener">Sandoz–Amgen settlement</a> (U.S. entry from 31 May 2025; launch June 2025).</li>
+      <li id="ref-13">Novartis, <a href="https://www.sec.gov/Archives/edgar/data/1114448/000111444826000004/nvs-20251231.htm" target="_blank" rel="noopener">FY2025 Form 20-F</a> (Entresto $7.75bn; U.S. generics from July 2025; Cosentyx U.S. 2029).</li>
+      <li id="ref-14">Bristol Myers Squibb, FY2025 Form 10-K (SEC accession 0000014272-26-000004): Revlimid $2.95bn, U.S. generic volume limits ended 31 Jan 2026; Eliquis $14.44bn; Opdivo $10.05bn and Opdivo Qvantig $238m.</li>
+      <li id="ref-15">"How Big Pharma is navigating a $300 billion patent cliff," <a href="https://www.pharmavoice.com/news/big-pharma-navigating-patent-cliff-300-billion-jnj-merck-abbvie/810915/" target="_blank" rel="noopener"><em>PharmaVoice</em>, 30 Jan 2026</a> (Evaluate growth-gap figures).</li>
+      <li id="ref-16">Eli Lilly, <a href="https://www.sec.gov/Archives/edgar/data/59478/000005947826000013/lly-20251231.htm" target="_blank" rel="noopener">FY2025 Form 10-K</a> (Mounjaro $22.97bn + Zepbound $13.54bn = $36.51bn; tirzepatide patent to 2036).</li>
+      <li id="ref-17">Merck, <a href="https://www.merck.com/news/fda-approves-mercks-keytruda-qlex-pembrolizumab-and-berahyaluronidase-alfa-pmph-injection-for-subcutaneous-use-in-adults-across-most-solid-tumor-indications-for-keytruda-pem/" target="_blank" rel="noopener">"FDA Approves Keytruda Qlex,"</a> Sep 2025.</li>
+      <li id="ref-18"><a href="https://www.biopharmadive.com/news/merck-keytruda-subcutaneous-cancer-sales-drug-delivery/801889/" target="_blank" rel="noopener">BioPharma Dive</a>, Oct 2025 (Merck's 30–40% conversion expectation; Evaluate consensus of $7.1bn by 2032).</li>
+      <li id="ref-19">Company deal announcements: <a href="https://news.bms.com/news/details/2024/Bristol-Myers-Squibb-Completes-Acquisition-of-Karuna-Therapeutics-Strengthening-Neuroscience-Portfolio/default.aspx" target="_blank" rel="noopener">BMS–Karuna</a> (Mar 2024); <a href="https://www.jnj.com/media-center/press-releases/johnson-johnson-closes-landmark-intra-cellular-therapies-acquisition-to-solidify-neuroscience-leadership" target="_blank" rel="noopener">J&amp;J–Intra-Cellular</a> (Apr 2025); <a href="https://www.merck.com/news/merck-completes-acquisition-of-verona-pharma/" target="_blank" rel="noopener">Merck–Verona</a> (Oct 2025); <a href="https://www.pfizer.com/news/press-release/press-release-detail/pfizer-completes-acquisition-metsera" target="_blank" rel="noopener">Pfizer–Metsera</a> (Nov 2025, ~$7.0bn enterprise value plus payments tied to milestones).</li>
+      <li id="ref-20">GlobalData, via <a href="https://www.pharmaceutical-technology.com/analyst-comment/large-pharma-drug-licensing-china-2024/" target="_blank" rel="noopener">Pharmaceutical Technology</a> (28% of large-pharma in-licensed innovator drugs in 2024 originated in China).</li>
+      <li id="ref-21">DealForma, via <a href="https://www.nature.com/articles/d43747-025-00113-2" target="_blank" rel="noopener"><em>Nature Biopharma Dealmakers</em></a> (China-origin share of larger 2025 licensing deals).</li>
+      <li id="ref-22">Merck, <a href="https://www.merck.com/news/merck-enters-into-exclusive-global-license-for-lm-299-an-investigational-anti-pd-1-vegf-bispecific-antibody-from-lanova-medicines-ltd/" target="_blank" rel="noopener">"Merck Enters into Exclusive Global License for LM-299 from LaNova Medicines,"</a> Nov 2024 ($588m upfront, up to $2.7bn in milestones).</li>
+      <li id="ref-23">Merck and Moderna, <a href="https://www.merck.com/news/merck-and-moderna-announce-phase-3-interpath-001-trial-of-intismeran-autogene-plus-keytruda-met-endpoints-of-recurrence-free-survival-rfs-and-dmfs-in-patient/" target="_blank" rel="noopener">"Phase 3 INTerpath-001 trial met its endpoints of recurrence-free and distant-metastasis-free survival,"</a> 19 Aug 2026, reporting a pre-specified interim analysis. No effect size has been released; full results are due at ESMO on 24 Oct 2026. Overall survival remains immature. Keytruda Qlex US protection to 2043 is from the Merck FY2025 10-K.</li>
+    </ol>
+    <p class="disclaimer">Figures are FY2025 from company filings unless otherwise noted. Loss-of-exclusivity dates are the U.S. dates companies disclose or settlement-based entry dates, and can move with litigation. Aggregate estimates measure sales exposed to competition, not revenue lost. This is analysis, not investment advice.</p>
+  </section>
+</article>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>Analysis by <a href="../index.html">Suruchi Sethi, PhD</a> · Life sciences competitive intelligence</span>
+    <span>© 2026 Suruchi Sethi</span>
+  </div>
+</footer>
+
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const STATUS_LABEL = { eroding: "Losing sales now", pending: "Patent loss ahead", safe: "Safe for now" };
+  const YEARS = [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033];
+  const PEAK = 2028;
+
+  if (new URLSearchParams(location.search).has("review")) document.body.classList.add("review");
+
+  const d = new Date(CLIFF.data_as_of + "T00:00:00");
+  $("asof-date").textContent = d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+
+  // Exposure lenses
+  $("lens-pct").innerHTML = CLIFF.company_exposure_pct.map((r) =>
+    `<div class="lens-row"><div><div class="c">${r.company}</div><div class="n">${r.note}</div></div><div class="val">${r.value}</div></div>`).join("");
+  $("lens-pct-src").innerHTML = "Source: " + CLIFF.company_exposure_source;
+  $("lens-gap").innerHTML = CLIFF.company_growth_gap.map((r) =>
+    `<div class="lens-row"><div class="c">${r.company}</div><div class="val">${r.value}</div></div>`).join("");
+  const g = CLIFF.company_growth_gap_source;
+  $("lens-gap-src").innerHTML = `Source: <a href="${g.url}" target="_blank" rel="noopener">${g.label}</a>`;
+
+  // Sorted drug list (shared by timeline + cards)
+  const drugs = CLIFF.drugs.map((x, i) => ({ ...x, id: "drug-" + i }))
+    .sort((a, b) => (a.loe_year ?? 9999) - (b.loe_year ?? 9999) || (b.rev_bn || 0) - (a.rev_bn || 0));
+
+  // Timeline
+  const maxRev = Math.max(...drugs.map((x) => x.rev_bn || 0));
+  const MAX_D = 34;
+  const colIndex = (y) => Math.min(Math.max(y, YEARS[0]), YEARS[YEARS.length - 1]) - YEARS[0];
+  const cols = (extra) => `<div class="tl-cols">${YEARS.map((y) => `<span class="${y === PEAK ? "peak" : ""}">${extra ? extra(y) : ""}</span>`).join("")}</div>`;
+  const yearLabel = (y) => {
+    const suf = y === YEARS[YEARS.length - 1] ? "+" : "";
+    const pre = y === YEARS[0] ? "≤" : "";
+    return `<span class="yl">${pre}${y}${suf}</span><span class="ys">${pre}’${String(y).slice(2)}${suf}</span>`;
+  };
+
+  const plotted = drugs.filter((x) => x.loe_year != null);
+  const peakSum = plotted.filter((x) => x.loe_year === PEAK).reduce((s, x) => s + x.rev_bn, 0);
+  const peakPct = ((colIndex(PEAK) + 0.5) / YEARS.length) * 100;
+
+  let html = `<div class="tl-row tl-axis" aria-hidden="true"><div class="tl-label"></div><div class="tl-track">${cols(yearLabel)}</div></div>`;
+  html += plotted.map((x) => {
+    const pos = ((colIndex(x.loe_year) + 0.5) / YEARS.length) * 100;
+    const size = Math.max(9, MAX_D * Math.sqrt(x.rev_bn / maxRev));
+    const beyond = x.loe_year > YEARS[YEARS.length - 1]
+      ? `<span class="beyond" style="left:calc(${pos}% - ${size / 2 + 6}px)">${x.loe_year} →</span>` : "";
+    const aria = `${x.drug}, ${x.company}: ${x.rev_label} in 2025 sales; U.S. patent loss ${x.loe_label}; ${STATUS_LABEL[x.status]}`;
+    return `<div class="tl-row" role="listitem">
+      <div class="tl-label"><span class="d">${x.drug}</span> <span class="c">${x.company}</span></div>
+      <div class="tl-track">${cols()}${beyond}
+        <button class="bub ${x.status}" data-id="${x.id}" style="left:${pos}%;width:${size}px;height:${size}px" aria-label="${aria.replace(/"/g, "&quot;")}"></button>
+      </div></div>`;
+  }).join("");
+  html += `<div class="tl-row tl-foot" aria-hidden="true"><div class="tl-label"></div><div class="tl-track">${cols()}<span class="peak-note" style="left:${peakPct}%">2028 wave ≈ $${Math.round(peakSum)}bn</span></div></div>`;
+  $("tl").innerHTML = html;
+
+  const unplotted = drugs.filter((x) => x.loe_year == null).map((x) => `${x.drug} (U.S. patent-loss date ${x.loe_label.replace(/^Not/, "not")})`);
+  $("tl-notes").textContent =
+    `2028 wave = 2025 sales of Keytruda, Eliquis and Opdivo. Sales are as reported by each company for 2025; Jardiance is sized on its euro figure.` +
+    (unplotted.length ? ` Not plotted: ${unplotted.join(", ")}.` : "");
+
+  // Tooltip
+  const tip = $("tip");
+  const byId = Object.fromEntries(drugs.map((x) => [x.id, x]));
+  function showTip(el) {
+    const x = byId[el.dataset.id];
+    tip.innerHTML = `<b>${x.drug}</b><span class="t-sub">${x.company} · ${x.modality}</span><br>
+      <span class="t-rev">${x.rev_label}</span> <span class="t-sub">2025 sales</span><br>
+      <span>${STATUS_LABEL[x.status]} · ${x.loe_label}</span>`;
+    const r = el.getBoundingClientRect();
+    tip.classList.add("on");
+    const tw = tip.offsetWidth, th = tip.offsetHeight;
+    let left = r.left + r.width / 2 - tw / 2;
+    left = Math.max(8, Math.min(left, window.innerWidth - tw - 8));
+    let top = r.top - th - 10;
+    if (top < 64) top = r.bottom + 10;
+    tip.style.left = left + "px";
+    tip.style.top = top + "px";
+  }
+  const hideTip = () => tip.classList.remove("on");
+  $("tl").addEventListener("mouseover", (e) => { if (e.target.classList.contains("bub")) showTip(e.target); });
+  $("tl").addEventListener("mouseout", (e) => { if (e.target.classList.contains("bub")) hideTip(); });
+  $("tl").addEventListener("focusin", (e) => { if (e.target.classList.contains("bub")) showTip(e.target); });
+  $("tl").addEventListener("focusout", hideTip);
+  window.addEventListener("scroll", hideTip, { passive: true });
+  $("tl").addEventListener("click", (e) => {
+    if (!e.target.classList.contains("bub")) return;
+    hideTip();
+    const card = $(e.target.dataset.id);
+    if (!card) return;
+    card.classList.add("open", "flash");
+    card.querySelector(".card-head").setAttribute("aria-expanded", "true");
+    card.scrollIntoView({ behavior: "smooth", block: "center" });
+    setTimeout(() => card.classList.remove("flash"), 1600);
+  });
+
+  // Cards
+  const field = (k, v, cls = "") => (v ? `<div class="field ${cls}"><div class="k">${k}</div><div class="v">${v}</div></div>` : "");
+  $("cards").innerHTML = drugs.map((x) => {
+    const srcs = x.sources.map((s) => (s.url ? `<a href="${s.url}" target="_blank" rel="noopener">${s.label} ↗</a>` : `<span>${s.label}</span>`)).join("");
+    const loeShort = x.loe_year == null ? "Not disclosed" : x.loe_year;
+    return `<div class="card" id="${x.id}">
+      <button class="card-head" aria-expanded="false" aria-controls="${x.id}-d">
+        <span class="ch-drug">${x.drug}<span class="ch-co">${x.company}</span></span>
+        <span class="status ${x.status}">${STATUS_LABEL[x.status]}</span>
+        <span class="ch-rev"><small>2025 sales</small>${x.rev_label.split(" (")[0]}</span>
+        <span class="ch-loe"><small>U.S. patent loss</small>${loeShort}</span>
+        <span class="chev" aria-hidden="true">▸</span>
+      </button>
+      <div class="detail" id="${x.id}-d">
+        <div class="detail-grid">
+          ${field("2025 sales", x.rev_label)}
+          ${field("Type", x.modality)}
+          ${field("U.S. patent loss", x.loe_label + (x.loe_source ? ` <a class="datasrc" href="${x.loe_source.url}" target="_blank" rel="noopener">${x.loe_source.label} ↗</a>` : ""), "full")}
+          ${field("Defense", x.defense, "full")}
+          ${field("Context", x.commentary, "full read")}
+          ${x.flag ? `<div class="field full"><div class="flagnote">⚑ ${x.flag}</div></div>` : ""}
+          <div class="field full"><div class="k">Sources</div><div class="v srcs">${srcs}</div></div>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+  $("cards").addEventListener("click", (e) => {
+    const head = e.target.closest(".card-head");
+    if (!head) return;
+    const card = head.parentElement;
+    const open = card.classList.toggle("open");
+    head.setAttribute("aria-expanded", String(open));
+  });
+})();
+</script>
+</body>
+</html>
