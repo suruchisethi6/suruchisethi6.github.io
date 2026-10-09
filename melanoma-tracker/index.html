@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melanoma Phase 3 Readout & FDA Tracker — Suruchi Sethi, PhD</title>
+    <meta name="description" content="A curated competitive-intelligence tracker of Phase 3 melanoma trial readouts and their FDA regulatory journey — from data readout to filing, PDUFA, and decision.">
+    <meta property="og:title" content="Melanoma Phase 3 Readout & FDA Approval Tracker">
+    <meta property="og:description" content="Tracking Phase 3 melanoma readouts as structured signals — and following the positive ones through the FDA. Curated by Suruchi Sethi, PhD.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://suruchisethi6.github.io/melanoma-tracker">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Melanoma Phase 3 Readout & FDA Approval Tracker">
+    <meta name="twitter:description" content="Tracking Phase 3 melanoma readouts as structured signals — and following the positive ones through the FDA. Curated by Suruchi Sethi, PhD.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --deep: #0c1e2e;
+            --deep2: #132f46;
+            --slate: #334155;
+            --body: #475569;
+            --muted: #94a3b8;
+            --teal: #0d9488;
+            --teal-dark: #0a7a70;
+            --teal-light: #ccfbf1;
+            --teal-subtle: #f0fdfa;
+            --copper: #c2724e;
+            --bg: #fafcfd;
+            --white: #ffffff;
+            --border: #e2e8f0;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+
+            /* status colors */
+            --pos: #059669; --pos-bg: #ecfdf5;
+            --neg: #dc2626; --neg-bg: #fef2f2;
+            --mix: #ca8a04; --mix-bg: #fefce8;
+            --exp: #6366f1; --exp-bg: #eef2ff;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--sans);
+            color: var(--slate);
+            background: var(--bg);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        a { color: var(--teal); }
+
+        /* ---- NAV ---- */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(12, 30, 46, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .nav-inner {
+            max-width: 1140px; margin: 0 auto; padding: 0 24px;
+            display: flex; align-items: center; justify-content: space-between; height: 56px;
+        }
+        .nav-name { font-family: var(--serif); color: #fff; font-size: 18px; text-decoration: none; }
+        .nav-links { display: flex; gap: 24px; align-items: center; }
+        .nav-links a {
+            color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500;
+            letter-spacing: 0.01em; transition: color 0.2s;
+        }
+        .nav-links a:hover { color: #fff; }
+
+        /* ---- HERO ---- */
+        .hero {
+            background: linear-gradient(160deg, #0c1e2e 0%, #132f46 50%, #0c1e2e 100%);
+            padding: 128px 24px 56px; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: -120px; right: -80px;
+            width: 520px; height: 520px;
+            background: radial-gradient(circle, rgba(13,148,136,0.10) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-inner { max-width: 1140px; margin: 0 auto; position: relative; }
+        .hero-eyebrow {
+            font-size: 12px; font-weight: 600; color: var(--teal);
+            text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 16px;
+        }
+        .hero h1 {
+            font-family: var(--serif); font-size: clamp(30px, 4.6vw, 46px);
+            color: #fff; line-height: 1.15; margin-bottom: 18px; max-width: 900px;
+        }
+        .hero p.lede {
+            font-size: clamp(15px, 1.6vw, 17px); color: #cbd5e1;
+            max-width: 720px; line-height: 1.7; margin-bottom: 22px;
+        }
+        .hero p.lede strong { color: #fff; font-weight: 600; }
+        .asof {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(13,148,136,0.14); border: 1px solid rgba(13,148,136,0.35);
+            color: var(--teal-light); font-size: 12.5px; font-weight: 600;
+            padding: 6px 14px; border-radius: 999px;
+        }
+        .asof .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); }
+
+        /* ---- STATS ---- */
+        .stats-wrap { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+        .stats {
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px;
+            margin-top: -34px; position: relative; z-index: 5;
+        }
+        .stat {
+            background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+            padding: 18px 16px; box-shadow: 0 4px 18px rgba(12,30,46,0.05);
+        }
+        .stat .num { font-family: var(--serif); font-size: 30px; line-height: 1; color: var(--deep); }
+        .stat .lbl { font-size: 11.5px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 8px; }
+        .stat.pos .num { color: var(--pos); }
+        .stat.neg .num { color: var(--neg); }
+        .stat.exp .num { color: var(--exp); }
+
+        .modbar { max-width: 1140px; margin: 16px auto 0; padding: 0 24px; }
+        .modbar-inner { display: flex; flex-wrap: wrap; gap: 8px; }
+        .modchip {
+            display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600;
+            background: var(--white); border: 1px solid var(--border); color: var(--slate);
+            padding: 6px 12px; border-radius: 999px;
+        }
+        .modchip .swatch { width: 9px; height: 9px; border-radius: 2px; }
+        .modchip .c { color: var(--muted); font-weight: 700; }
+
+        /* ---- CONTROLS ---- */
+        .controls-section { max-width: 1140px; margin: 40px auto 0; padding: 0 24px; }
+        .viewtoggle { display: inline-flex; background: #eef2f5; border-radius: 10px; padding: 4px; margin-bottom: 20px; }
+        .viewtoggle button {
+            border: none; background: transparent; font-family: var(--sans); font-size: 13.5px; font-weight: 600;
+            color: var(--body); padding: 8px 18px; border-radius: 7px; cursor: pointer; transition: all 0.18s;
+        }
+        .viewtoggle button.active { background: var(--white); color: var(--deep); box-shadow: 0 1px 4px rgba(12,30,46,0.08); }
+
+        .controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+        .search {
+            flex: 1 1 260px; min-width: 200px; position: relative;
+        }
+        .search input {
+            width: 100%; font-family: var(--sans); font-size: 14px; color: var(--slate);
+            padding: 11px 14px 11px 38px; border: 1px solid var(--border); border-radius: 10px;
+            background: var(--white); outline: none; transition: border 0.18s, box-shadow 0.18s;
+        }
+        .search input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-subtle); }
+        .search svg { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; stroke: var(--muted); }
+        select.filter {
+            font-family: var(--sans); font-size: 13.5px; font-weight: 500; color: var(--slate);
+            padding: 10px 34px 10px 13px; border: 1px solid var(--border); border-radius: 10px;
+            background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 12px center;
+            -webkit-appearance: none; appearance: none; cursor: pointer; outline: none;
+        }
+        select.filter:focus { border-color: var(--teal); }
+        .clearbtn {
+            font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--teal);
+            background: none; border: none; cursor: pointer; padding: 8px 6px;
+        }
+        .resultcount { font-size: 13px; color: var(--muted); font-weight: 500; margin: 16px 0 0; }
+
+        /* ---- CARDS ---- */
+        .cards { max-width: 1140px; margin: 12px auto 0; padding: 0 24px 40px; display: grid; gap: 16px; }
+        .card {
+            background: var(--white); border: 1px solid var(--border); border-radius: 14px;
+            overflow: hidden; transition: box-shadow 0.18s, border 0.18s;
+        }
+        .card:hover { box-shadow: 0 6px 24px rgba(12,30,46,0.07); }
+        .card-head {
+            padding: 20px 22px; cursor: pointer; display: grid;
+            grid-template-columns: 1fr auto; gap: 14px; align-items: start;
+        }
+        .card-main { min-width: 0; }
+        .card-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 11px; }
+        .tag {
+            font-size: 11px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase;
+            padding: 4px 9px; border-radius: 6px;
+        }
+        .tag.modality { color: #fff; }
+        .tag.setting { background: #eef2f5; color: var(--slate); }
+        .card h3 {
+            font-family: var(--serif); font-size: 20px; color: var(--deep); line-height: 1.28;
+            margin-bottom: 5px; font-weight: 400;
+        }
+        .card .sponsor { font-size: 13px; color: var(--body); font-weight: 500; }
+        .card .trialline { font-size: 12.5px; color: var(--muted); margin-top: 7px; }
+        .card .trialline a { color: var(--teal); text-decoration: none; font-weight: 600; }
+        .card .trialline a:hover { text-decoration: underline; }
+
+        .card-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; text-align: right; }
+        .status {
+            font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 999px; white-space: nowrap;
+        }
+        .status.pos { background: var(--pos-bg); color: var(--pos); }
+        .status.neg { background: var(--neg-bg); color: var(--neg); }
+        .status.mix { background: var(--mix-bg); color: var(--mix); }
+        .status.exp { background: var(--exp-bg); color: var(--exp); }
+        .card .rdate { font-size: 12.5px; color: var(--body); font-weight: 600; }
+        .card .rdate span { color: var(--muted); font-weight: 500; }
+        .expand-ind { font-size: 12px; color: var(--muted); font-weight: 600; display: flex; align-items: center; gap: 5px; }
+        .expand-ind svg { width: 13px; height: 13px; stroke: var(--muted); transition: transform 0.2s; }
+        .card.open .expand-ind svg { transform: rotate(180deg); }
+
+        /* ---- CARD DETAIL ---- */
+        .detail { display: none; border-top: 1px solid var(--border); padding: 4px 22px 22px; }
+        .card.open .detail { display: block; }
+        .detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px 28px; margin-top: 18px; }
+        .field .k {
+            font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase;
+            letter-spacing: 0.06em; margin-bottom: 5px;
+        }
+        .field .v { font-size: 14px; color: var(--slate); line-height: 1.55; }
+        .field .v .met-yes { color: var(--pos); font-weight: 700; }
+        .field .v .met-no { color: var(--neg); font-weight: 700; }
+        .field .v .met-pending { color: var(--exp); font-weight: 700; }
+        .field.full { grid-column: 1 / -1; }
+
+        .sources { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+        .sources li { font-size: 13px; }
+        .sources a { color: var(--teal); text-decoration: none; font-weight: 600; }
+        .sources a:hover { text-decoration: underline; }
+        .sources .stype {
+            font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+            color: var(--body); background: #eef2f5; padding: 2px 7px; border-radius: 5px; margin-right: 8px;
+        }
+
+        .flagnote {
+            grid-column: 1 / -1; font-size: 12.5px; color: #92400e; background: #fffbeb;
+            border: 1px solid #fde68a; border-radius: 8px; padding: 10px 12px; display: flex; gap: 8px;
+        }
+
+        /* verify badge */
+        .verify { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; }
+        .verify.ok { color: var(--pos); }
+        .verify.flag { color: var(--mix); }
+        .verify svg { width: 12px; height: 12px; }
+
+        /* ---- PIPELINE ---- */
+        .pipeline-wrap { grid-column: 1 / -1; margin-top: 4px; }
+        .pipeline-wrap .k { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+        .pipeline { display: flex; align-items: flex-start; gap: 0; overflow-x: auto; padding-bottom: 4px; }
+        .pstep { flex: 1 1 0; min-width: 120px; position: relative; text-align: center; }
+        .pstep .bar { height: 4px; background: var(--border); border-radius: 2px; margin: 0 2px 12px; position: relative; }
+        .pstep.done .bar { background: var(--teal); }
+        .pstep.current .bar { background: var(--teal); }
+        .pstep.neg .bar { background: var(--neg); }
+        .pdot {
+            width: 26px; height: 26px; border-radius: 50%; background: #eef2f5; border: 2px solid var(--border);
+            display: flex; align-items: center; justify-content: center; margin: -27px auto 10px;
+            font-size: 12px; font-weight: 700; color: var(--muted); position: relative; z-index: 2;
+        }
+        .pstep.done .pdot { background: var(--teal); border-color: var(--teal); color: #fff; }
+        .pstep.current .pdot { background: #fff; border-color: var(--teal); color: var(--teal); box-shadow: 0 0 0 4px var(--teal-subtle); }
+        .pstep.neg .pdot { background: var(--neg); border-color: var(--neg); color: #fff; }
+        .pstep .plabel { font-size: 12px; font-weight: 700; color: var(--slate); }
+        .pstep .psub { font-size: 11px; color: var(--muted); margin-top: 3px; line-height: 1.4; padding: 0 6px; }
+        .pstep.done .plabel, .pstep.current .plabel { color: var(--deep); }
+        .designations { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+        .desig {
+            font-size: 11px; font-weight: 600; color: var(--teal-dark); background: var(--teal-subtle);
+            border: 1px solid var(--teal-light); padding: 3px 9px; border-radius: 6px;
+        }
+
+        .empty { text-align: center; padding: 60px 20px; color: var(--muted); }
+        .empty h3 { font-family: var(--serif); font-size: 20px; color: var(--slate); margin-bottom: 8px; }
+
+        /* ---- METHODOLOGY ---- */
+        .method { background: var(--white); border-top: 1px solid var(--border); }
+        .method-inner { max-width: 1140px; margin: 0 auto; padding: 64px 24px; }
+        .section-label { font-size: 11px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 12px; }
+        .section-title { font-family: var(--serif); font-size: clamp(24px, 3.2vw, 32px); color: var(--deep); line-height: 1.25; margin-bottom: 28px; }
+        .method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+        .method-card h4 {
+            font-size: 15px; font-weight: 700; color: var(--deep); margin-bottom: 8px;
+            display: flex; align-items: center; gap: 9px;
+        }
+        .method-card .mico {
+            width: 30px; height: 30px; border-radius: 8px; background: var(--teal-subtle);
+            display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0;
+        }
+        .method-card p { font-size: 14px; color: var(--body); line-height: 1.65; }
+        .method-note {
+            margin-top: 30px; font-size: 13px; color: var(--body); background: var(--bg);
+            border: 1px solid var(--border); border-left: 3px solid var(--teal); border-radius: 8px;
+            padding: 16px 18px; line-height: 1.65;
+        }
+
+        /* ---- FOOTER ---- */
+        footer { background: #091520; padding: 26px 24px; text-align: center; }
+        footer p { font-size: 12.5px; color: #64748b; line-height: 1.7; max-width: 760px; margin: 0 auto; }
+        footer a { color: #94a3b8; text-decoration: none; }
+        footer a:hover { color: #fff; }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 860px) {
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .method-grid { grid-template-columns: 1fr; }
+            .detail-grid { grid-template-columns: 1fr; }
+            .nav-links a.hide-sm { display: none; }
+        }
+        @media (max-width: 560px) {
+            .hero { padding: 108px 20px 52px; }
+            .card-head { grid-template-columns: 1fr; }
+            .card-right { flex-direction: row; align-items: center; justify-content: flex-start; text-align: left; flex-wrap: wrap; }
+            .stats { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-name">Suruchi Sethi</a>
+        <div class="nav-links">
+            <a href="#methodology" class="hide-sm">Methodology</a>
+            <a href="../index.html#projects">← All projects</a>
+        </div>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="hero-inner">
+        <div class="hero-eyebrow">Melanoma · Phase 3 · Competitive Intelligence</div>
+        <h1>Melanoma Phase 3 Readout &amp; FDA Approval Tracker</h1>
+        <p class="lede">
+            A curated tracker that treats Phase 3 melanoma readouts as <strong>structured signals</strong>, not
+            one-off news. Each positive readout is a leading indicator of a future FDA filing — so the tool follows
+            drugs across two linked layers: the <strong>data readout</strong>, then the <strong>regulatory journey</strong>
+            (filing → PDUFA → decision).
+        </p>
+        <p class="lede" style="font-size:14px; color:#94a3b8; margin-bottom:24px;">
+            Built after Merck &amp; Moderna's INTerpath-001 positive readout (19 Aug 2026) — the first Phase 3 win for
+            an mRNA individualised neoantigen therapy — to capture events like it systematically.
+        </p>
+        <span class="asof"><span class="dot"></span> Data current as of <span id="asof-date">—</span></span>
+    </div>
+</header>
+
+<div class="stats-wrap">
+    <div class="stats" id="stats"></div>
+</div>
+<div class="modbar">
+    <div class="modbar-inner" id="modbar"></div>
+</div>
+
+<section class="controls-section">
+    <div class="viewtoggle" id="viewtoggle">
+        <button data-view="readout" class="active">Readout tracker</button>
+        <button data-view="fda">FDA pipeline</button>
+    </div>
+    <div class="controls">
+        <div class="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="search" placeholder="Search drug or sponsor…" autocomplete="off">
+        </div>
+        <select class="filter" id="f-modality"><option value="">All modalities</option></select>
+        <select class="filter" id="f-setting"><option value="">All settings</option></select>
+        <select class="filter" id="f-status"><option value="">All statuses</option></select>
+        <button class="clearbtn" id="clearbtn" style="display:none;">Clear filters</button>
+    </div>
+    <p class="resultcount" id="resultcount"></p>
+</section>
+
+<main class="cards" id="cards"></main>
+
+<section class="method" id="methodology">
+    <div class="method-inner">
+        <div class="section-label">Methodology</div>
+        <div class="section-title">How this tracker is built</div>
+        <div class="method-grid">
+            <div class="method-card">
+                <h4><span class="mico">📡</span> Curated, not scraped</h4>
+                <p>
+                    Readout timing and outcomes are announced by companies via press releases, earnings calls,
+                    and medical meetings — they are not reliably held in ClinicalTrials.gov. So each entry is
+                    captured from a public announcement, by hand.
+                </p>
+            </div>
+            <div class="method-card">
+                <h4><span class="mico">🔗</span> Enriched with trial data</h4>
+                <p>
+                    Every readout is linked to its structured trial record — NCT ID, design, setting, primary
+                    endpoint — sourced from ClinicalTrials.gov, so the leading signal sits next to the underlying trial.
+                </p>
+            </div>
+            <div class="method-card">
+                <h4><span class="mico">✔️</span> Sourced &amp; flagged</h4>
+                <p>
+                    Every entry cites its source. Nothing is invented — no hazard ratios or dates are guessed.
+                    Where a field can't be verified from public disclosure, it is flagged rather than filled in.
+                </p>
+            </div>
+        </div>
+        <div class="method-note">
+            <strong>Why two layers?</strong> A positive Phase 3 readout is a <em>leading</em> indicator; the FDA
+            decision that follows is a <em>lagging</em> one. Tracking both — connected through the drug — turns
+            scattered news into a visible pipeline: which positive readouts have converted to filings, which are
+            approaching a PDUFA date, and which have crossed the line. Failures are tracked too, because a negative
+            readout is just as much a signal as a positive one.
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>
+        Curated by <a href="../index.html">Suruchi Sethi, PhD</a> · Readouts sourced from public company
+        announcements; trial data from <a href="https://clinicaltrials.gov" target="_blank" rel="noopener">ClinicalTrials.gov</a> · 2026
+        <br>
+        This is an independent competitive-intelligence project for informational purposes only — not investment or medical advice.
+    </p>
+</footer>
+
+<script src="data.js"></script>
+<script>
+(function () {
+    "use strict";
+
+    var DATA = (typeof READOUTS !== "undefined" && Array.isArray(READOUTS)) ? READOUTS : [];
+    var AS_OF = (typeof DATA_AS_OF !== "undefined") ? DATA_AS_OF : "";
+
+    // ---- color maps ----
+    var MODALITY_COLOR = {
+        "mRNA/neoantigen vaccine": "#0d9488",
+        "TIL cell therapy": "#7c3aed",
+        "Checkpoint inhibitor": "#0891b2",
+        "Oncolytic virus": "#c2724e",
+        "Targeted therapy": "#ca8a04",
+        "Other (T-cell engager)": "#64748b"
+    };
+    function modColor(m) { return MODALITY_COLOR[m] || "#64748b"; }
+
+    function statusClass(s) {
+        s = (s || "").toLowerCase();
+        if (s.indexOf("positive") > -1) return "pos";
+        if (s.indexOf("negative") > -1) return "neg";
+        if (s.indexOf("mixed") > -1) return "mix";
+        return "exp";
+    }
+
+    function fmtDate(iso, isExpected) {
+        if (!iso) return "—";
+        // accept "2026-08-19" or free text windows like "H2 2026"
+        var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+        if (!m) return iso;
+        var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+        var d = new Date(iso + "T00:00:00");
+        return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
+    }
+
+    function esc(str) {
+        return String(str == null ? "" : str)
+            .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
+    }
+
+    // ---- state ----
+    var state = { view: "readout", search: "", modality: "", setting: "", status: "" };
+
+    // ---- populate as-of ----
+    document.getElementById("asof-date").textContent = AS_OF ? fmtDate(AS_OF) : "—";
+
+    // ---- build filter options dynamically ----
+    function distinct(key) {
+        var seen = {}, out = [];
+        DATA.forEach(function (e) {
+            var v = e[key];
+            if (v && !seen[v]) { seen[v] = 1; out.push(v); }
+        });
+        return out.sort();
+    }
+    function fillSelect(id, values) {
+        var sel = document.getElementById(id);
+        values.forEach(function (v) {
+            var o = document.createElement("option");
+            o.value = v; o.textContent = v;
+            sel.appendChild(o);
+        });
+    }
+    fillSelect("f-modality", distinct("modality"));
+    fillSelect("f-setting", distinct("setting"));
+    fillSelect("f-status", distinct("status"));
+
+    // ---- stats ----
+    function renderStats() {
+        var total = DATA.length;
+        var pos = 0, neg = 0, exp = 0;
+        DATA.forEach(function (e) {
+            var c = statusClass(e.status);
+            if (c === "pos") pos++; else if (c === "neg") neg++; else if (c === "exp") exp++;
+        });
+        var filed = DATA.filter(function (e) { return !!e.regulatory; }).length;
+
+        var stats = [
+            { num: total, lbl: "Trials tracked", cls: "" },
+            { num: pos, lbl: "Reported positive", cls: "pos" },
+            { num: neg, lbl: "Reported negative", cls: "neg" },
+            { num: exp, lbl: "Expected", cls: "exp" },
+            { num: filed, lbl: "In FDA pipeline", cls: "" }
+        ];
+        document.getElementById("stats").innerHTML = stats.map(function (s) {
+            return '<div class="stat ' + s.cls + '"><div class="num">' + s.num + '</div><div class="lbl">' + s.lbl + '</div></div>';
+        }).join("");
+
+        // modality breakdown
+        var counts = {};
+        DATA.forEach(function (e) { counts[e.modality] = (counts[e.modality] || 0) + 1; });
+        var modOrder = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; });
+        document.getElementById("modbar").innerHTML = modOrder.map(function (m) {
+            return '<span class="modchip"><span class="swatch" style="background:' + modColor(m) + '"></span>' +
+                esc(m) + ' <span class="c">' + counts[m] + '</span></span>';
+        }).join("");
+    }
+
+    // ---- pipeline (FDA journey) ----
+    function pipelineHTML(e) {
+        var reg = e.regulatory || null;
+        var sc = statusClass(e.status);
+        var steps = [];
+
+        // Step 1: Readout
+        var s1 = { label: "Readout", cls: "done", sub: "" };
+        if (sc === "pos") s1.sub = "Positive";
+        else if (sc === "neg") { s1.cls = "neg"; s1.sub = "Negative"; }
+        else if (sc === "mix") s1.sub = "Mixed";
+        else { s1.cls = "current"; s1.sub = "Expected"; }
+        steps.push(s1);
+
+        var filingStr = reg ? (reg.filingStatus || "") : "";
+        var outcome = reg ? (reg.outcome || "") : "";
+        var pdufa = reg ? reg.pdufaDate : null;
+        var isFiled = /filed|review|approved|crl/i.test(filingStr + " " + outcome);
+        var underReview = /review/i.test(filingStr) || pdufa || /approved|crl/i.test(outcome);
+        var decided = /approved|crl/i.test(outcome);
+        var approved = /approved/i.test(outcome);
+
+        // Step 2: Filed
+        var s2 = { label: "Filed", cls: "", sub: "" };
+        if (isFiled) { s2.cls = "done"; s2.sub = filingStr || "Filed"; }
+        else if (sc === "pos" && reg) {
+            s2.cls = "current";
+            s2.sub = (filingStr && !/not yet|pending|^—$/i.test(filingStr)) ? filingStr : "Filing expected";
+        }
+        else { s2.sub = "—"; }
+        steps.push(s2);
+
+        // Step 3: PDUFA / review
+        var s3 = { label: "PDUFA", cls: "", sub: "" };
+        if (decided) { s3.cls = "done"; s3.sub = pdufa ? fmtDate(pdufa) : "Reviewed"; }
+        else if (underReview) { s3.cls = "current"; s3.sub = pdufa ? fmtDate(pdufa) : "Under review"; }
+        else { s3.sub = "—"; }
+        steps.push(s3);
+
+        // Step 4: Decision
+        var s4 = { label: "Decision", cls: "", sub: "" };
+        if (decided) { s4.cls = approved ? "done" : "neg"; s4.sub = approved ? "Approved" : "CRL"; }
+        else if (sc === "neg") { s4.sub = "—"; }
+        else { s4.sub = "Pending"; }
+        steps.push(s4);
+
+        var html = '<div class="pipeline">';
+        steps.forEach(function (s) {
+            var dotContent = s.cls === "done" ? "✓" : (s.cls === "neg" ? "✕" : "");
+            html += '<div class="pstep ' + s.cls + '">' +
+                '<div class="bar"></div>' +
+                '<div class="pdot">' + dotContent + '</div>' +
+                '<div class="plabel">' + s.label + '</div>' +
+                '<div class="psub">' + esc(s.sub) + '</div>' +
+                '</div>';
+        });
+        html += '</div>';
+
+        if (reg && reg.designations && reg.designations.length) {
+            html += '<div class="designations">' + reg.designations.map(function (d) {
+                return '<span class="desig">' + esc(d) + '</span>';
+            }).join("") + '</div>';
+        }
+        return html;
+    }
+
+    // ---- card ----
+    function metSpan(met) {
+        var m = (met || "").toLowerCase();
+        if (m === "yes") return '<span class="met-yes">Met ✓</span>';
+        if (m === "no") return '<span class="met-no">Not met ✕</span>';
+        if (m === "partial") return '<span class="met-yes">Partially met</span>';
+        return '<span class="met-pending">Pending</span>';
+    }
+
+    function cardHTML(e, idx) {
+        var sc = statusClass(e.status);
+        var nct = e.nctId
+            ? '<a href="https://clinicaltrials.gov/study/' + esc(e.nctId) + '" target="_blank" rel="noopener">' + esc(e.nctId) + '</a>'
+            : '<span style="color:var(--muted)">NCT n/a</span>';
+
+        var sources = (e.sources || []).map(function (s) {
+            return '<li><span class="stype">' + esc(s.type || "Source") + '</span>' +
+                '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.label || s.url) + ' →</a></li>';
+        }).join("");
+
+        var verify = e.verified
+            ? '<span class="verify ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Verified</span>'
+            : '<span class="verify flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>Partially verified</span>';
+
+        var flagBlock = e.flags
+            ? '<div class="flagnote"><span>⚠</span><span>' + esc(e.flags) + '</span></div>'
+            : '';
+
+        var regNext = e.regulatoryNextStep ? esc(e.regulatoryNextStep) : "—";
+
+        return '' +
+        '<div class="card" data-idx="' + idx + '">' +
+            '<div class="card-head" role="button" tabindex="0">' +
+                '<div class="card-main">' +
+                    '<div class="card-tags">' +
+                        '<span class="tag modality" style="background:' + modColor(e.modality) + '">' + esc(e.modality) + '</span>' +
+                        '<span class="tag setting">' + esc(e.setting) + '</span>' +
+                    '</div>' +
+                    '<h3>' + esc(e.drug) + '</h3>' +
+                    '<div class="sponsor">' + esc((e.sponsors || []).join(" · ")) + '</div>' +
+                    '<div class="trialline"><strong>' + esc(e.trialName || "—") + '</strong> · ' + nct + '</div>' +
+                '</div>' +
+                '<div class="card-right">' +
+                    '<span class="status ' + sc + '">' + esc(e.status) + '</span>' +
+                    '<span class="rdate">' + (e.isExpected ? '<span>Expected </span>' : '') + fmtDate(e.readoutDate, e.isExpected) + '</span>' +
+                    '<span class="expand-ind">Details <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>' +
+                '</div>' +
+            '</div>' +
+            '<div class="detail">' +
+                '<div class="detail-grid">' +
+                    '<div class="field"><div class="k">Primary endpoint</div><div class="v">' + esc(e.primaryEndpoint || "—") + ' — ' + metSpan(e.endpointMet) + '</div></div>' +
+                    '<div class="field"><div class="k">Readout date</div><div class="v">' + (e.isExpected ? "Expected " : "") + fmtDate(e.readoutDate) + '</div></div>' +
+                    '<div class="field full"><div class="k">Key data</div><div class="v">' + esc(e.keyData || "Not disclosed") + '</div></div>' +
+                    '<div class="field full"><div class="k">Regulatory next step</div><div class="v">' + regNext + '</div></div>' +
+                    '<div class="pipeline-wrap"><div class="k">FDA pipeline</div>' + pipelineHTML(e) + '</div>' +
+                    '<div class="field full"><div class="k">Sources</div><ul class="sources">' + (sources || '<li style="color:var(--muted)">—</li>') + '</ul></div>' +
+                    (flagBlock ? flagBlock : '') +
+                    '<div class="field full" style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:14px;">' +
+                        verify + '<span style="font-size:11.5px;color:var(--muted);">Verified as of ' + fmtDate(e.asOf) + '</span>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
+    }
+
+    // ---- filtering ----
+    function applyFilters() {
+        var q = state.search.toLowerCase().trim();
+        return DATA.filter(function (e) {
+            if (state.modality && e.modality !== state.modality) return false;
+            if (state.setting && e.setting !== state.setting) return false;
+            if (state.status && e.status !== state.status) return false;
+            if (state.view === "fda" && !e.regulatory) return false;
+            if (q) {
+                var hay = (e.drug + " " + (e.sponsors || []).join(" ") + " " + (e.trialName || "")).toLowerCase();
+                if (hay.indexOf(q) === -1) return false;
+            }
+            return true;
+        });
+    }
+
+    function statusRank(s) {
+        var c = statusClass(s);
+        return c === "pos" ? 0 : c === "mix" ? 1 : c === "neg" ? 2 : 3;
+    }
+
+    function render() {
+        var list = applyFilters();
+
+        // sort: FDA view by pipeline progress; readout view = actual (newest first) then expected (soonest first)
+        list.sort(function (a, b) {
+            if (state.view === "fda") {
+                var ra = statusRank(a.status), rb = statusRank(b.status);
+                if (ra !== rb) return ra - rb;
+                return (b.readoutDate || "").localeCompare(a.readoutDate || "");
+            }
+            var ae = a.isExpected ? 1 : 0, be = b.isExpected ? 1 : 0;
+            if (ae !== be) return ae - be;
+            var da = a.readoutDate || "", db = b.readoutDate || "";
+            return ae === 1 ? da.localeCompare(db) : db.localeCompare(da);
+        });
+
+        var el = document.getElementById("cards");
+        if (!list.length) {
+            el.innerHTML = '<div class="empty"><h3>No matching readouts</h3><p>Try clearing a filter or search term.</p></div>';
+        } else {
+            el.innerHTML = list.map(function (e) {
+                return cardHTML(e, DATA.indexOf(e));
+            }).join("");
+        }
+
+        var showing = list.length, total = DATA.length;
+        var rc = document.getElementById("resultcount");
+        rc.textContent = state.view === "fda"
+            ? "Showing " + showing + " drug" + (showing === 1 ? "" : "s") + " in or approaching the FDA pipeline"
+            : "Showing " + showing + " of " + total + " tracked readouts";
+
+        var anyFilter = state.search || state.modality || state.setting || state.status;
+        document.getElementById("clearbtn").style.display = anyFilter ? "" : "none";
+    }
+
+    // ---- events ----
+    document.getElementById("cards").addEventListener("click", function (ev) {
+        var head = ev.target.closest(".card-head");
+        if (!head) return;
+        head.parentNode.classList.toggle("open");
+    });
+    document.getElementById("cards").addEventListener("keydown", function (ev) {
+        if ((ev.key === "Enter" || ev.key === " ") && ev.target.classList.contains("card-head")) {
+            ev.preventDefault();
+            ev.target.parentNode.classList.toggle("open");
+        }
+    });
+
+    document.getElementById("search").addEventListener("input", function (e) {
+        state.search = e.target.value; render();
+    });
+    document.getElementById("f-modality").addEventListener("change", function (e) { state.modality = e.target.value; render(); });
+    document.getElementById("f-setting").addEventListener("change", function (e) { state.setting = e.target.value; render(); });
+    document.getElementById("f-status").addEventListener("change", function (e) { state.status = e.target.value; render(); });
+
+    document.getElementById("clearbtn").addEventListener("click", function () {
+        state.search = state.modality = state.setting = state.status = "";
+        document.getElementById("search").value = "";
+        document.getElementById("f-modality").value = "";
+        document.getElementById("f-setting").value = "";
+        document.getElementById("f-status").value = "";
+        render();
+    });
+
+    var vt = document.getElementById("viewtoggle");
+    vt.addEventListener("click", function (ev) {
+        var btn = ev.target.closest("button");
+        if (!btn) return;
+        state.view = btn.getAttribute("data-view");
+        vt.querySelectorAll("button").forEach(function (b) { b.classList.toggle("active", b === btn); });
+        render();
+    });
+
+    // ---- init ----
+    renderStats();
+    render();
+})();
+</script>
+</body>
+</html>
