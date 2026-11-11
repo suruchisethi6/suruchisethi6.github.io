@@ -17,7 +17,7 @@
    STATUS:     Reported Positive | Reported Negative | Mixed | Expected
    ===================================================================== */
 
-const DATA_AS_OF = "2026-08-27";
+const DATA_AS_OF = "2026-11-11";
 
 const READOUTS = [
 
@@ -35,16 +35,18 @@ const READOUTS = [
     isExpected: false,
     primaryEndpoint: "Recurrence-free survival (RFS)",
     endpointMet: "Yes",
-    keyData: "Topline only: RFS (primary) and DMFS (key secondary) both statistically significant and clinically meaningful vs pembrolizumab alone. Hazard ratios not yet disclosed — full data due at an upcoming medical meeting. First positive Phase 3 for an mRNA individualised neoantigen therapy. (~1,137 patients randomised 2:1.)",
-    regulatoryNextStep: "Companies will present full data at an international medical meeting and engage regulators on filing submissions. Not yet filed.",
+    keyData: "Full data presented at ESMO 2026 (Presidential Symposium I, late-breaker LBA1, 24 Oct 2026, Georgina Long). RFS (primary, ITT): HR 0.58 (95% CI 0.45–0.75), two-sided p<0.001; 2-year RFS 82.2% vs 70.0%. DMFS (key secondary): HR 0.62 (95% CI 0.45–0.85), p=0.002; 2-year DMFS 88.5% vs 80.2%. Median follow-up 24.6 months; data cutoff 30 June 2026. Overall survival still immature. First positive Phase 3 for an mRNA individualised neoantigen therapy. (~1,137 patients randomised 2:1.) Safety deliberately not recorded here — see flags.",
+    regulatoryNextStep: "BLA not yet submitted. Moderna CEO Stéphane Bancel, speaking to STAT at ESMO (published around 27 Oct 2026), said work on the filing with the Merck team began in mid-August and gave no update on when submission would complete; the company expects approval in 2027. No FDA acceptance, priority review or PDUFA date announced.",
     sources: [
       { type: "Press release", url: "https://www.merck.com/news/merck-and-moderna-announce-phase-3-interpath-001-trial-of-intismeran-autogene-plus-keytruda-met-endpoints-of-recurrence-free-survival-rfs-and-distant-metastasis-free-survival-dmfs-in-patient/", label: "Merck / Moderna joint release, 19 Aug 2026" },
       { type: "Press release", url: "https://news.modernatx.com/merck-and-moderna-announce-phase-3-interpath-001-trial-of-intismeran-plus-keytruda-met-endpoints-of-rfs-and-dmfs-in-melanoma", label: "Moderna newsroom" },
-      { type: "Medical meeting", url: "https://ascopost.com/news/august-2026/interpath-001-trial-of-mrna-based-individualized-neoantigen-therapy-meets-primary-and-key-secondary-endpoints-in-patients-with-high-risk-resected-melanoma/", label: "The ASCO Post" }
+      { type: "Medical meeting", url: "https://ascopost.com/news/august-2026/interpath-001-trial-of-mrna-based-individualized-neoantigen-therapy-meets-primary-and-key-secondary-endpoints-in-patients-with-high-risk-resected-melanoma/", label: "The ASCO Post" },
+      { type: "Trade press", url: "https://www.onclive.com/view/adjuvant-intismeran-autogene-plus-pembrolizumab-improves-rfs-and-dmfs-in-melanoma", label: "OncLive, ESMO 2026 report, 24 Oct 2026" },
+      { type: "Trade press", url: "https://www.cancernetwork.com/view/interpath-001-data-detail-survival-subgroup-and-safety-findings-in-melanoma", label: "CancerNetwork, ESMO 2026 report, 24 Oct 2026" }
     ],
-    asOf: "2026-08-27",
-    verified: true,
-    flags: "Hazard ratios not disclosed at topline — any HR ~0.51 that circulates refers to the earlier Phase 2b KEYNOTE-942, not this trial. Enrolment reported as ~1,137 randomised vs 1,089 in the ClinicalTrials.gov registry.",
+    asOf: "2026-11-11",
+    verified: false,
+    flags: "ESMO efficacy figures come from trade coverage only — no company-primary source has been read, because Merck and Moderna both block automated access. Hence verified:false. SAFETY IS DELIBERATELY NOT FILLED. The two trade reports looked contradictory and are not: OncLive gives fatal AEs in 1.1% (n=8) of the combination arm with none related to intismeran, which is an all-cause count; CancerNetwork gives 2 treatment-related deaths (0.3%), both attributed to pembrolizumab. Same pattern for grade 3+ AEs, 23.6% all-cause vs 14.2% treatment-related. They reconcile, but the two articles use different denominators (755 as-treated vs 757) and neither is primary, so the numbers stay out until a primary source is read. NEJM publication was reported as due 11 Nov 2026; checked that day and no NEJM article, DOI or title could be found, and nejm.org blocks automated access. Any HR ~0.51 that circulates refers to the earlier Phase 2b KEYNOTE-942, not this trial. Enrolment reported as ~1,137 randomised vs 1,089 in the ClinicalTrials.gov registry.",
     regulatory: {
       filingStatus: "Not yet filed",
       pdufaDate: null,
@@ -69,16 +71,17 @@ const READOUTS = [
     primaryEndpoint: "Progression-free survival (PFS) by BICR",
     endpointMet: "Yes",
     keyData: "Median PFS 6.9 vs 3.1 months; HR 0.42 (95% CI 0.30–0.59; p<0.0001). ORR 37.1% vs 5.8% (p<0.0001), including 5 complete responses. Early positive OS trend. First-in-class PKC-inhibitor combination in 1L HLA-A*02:01-negative metastatic uveal melanoma (Phase 2/3, n≈313).",
-    regulatoryNextStep: "NDA submission planned for H2 2026 to support US accelerated approval; FDA endorsed the Phase 3 design. Not yet filed.",
+    regulatoryNextStep: "NDA submission completed in Q3 2026 to support potential US approval, filed under the FDA Oncology Center of Excellence RTOR programme (IDEAYA Q3 2026 business update, 3 Nov 2026). FDA acceptance, priority review and a PDUFA date have not been announced and are deliberately left empty.",
     sources: [
       { type: "Press release", url: "https://ir.ideayabio.com/2026-04-13-IDEAYA-Biosciences-and-Servier-Announce-Positive-Topline-Results-from-Phase-2-3-Registrational-Trial-OptimUM-02-of-Darovasertib-in-Combination-with-Crizotinib-in-First-line-HLA-A-02-01-Negative-Metastatic-Uveal-Melanoma", label: "IDEAYA / Servier topline, 13 Apr 2026" },
-      { type: "Trade press", url: "https://www.ophthalmologytimes.com/view/darovasertib-combination-progression-free-survival-benefit-uveal-melanoma", label: "Ophthalmology Times" }
+      { type: "Trade press", url: "https://www.ophthalmologytimes.com/view/darovasertib-combination-progression-free-survival-benefit-uveal-melanoma", label: "Ophthalmology Times" },
+      { type: "Earnings", url: "https://finviz.com/news/413961/ideaya-biosciences-reports-financial-results-for-the-third-quarter-2026-and-provides-a-business-update", label: "IDEAYA Q3 2026 business update, 3 Nov 2026 (PR Newswire copy — issuer IR page not reached)" }
     ],
-    asOf: "2026-08-27",
-    verified: true,
-    flags: "",
+    asOf: "2026-11-11",
+    verified: false,
+    flags: "The April 2026 efficacy data is well sourced and unchanged. verified:false applies to the filing line only, and stands until an FDA acceptance is announced. Two things to check: IDEAYA's ESMO release of 19 Oct 2026 still said it expected to complete the NDA submission in the second half of 2026, which sits oddly with a Q3 completion announced on 3 Nov — read the 3 Nov release directly before this goes live. And the Q3 source cited here is the syndicated PR Newswire copy, because the ir.ideayabio.com page for it could not be found; swap it for the issuer URL when you have it.",
     regulatory: {
-      filingStatus: "Filing planned (H2 2026)",
+      filingStatus: "Filed (NDA submitted Q3 2026, under RTOR)",
       pdufaDate: null,
       designations: [],
       adcom: null,
@@ -250,16 +253,17 @@ const READOUTS = [
     isExpected: true,
     primaryEndpoint: "Objective response rate (ORR) and progression-free survival (PFS), co-primary",
     endpointMet: "Pending",
-    keyData: "Confirmatory Phase 3 of lifileucel + pembrolizumab vs pembrolizumab in untreated advanced melanoma (target n≈670). No efficacy data yet. An early ORR interim is built into the design, but Iovance has not committed to a specific interim readout date (as of Q2 2026). Registry primary completion Mar 2028.",
+    keyData: "Confirmatory Phase 3 of lifileucel + pembrolizumab vs pembrolizumab in untreated advanced melanoma (target n≈670). No efficacy data yet. An early ORR interim is built into the design, but Iovance has not committed to a specific interim readout date. Q3 2026 update (5 Nov 2026): enrolment accelerating at more than 80 sites across the US, Canada, Europe and Asia-Pacific; the interim ORR analysis for a potential first-line sBLA is confirmed as a plan with no timing given. Registry primary completion Mar 2028.",
     regulatoryNextStep: "Serves as the confirmatory trial for Amtagvi's accelerated approval and could support a 1L label expansion (sBLA) via the ORR interim. Amtagvi received FDA accelerated approval (Feb 2024) for advanced melanoma after anti-PD-1 (and BRAF/MEK if BRAF-mutant).",
     sources: [
       { type: "Trial registry", url: "https://clinicaltrials.gov/study/NCT05727904", label: "ClinicalTrials.gov — TILVANCE-301" },
       { type: "Earnings", url: "https://www.globenewswire.com/news-release/2026/08/06/3340124/0/en/Iovance-Biotherapeutics-Reports-Record-Second-Quarter-2026-Revenue-of-99M-Business-Achievements-and-Corporate-Updates.html", label: "Iovance Q2 2026 update" },
-      { type: "Trade press", url: "https://www.targetedonc.com/view/phase-3-trial-of-lifileucel-pembrolizumab-in-frontline-advanced-melanoma-begins", label: "Targeted Oncology" }
+      { type: "Trade press", url: "https://www.targetedonc.com/view/phase-3-trial-of-lifileucel-pembrolizumab-in-frontline-advanced-melanoma-begins", label: "Targeted Oncology" },
+      { type: "Earnings", url: "https://finviz.com/news/416728/iovance-biotherapeutics-reports-record-third-quarter-2026-revenue-of-122m-business-achievements-and-corporate-updates", label: "Iovance Q3 2026 update, 5 Nov 2026 (syndicated copy — issuer IR page not reached)" }
     ],
-    asOf: "2026-08-27",
+    asOf: "2026-11-11",
     verified: true,
-    flags: "Readout timing is company-guided / registry-based; Iovance has not committed to a firm interim date.",
+    flags: "Readout timing is company-guided / registry-based; Iovance has not committed to a firm interim date. Note what the Q3 2026 release did NOT repeat: earlier guidance about completing enrolment in 2026, and a possible H2 2027 approval, were both absent. Treat the absence as a signal to watch, not as a change of plan. The Q3 source cited here is a syndicated copy; swap it for the Iovance IR URL when you have it.",
     regulatory: {
       filingStatus: "Approved (2L+)",
       pdufaDate: null,
@@ -278,20 +282,22 @@ const READOUTS = [
     nctId: "NCT04657991",
     modality: "Targeted therapy",
     setting: "1L metastatic",
-    status: "Expected",
-    readoutDate: "2026-08-31",
-    isExpected: true,
+    status: "Reported Positive",
+    readoutDate: "2026-10-23",
+    isExpected: false,
     primaryEndpoint: "Objective response by BICR (per current registry; earlier design was PFS-based)",
-    endpointMet: "Pending",
-    keyData: "BRAF/MEK/PD-1 triplet in 1L BRAF V600E/K-mutant melanoma (n≈257). No efficacy readout yet — only a safety lead-in has been published (EJC 2024). Registry primary completion Jan 2026, study completion Aug 2026.",
-    regulatoryNextStep: "None yet — awaiting topline.",
+    endpointMet: "Yes",
+    keyData: "Final analysis presented at ESMO 2026 (abstract 2071O, 23 Oct 2026, Schadendorf). Confirmed ORR by BICR 70.0% (95% CI 60.9–77.8) vs 32.7%; odds ratio 4.903; CR 10.9% vs 4.5%. Median PFS by BICR 33.0 months (95% CI 20.0–NE) vs 3.4 months (2.2–8.3); HR 0.33 (90% CI 0.24–0.46), one-sided p<0.0001. Overall survival immature and not statistically significant: HR 0.71 (90% CI 0.48–1.05), medians not reached. BRAF/MEK/PD-1 triplet in 1L BRAF V600E/K-mutant melanoma.",
+    regulatoryNextStep: "No filing expected from this trial. Pfizer's own ESMO communication describes STARBOARD as a \"non-registrational Phase 3 trial\" of an \"investigational triplet combination regimen\". No FDA or EMA submission found. A positive Phase 3 that is not intended to support registration.",
     sources: [
       { type: "Trial registry", url: "https://clinicaltrials.gov/study/NCT04657991", label: "ClinicalTrials.gov — STARBOARD" },
-      { type: "Journal", url: "https://www.ejcancer.com/article/S0959-8049(24)01201-2/fulltext", label: "Safety lead-in, EJC 2024" }
+      { type: "Journal", url: "https://www.ejcancer.com/article/S0959-8049(24)01201-2/fulltext", label: "Safety lead-in, EJC 2024" },
+      { type: "Trade press", url: "https://www.cancernetwork.com/view/encorafenib-binimetinib-plus-pembrolizumab-extends-pfs-in-braf-v600-melanoma", label: "CancerNetwork, 27 Oct 2026" },
+      { type: "Press release", url: "https://www.pfizer.com/news/press-release/press-release-detail/pfizer-advances-todays-cancer-care-and-tomorrows-potential", label: "Pfizer ESMO 2026 preview release, 28 Sep 2026 (non-registrational wording)" }
     ],
-    asOf: "2026-08-27",
+    asOf: "2026-11-11",
     verified: false,
-    flags: "No company-confirmed topline date — registry dates (primary completion Jan 2026) have passed, but one third-party tracker cited Mar 2027. Registered enrolment (~257) is well below the ~600 originally planned, and the registered primary endpoint is now ORR by BICR (earlier design was PFS). Verify current status with Pfizer."
+    flags: "Efficacy comes from a single trade outlet (CancerNetwork, 27 Oct 2026); the ESMO abstract 2071O page could not be reached, so nothing here is confirmed against the abstract or a Pfizer data release. Hence verified:false. The 23 Oct 2026 presentation date and the presenter come from desk research, not from a fetched primary page. One other outlet reportedly gave the PFS hazard ratio as 0.38 rather than 0.33 — unverified, but do not treat 0.33 as settled. Enrolment reported as 220 randomised in trade press vs 257 in the ClinicalTrials.gov registry, and both are well below the ~600 originally planned. Registry still reads ACTIVE_NOT_RECRUITING with primary completion 2026-10-30 and no results posted. The previous readoutDate of 31 Aug 2026 could not be traced to any source and has been replaced — worth knowing where it came from, as it was the only unsourced date in this file."
   },
 
   /* ---------------------------------------------------------------- */
