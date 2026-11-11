@@ -40,6 +40,7 @@
             --neg: #dc2626; --neg-bg: #fef2f2;
             --mix: #ca8a04; --mix-bg: #fefce8;
             --exp: #6366f1; --exp-bg: #eef2ff;
+            --dis: #64748b; --dis-bg: #f1f5f9;
         }
 
         html { scroll-behavior: smooth; }
@@ -107,7 +108,8 @@
         /* ---- STATS ---- */
         .stats-wrap { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
         .stats {
-            display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px;
+            /* --n is set inline from JS to the number of tiles, so the row never orphans one */
+            display: grid; grid-template-columns: repeat(var(--n, 5), 1fr); gap: 14px;
             margin-top: -34px; position: relative; z-index: 5;
         }
         .stat {
@@ -119,6 +121,7 @@
         .stat.pos .num { color: var(--pos); }
         .stat.neg .num { color: var(--neg); }
         .stat.exp .num { color: var(--exp); }
+        .stat.dis .num { color: var(--dis); }
 
         .modbar { max-width: 1140px; margin: 16px auto 0; padding: 0 24px; }
         .modbar-inner { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -182,6 +185,7 @@
         }
         .tag.modality { color: #fff; }
         .tag.setting { background: #eef2f5; color: var(--slate); }
+        .tag.tumour { background: var(--white); border: 1px solid var(--border); color: var(--body); }
         .card h3 {
             font-family: var(--serif); font-size: 20px; color: var(--deep); line-height: 1.28;
             margin-bottom: 5px; font-weight: 400;
@@ -199,6 +203,7 @@
         .status.neg { background: var(--neg-bg); color: var(--neg); }
         .status.mix { background: var(--mix-bg); color: var(--mix); }
         .status.exp { background: var(--exp-bg); color: var(--exp); }
+        .status.dis { background: var(--dis-bg); color: var(--dis); }
         .card .rdate { font-size: 12.5px; color: var(--body); font-weight: 600; }
         .card .rdate span { color: var(--muted); font-weight: 500; }
         .expand-ind { font-size: 12px; color: var(--muted); font-weight: 600; display: flex; align-items: center; gap: 5px; }
@@ -217,6 +222,7 @@
         .field .v .met-yes { color: var(--pos); font-weight: 700; }
         .field .v .met-no { color: var(--neg); font-weight: 700; }
         .field .v .met-pending { color: var(--exp); font-weight: 700; }
+        .field .v .met-none { color: var(--dis); font-weight: 700; }
         .field.full { grid-column: 1 / -1; }
 
         .sources { list-style: none; display: flex; flex-direction: column; gap: 7px; }
@@ -359,6 +365,7 @@
         </div>
         <select class="filter" id="f-modality"><option value="">All modalities</option></select>
         <select class="filter" id="f-setting"><option value="">All settings</option></select>
+        <select class="filter" id="f-tumour"><option value="">All tumour types</option></select>
         <select class="filter" id="f-status"><option value="">All statuses</option></select>
         <button class="clearbtn" id="clearbtn" style="display:none;">Clear filters</button>
     </div>
@@ -392,6 +399,8 @@
                 <p>
                     Every entry cites its source. Nothing is invented — no hazard ratios or dates are guessed.
                     Where a field can't be verified from public disclosure, it is flagged rather than filled in.
+                    The date in the header is when the tracker was last reviewed; each entry carries its own
+                    "verified as of" date, because entries are rechecked when there is news, not on a schedule.
                 </p>
             </div>
         </div>
@@ -429,7 +438,7 @@
         "Checkpoint inhibitor": "#0891b2",
         "Oncolytic virus": "#c2724e",
         "Targeted therapy": "#ca8a04",
-        "Other (T-cell engager)": "#64748b"
+        "Other": "#64748b"
     };
     function modColor(m) { return MODALITY_COLOR[m] || "#64748b"; }
 
@@ -438,6 +447,7 @@
         if (s.indexOf("positive") > -1) return "pos";
         if (s.indexOf("negative") > -1) return "neg";
         if (s.indexOf("mixed") > -1) return "mix";
+        if (s.indexOf("discontinued") > -1) return "dis";
         return "exp";
     }
 
@@ -458,7 +468,7 @@
     }
 
     // ---- state ----
-    var state = { view: "readout", search: "", modality: "", setting: "", status: "" };
+    var state = { view: "readout", search: "", modality: "", setting: "", tumourType: "", status: "" };
 
     // ---- populate as-of ----
     document.getElementById("asof-date").textContent = AS_OF ? fmtDate(AS_OF) : "—";
@@ -482,15 +492,19 @@
     }
     fillSelect("f-modality", distinct("modality"));
     fillSelect("f-setting", distinct("setting"));
+    fillSelect("f-tumour", distinct("tumourType"));
     fillSelect("f-status", distinct("status"));
 
     // ---- stats ----
     function renderStats() {
         var total = DATA.length;
-        var pos = 0, neg = 0, exp = 0;
+        var pos = 0, neg = 0, exp = 0, dis = 0;
         DATA.forEach(function (e) {
             var c = statusClass(e.status);
-            if (c === "pos") pos++; else if (c === "neg") neg++; else if (c === "exp") exp++;
+            if (c === "pos") pos++;
+            else if (c === "neg") neg++;
+            else if (c === "dis") dis++;
+            else if (c === "exp") exp++;
         });
         var filed = DATA.filter(function (e) { return !!e.regulatory; }).length;
 
@@ -501,6 +515,9 @@
             { num: exp, lbl: "Expected", cls: "exp" },
             { num: filed, lbl: "In FDA pipeline", cls: "" }
         ];
+        // only shown once a trial has actually been closed without reading out
+        if (dis) stats.push({ num: dis, lbl: "Closed, no readout", cls: "dis" });
+        document.getElementById("stats").style.setProperty("--n", stats.length);
         document.getElementById("stats").innerHTML = stats.map(function (s) {
             return '<div class="stat ' + s.cls + '"><div class="num">' + s.num + '</div><div class="lbl">' + s.lbl + '</div></div>';
         }).join("");
@@ -526,6 +543,7 @@
         if (sc === "pos") s1.sub = "Positive";
         else if (sc === "neg") { s1.cls = "neg"; s1.sub = "Negative"; }
         else if (sc === "mix") s1.sub = "Mixed";
+        else if (sc === "dis") { s1.cls = "neg"; s1.label = "Closed"; s1.sub = "No readout"; }
         else { s1.cls = "current"; s1.sub = "Expected"; }
         steps.push(s1);
 
@@ -557,7 +575,7 @@
         // Step 4: Decision
         var s4 = { label: "Decision", cls: "", sub: "" };
         if (decided) { s4.cls = approved ? "done" : "neg"; s4.sub = approved ? "Approved" : "CRL"; }
-        else if (sc === "neg") { s4.sub = "—"; }
+        else if (sc === "neg" || sc === "dis") { s4.sub = "—"; }
         else { s4.sub = "Pending"; }
         steps.push(s4);
 
@@ -587,6 +605,7 @@
         if (m === "yes") return '<span class="met-yes">Met ✓</span>';
         if (m === "no") return '<span class="met-no">Not met ✕</span>';
         if (m === "partial") return '<span class="met-yes">Partially met</span>';
+        if (m === "not reported") return '<span class="met-none">Never reported</span>';
         return '<span class="met-pending">Pending</span>';
     }
 
@@ -618,6 +637,7 @@
                     '<div class="card-tags">' +
                         '<span class="tag modality" style="background:' + modColor(e.modality) + '">' + esc(e.modality) + '</span>' +
                         '<span class="tag setting">' + esc(e.setting) + '</span>' +
+                        (e.tumourType ? '<span class="tag tumour">' + esc(e.tumourType) + '</span>' : '') +
                     '</div>' +
                     '<h3>' + esc(e.drug) + '</h3>' +
                     '<div class="sponsor">' + esc((e.sponsors || []).join(" · ")) + '</div>' +
@@ -625,14 +645,14 @@
                 '</div>' +
                 '<div class="card-right">' +
                     '<span class="status ' + sc + '">' + esc(e.status) + '</span>' +
-                    '<span class="rdate">' + (e.isExpected ? '<span>Expected </span>' : '') + fmtDate(e.readoutDate, e.isExpected) + '</span>' +
+                    '<span class="rdate">' + (e.isExpected ? '<span>Expected </span>' : (sc === "dis" ? '<span>Closed </span>' : '')) + fmtDate(e.readoutDate, e.isExpected) + '</span>' +
                     '<span class="expand-ind">Details <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>' +
                 '</div>' +
             '</div>' +
             '<div class="detail">' +
                 '<div class="detail-grid">' +
                     '<div class="field"><div class="k">Primary endpoint</div><div class="v">' + esc(e.primaryEndpoint || "—") + ' — ' + metSpan(e.endpointMet) + '</div></div>' +
-                    '<div class="field"><div class="k">Readout date</div><div class="v">' + (e.isExpected ? "Expected " : "") + fmtDate(e.readoutDate) + '</div></div>' +
+                    '<div class="field"><div class="k">' + (sc === "dis" ? "Date closed" : "Readout date") + '</div><div class="v">' + (e.isExpected ? "Expected " : "") + fmtDate(e.readoutDate) + '</div></div>' +
                     '<div class="field full"><div class="k">Key data</div><div class="v">' + esc(e.keyData || "Not disclosed") + '</div></div>' +
                     '<div class="field full"><div class="k">Regulatory next step</div><div class="v">' + regNext + '</div></div>' +
                     '<div class="pipeline-wrap"><div class="k">FDA pipeline</div>' + pipelineHTML(e) + '</div>' +
@@ -652,6 +672,7 @@
         return DATA.filter(function (e) {
             if (state.modality && e.modality !== state.modality) return false;
             if (state.setting && e.setting !== state.setting) return false;
+            if (state.tumourType && e.tumourType !== state.tumourType) return false;
             if (state.status && e.status !== state.status) return false;
             if (state.view === "fda" && !e.regulatory) return false;
             if (q) {
@@ -664,7 +685,7 @@
 
     function statusRank(s) {
         var c = statusClass(s);
-        return c === "pos" ? 0 : c === "mix" ? 1 : c === "neg" ? 2 : 3;
+        return c === "pos" ? 0 : c === "mix" ? 1 : c === "neg" ? 2 : c === "exp" ? 3 : 4;
     }
 
     function render() {
@@ -698,7 +719,7 @@
             ? "Showing " + showing + " drug" + (showing === 1 ? "" : "s") + " in or approaching the FDA pipeline"
             : "Showing " + showing + " of " + total + " tracked readouts";
 
-        var anyFilter = state.search || state.modality || state.setting || state.status;
+        var anyFilter = state.search || state.modality || state.setting || state.tumourType || state.status;
         document.getElementById("clearbtn").style.display = anyFilter ? "" : "none";
     }
 
@@ -720,13 +741,15 @@
     });
     document.getElementById("f-modality").addEventListener("change", function (e) { state.modality = e.target.value; render(); });
     document.getElementById("f-setting").addEventListener("change", function (e) { state.setting = e.target.value; render(); });
+    document.getElementById("f-tumour").addEventListener("change", function (e) { state.tumourType = e.target.value; render(); });
     document.getElementById("f-status").addEventListener("change", function (e) { state.status = e.target.value; render(); });
 
     document.getElementById("clearbtn").addEventListener("click", function () {
-        state.search = state.modality = state.setting = state.status = "";
+        state.search = state.modality = state.setting = state.tumourType = state.status = "";
         document.getElementById("search").value = "";
         document.getElementById("f-modality").value = "";
         document.getElementById("f-setting").value = "";
+        document.getElementById("f-tumour").value = "";
         document.getElementById("f-status").value = "";
         render();
     });

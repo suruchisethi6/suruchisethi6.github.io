@@ -8,13 +8,31 @@
    - Every entry MUST cite at least one real source URL.
    - NEVER invent hazard ratios, dates, endpoints, or NCT IDs.
      Unknown -> null or a clear "not disclosed" string, and set verified:false.
-   - Use the exact modality / setting / status strings from the lists below
-     (the filters key off them).
+   - Use the exact modality / setting / tumourType / status strings from the
+     lists below (the filters key off them).
 
-   MODALITIES: mRNA/neoantigen vaccine | TIL cell therapy | Checkpoint inhibitor
-               | Oncolytic virus | Targeted therapy | Other (T-cell engager)
-   SETTINGS:   Adjuvant | Neoadjuvant | 1L metastatic | 2L+ metastatic | Uveal
-   STATUS:     Reported Positive | Reported Negative | Mixed | Expected
+   MODALITIES:   mRNA/neoantigen vaccine | TIL cell therapy | Checkpoint inhibitor
+                 | Oncolytic virus | Targeted therapy | Other
+                 -> "Other" is a deliberate catch-all. Name the actual agent class
+                    in `drug`, e.g. "HBI-8000 (tucidinostat, HDAC inhibitor)".
+                    Do not add a new modality for a single entry.
+   SETTINGS:     Adjuvant | Neoadjuvant | 1L metastatic | 2L+ metastatic
+                 -> line of therapy ONLY. Tumour type goes in tumourType.
+   TUMOUR TYPES: Cutaneous | Uveal | Acral | Mucosal
+                 -> use Cutaneous for trials in cutaneous or unspecified
+                    "unresectable / metastatic melanoma", which is the standard
+                    population in this disease. Uveal, acral and mucosal trials
+                    always say so explicitly.
+   STATUS:       Reported Positive | Reported Negative | Mixed | Expected | Discontinued
+                 -> Discontinued = closed without reading out (operational or
+                    strategic), which is neither a result nor an expectation.
+                    Set isExpected:false and put the closure date in readoutDate;
+                    the page labels it "Closed", not "Readout date".
+
+   Schema note (11 Nov 2026): setting and tumourType were one field until this
+   date, with "Uveal" sitting in the settings list. tumourType on every entry was
+   derived from that entry's own recorded population, not from fresh research, so
+   the split did not change any entry's asOf date.
    ===================================================================== */
 
 const DATA_AS_OF = "2026-11-11";
@@ -30,6 +48,7 @@ const READOUTS = [
     nctId: "NCT05933577",
     modality: "mRNA/neoantigen vaccine",
     setting: "Adjuvant",
+    tumourType: "Cutaneous",
     status: "Reported Positive",
     readoutDate: "2026-08-19",
     isExpected: false,
@@ -64,7 +83,8 @@ const READOUTS = [
     trialName: "OptimUM-02",
     nctId: "NCT05987332",
     modality: "Targeted therapy",
-    setting: "Uveal",
+    setting: "1L metastatic",
+    tumourType: "Uveal",
     status: "Reported Positive",
     readoutDate: "2026-04-13",
     isExpected: false,
@@ -75,11 +95,11 @@ const READOUTS = [
     sources: [
       { type: "Press release", url: "https://ir.ideayabio.com/2026-04-13-IDEAYA-Biosciences-and-Servier-Announce-Positive-Topline-Results-from-Phase-2-3-Registrational-Trial-OptimUM-02-of-Darovasertib-in-Combination-with-Crizotinib-in-First-line-HLA-A-02-01-Negative-Metastatic-Uveal-Melanoma", label: "IDEAYA / Servier topline, 13 Apr 2026" },
       { type: "Trade press", url: "https://www.ophthalmologytimes.com/view/darovasertib-combination-progression-free-survival-benefit-uveal-melanoma", label: "Ophthalmology Times" },
-      { type: "Earnings", url: "https://finviz.com/news/413961/ideaya-biosciences-reports-financial-results-for-the-third-quarter-2026-and-provides-a-business-update", label: "IDEAYA Q3 2026 business update, 3 Nov 2026 (PR Newswire copy — issuer IR page not reached)" }
+      { type: "Earnings", url: "https://ir.ideayabio.com/2026-11-03-IDEAYA-Biosciences-Reports-Financial-Results-for-the-Third-Quarter-2026-and-Provides-a-Business-Update", label: "IDEAYA Q3 2026 business update, 3 Nov 2026 (issuer IR page)" }
     ],
     asOf: "2026-11-11",
     verified: false,
-    flags: "The April 2026 efficacy data is well sourced and unchanged. verified:false applies to the filing line only, and stands until an FDA acceptance is announced. Two things to check: IDEAYA's ESMO release of 19 Oct 2026 still said it expected to complete the NDA submission in the second half of 2026, which sits oddly with a Q3 completion announced on 3 Nov — read the 3 Nov release directly before this goes live. And the Q3 source cited here is the syndicated PR Newswire copy, because the ir.ideayabio.com page for it could not be found; swap it for the issuer URL when you have it.",
+    flags: "The April 2026 efficacy data is well sourced and unchanged. verified:false applies to the filing line only, and stands until an FDA acceptance is announced. One thing to check: IDEAYA's ESMO release of 19 Oct 2026 still said it expected to complete the NDA submission in the second half of 2026, which sits oddly with a Q3 completion announced on 3 Nov — read the 3 Nov release directly before this goes live.",
     regulatory: {
       filingStatus: "Filed (NDA submitted Q3 2026, under RTOR)",
       pdufaDate: null,
@@ -92,12 +112,13 @@ const READOUTS = [
   /* ---------------------------------------------------------------- */
   {
     id: "imcgp100-202",
-    drug: "Tebentafusp-tebn (Kimmtrak) vs investigator's choice",
+    drug: "Tebentafusp-tebn (Kimmtrak, gp100xCD3 ImmTAC T-cell engager) vs investigator's choice",
     sponsors: ["Immunocore"],
     trialName: "IMCgp100-202",
     nctId: "NCT03070392",
-    modality: "Other (T-cell engager)",
-    setting: "Uveal",
+    modality: "Other",
+    setting: "1L metastatic",
+    tumourType: "Uveal",
     status: "Reported Positive",
     readoutDate: "2026-01-01",
     isExpected: false,
@@ -112,7 +133,7 @@ const READOUTS = [
     ],
     asOf: "2026-08-27",
     verified: true,
-    flags: "Approved since 2022; included for its recent 5-year OS update (exact 2026 update date approximate).",
+    flags: "Approved since 2022; included for its recent 5-year OS update (exact 2026 update date approximate). Setting recorded as 1L metastatic because IMCgp100-202 enrolled previously untreated patients; that reading comes from the trial description already held here, not from a fresh check of the registry eligibility criteria.",
     regulatory: {
       filingStatus: "Approved",
       pdufaDate: null,
@@ -131,6 +152,7 @@ const READOUTS = [
     nctId: "NCT02388906",
     modality: "Checkpoint inhibitor",
     setting: "Adjuvant",
+    tumourType: "Cutaneous",
     status: "Reported Positive",
     readoutDate: "2025-10-01",
     isExpected: false,
@@ -163,6 +185,7 @@ const READOUTS = [
     nctId: "NCT03767348",
     modality: "Oncolytic virus",
     setting: "2L+ metastatic",
+    tumourType: "Cutaneous",
     status: "Reported Positive",
     readoutDate: "2025-06-01",
     isExpected: false,
@@ -196,6 +219,7 @@ const READOUTS = [
     nctId: "NCT04949113",
     modality: "Checkpoint inhibitor",
     setting: "Neoadjuvant",
+    tumourType: "Cutaneous",
     status: "Reported Positive",
     readoutDate: "2024-11-07",
     isExpected: false,
@@ -222,6 +246,7 @@ const READOUTS = [
     nctId: "NCT05002569",
     modality: "Checkpoint inhibitor",
     setting: "Adjuvant",
+    tumourType: "Cutaneous",
     status: "Reported Negative",
     readoutDate: "2025-06-01",
     isExpected: false,
@@ -248,6 +273,7 @@ const READOUTS = [
     nctId: "NCT05727904",
     modality: "TIL cell therapy",
     setting: "1L metastatic",
+    tumourType: "Cutaneous",
     status: "Expected",
     readoutDate: "2028-03-01",
     isExpected: true,
@@ -282,6 +308,7 @@ const READOUTS = [
     nctId: "NCT04657991",
     modality: "Targeted therapy",
     setting: "1L metastatic",
+    tumourType: "Cutaneous",
     status: "Reported Positive",
     readoutDate: "2026-10-23",
     isExpected: false,
@@ -309,6 +336,7 @@ const READOUTS = [
     nctId: "NCT06264180",
     modality: "Oncolytic virus",
     setting: "2L+ metastatic",
+    tumourType: "Cutaneous",
     status: "Expected",
     readoutDate: "2030-09-30",
     isExpected: true,
@@ -334,20 +362,23 @@ const READOUTS = [
     nctId: "NCT07015190",
     modality: "Targeted therapy",
     setting: "Neoadjuvant",
-    status: "Expected",
-    readoutDate: "2030-10-01",
-    isExpected: true,
+    tumourType: "Uveal",
+    status: "Discontinued",
+    readoutDate: "2026-11-03",
+    isExpected: false,
     primaryEndpoint: "Eye / vision-preservation and tumour-response endpoints (exact primary endpoint not verified)",
-    endpointMet: "Pending",
-    keyData: "Phase 3 of neoadjuvant darovasertib vs immediate local therapy (plaque brachytherapy / enucleation) in primary non-metastatic uveal melanoma (~520 patients, 2:1). Started enrolling Jan 2026. Long-horizon: registry primary completion ~Oct 2030. Supporting Phase 2 interim (Sept 2025) showed tumour shrinkage and vision preservation.",
-    regulatoryNextStep: "Registration-enabling; a separate global adjuvant primary-uveal-melanoma Phase 3 is also company-guided to launch in 2026.",
+    endpointMet: "Not reported",
+    keyData: "Closed without reading out. IDEAYA's Q3 2026 business update (3 Nov 2026) says the company \"has decided to stop enrollment and close the Phase 3 OptimUM-010 trial\", citing site activation and enrolment problems. Design as planned: neoadjuvant darovasertib vs immediate local therapy (plaque brachytherapy / enucleation) in primary non-metastatic uveal melanoma, ~520 patients, 2:1, enrolling from Jan 2026, registry primary completion ~Oct 2030. No efficacy data will come from this trial. The supporting Phase 2 interim (Sept 2025), which showed tumour shrinkage and vision preservation, is unaffected and stands.",
+    regulatoryNextStep: "Nothing further from this trial. The neoadjuvant programme is not dead — IDEAYA's separate adjuvant Phase 3 in primary uveal melanoma, OptimUM-11, dosed its first patient in Sept 2026 and is tracked here as its own entry.",
     sources: [
-      { type: "Trial registry", url: "https://clinicaltrials.gov/study/NCT07015190", label: "ClinicalTrials.gov — OptimUM-10" },
-      { type: "Press release", url: "https://ir.ideayabio.com/2025-09-08-IDEAYA-Biosciences-Announces-Positive-Interim-Phase-2-Data-for-Darovasertib-in-the-Neoadjuvant-Setting-of-Primary-Uveal-Melanoma", label: "IDEAYA Phase 2 interim, Sept 2025" }
+      { type: "Trial registry", url: "https://clinicaltrials.gov/study/NCT07015190", label: "ClinicalTrials.gov — OptimUM-10 (still reads RECRUITING; registry lags the closure)" },
+      { type: "Press release", url: "https://ir.ideayabio.com/2025-09-08-IDEAYA-Biosciences-Announces-Positive-Interim-Phase-2-Data-for-Darovasertib-in-the-Neoadjuvant-Setting-of-Primary-Uveal-Melanoma", label: "IDEAYA Phase 2 interim, Sept 2025" },
+      { type: "Earnings", url: "https://ir.ideayabio.com/2026-11-03-IDEAYA-Biosciences-Reports-Financial-Results-for-the-Third-Quarter-2026-and-Provides-a-Business-Update", label: "IDEAYA Q3 2026 business update, 3 Nov 2026 — the closure announcement (issuer IR page)" }
     ],
-    asOf: "2026-08-27",
+    asOf: "2026-11-11",
     verified: false,
-    flags: "Exact primary endpoint wording not verified from the registry outcomes section. Long-horizon readout (~2030)."
+    flags: "The closure rests on a single sentence in one release, and that page was reached through automated summarisation rather than read word for word — hence verified:false. The ClinicalTrials.gov record still reads RECRUITING (last updated 6 May 2026), so do not treat the registry as confirmation either way; expect it to move to WITHDRAWN or TERMINATED in due course. readoutDate holds the date the closure was announced, not a readout. Exact primary endpoint wording was never verified from the registry outcomes section and now never will be from this trial.",
+    regulatory: null
   },
 
   /* ---------------------------------------------------------------- */
@@ -358,7 +389,8 @@ const READOUTS = [
     trialName: "REVEAL (RP2-202)",
     nctId: "NCT06581406",
     modality: "Oncolytic virus",
-    setting: "Uveal",
+    setting: "1L metastatic",
+    tumourType: "Uveal",
     status: "Expected",
     readoutDate: "TBD",
     isExpected: true,
@@ -373,6 +405,62 @@ const READOUTS = [
     asOf: "2026-08-27",
     verified: false,
     flags: "NCT ID and design from an ASCO abstract / company page (not independently registry-verified this pass). RP2 mechanism/INN and any FDA designations unverified. No readout date guided."
+  },
+
+  /* ---------------------------------------------------------------- */
+  {
+    id: "optimum-11",
+    drug: "Adjuvant darovasertib (IDE196) + crizotinib vs observation",
+    sponsors: ["IDEAYA Biosciences", "Servier"],
+    trialName: "OptimUM-11",
+    nctId: "NCT07804186",
+    modality: "Targeted therapy",
+    setting: "Adjuvant",
+    tumourType: "Uveal",
+    status: "Expected",
+    readoutDate: "TBD",
+    isExpected: true,
+    primaryEndpoint: "Relapse-free survival (RFS)",
+    endpointMet: "Pending",
+    keyData: "Global Phase 3 registrational trial. First patient dosed 9 Sep 2026. Patients who have completed primary local therapy and are at increased risk of metastasis are randomised 1:1 to darovasertib + crizotinib for 12 months or to observation; approximately 450 patients. No efficacy data yet, and none expected for years — the registry follows both arms for about five years. This is the adjuvant companion to OptimUM-02 (metastatic, positive) and is now the live half of the primary-uveal-melanoma programme, since the neoadjuvant OptimUM-10 was closed in Nov 2026.",
+    regulatoryNextStep: "Registrational. No filing possible until RFS reads out. Darovasertib + crizotinib is separately under FDA review in metastatic uveal melanoma via the OptimUM-02 NDA, so a positive OptimUM-11 would be a label expansion into the adjuvant setting rather than a first approval.",
+    sources: [
+      { type: "Press release", url: "https://ir.ideayabio.com/2026-09-09-IDEAYA-Biosciences-and-Servier-Announce-First-Patient-Dosed-in-OptimUM-11-Global-Phase-3-Registrational-Trial-of-Darovasertib-and-Crizotinib-as-Adjuvant-Therapy-for-Subjects-with-Uveal-Melanoma", label: "IDEAYA / Servier, first patient dosed, 9 Sep 2026 (issuer IR page)" },
+      { type: "Trial registry", url: "https://clinicaltrials.gov/study/NCT07804186", label: "ClinicalTrials.gov — OptimUM-11" }
+    ],
+    asOf: "2026-11-11",
+    verified: true,
+    flags: "No readout date is guided and none is recorded, rather than guessing one — the registry gives an approximately five-year follow-up from a Sep 2026 start, which implies the early 2030s, but that is a follow-up period, not a readout date. One mismatch worth knowing: the 12-month treatment duration comes from the press release only; the registry describes up to five years of follow-up on both arms and does not state a treatment duration. Registry status RECRUITING, enrolment 450 and the Sep 2026 start are all marked estimated.",
+    regulatory: null
+  },
+
+  /* ---------------------------------------------------------------- */
+  {
+    id: "hbi-8000-303",
+    drug: "HBI-8000 (tucidinostat, oral HDAC inhibitor) + nivolumab vs placebo + nivolumab",
+    sponsors: ["HUYABIO International"],
+    trialName: "HBI-8000-303",
+    nctId: "NCT04674683",
+    modality: "Other",
+    setting: "1L metastatic",
+    tumourType: "Cutaneous",
+    status: "Reported Positive",
+    readoutDate: "2026-07-14",
+    isExpected: false,
+    primaryEndpoint: "Progression-free survival (PFS)",
+    endpointMet: "Yes",
+    keyData: "Topline announced 14 Jul 2026; full data presented at ESMO 2026 as late-breaker LBA54 (oral proffered paper, 23 Oct 2026, Nikhil Khushalani, Moffitt). Median PFS 11.7 vs 7.4 months. The hazard ratio was not in the July release and came only with the company's release of 22 Oct 2026: HR 0.73 (CI 0.56-0.95), p=0.014 — a 27% reduction in the risk of progression. ORR was not reported. Overall survival is immature with follow-up ongoing. 404 patients randomised across 15 countries. An epigenetic agent added to a checkpoint inhibitor in PD-1/PD-L1-naive advanced melanoma — a mechanism no other trial in this tracker tests.",
+    regulatoryNextStep: "No US filing announced. The 22 Oct 2026 release says the company plans to share the data with the FDA, which is not the same as a submission. HBI-8000 is already approved for lymphoma in China and Japan, so a US melanoma filing would be a new indication in a new territory. Nothing to track in the FDA pipeline until a submission is confirmed.",
+    sources: [
+      { type: "Press release", url: "https://huyabio.com/huyabio-international-delivers-significant-landmark-phase-3-results-in-advanced-melanoma/", label: "HUYABIO topline, 14 Jul 2026 (company site)" },
+      { type: "Press release", url: "https://www.prnewswire.com/news-releases/huyabio-international-announces-hbi-8000-and-nivolumab-combination-reduces-the-risk-of-disease-progression-by-27-in-patients-with-advanced-melanoma-in-phase-3-trial-302917490.html", label: "HUYABIO, hazard ratio and ESMO data, 22 Oct 2026" },
+      { type: "Press release", url: "https://www.prnewswire.com/news-releases/huyabio-international-announces-pivotal-data-for-hbi-8000-in-advanced-melanoma-selected-for-late-breaking-presentation-at-esmo-congress-2026-302892293.html", label: "HUYABIO, LBA54 selection, 29 Sep 2026" },
+      { type: "Trial registry", url: "https://clinicaltrials.gov/study/NCT04674683", label: "ClinicalTrials.gov — HBI-8000-303" }
+    ],
+    asOf: "2026-11-11",
+    verified: false,
+    flags: "This readout was missed at build time, not in a refresh window — it was announced 14 Jul 2026, six weeks before the tracker's original as-of date of 27 Aug 2026. Two things to check before quoting these figures publicly. First, the confidence interval on the hazard ratio was reported as a 96% interval, not the usual 95%; that is unusual enough that it may be a transcription error in the release or in the reading of it, so read the 22 Oct page directly before using it. Second, the company's own pages were reached through automated summarisation rather than read word for word, so the numbers are company-sourced but not verbatim-checked — hence verified:false. Registry enrolment reads 450 against 404 randomised in the releases; the releases are the better number for who was actually treated. The July release also claimed 'a statistically significant improvement in progression-free survival of 58%' without defining it; 11.7/7.4 = 1.58, so it most likely means the median PFS was 58% longer, which is not a risk reduction and should not be confused with the 27% from the hazard ratio [LOW - this is my reading, not the company's wording]. No ESMO-hosted abstract page for LBA54 could be found.",
+    regulatory: null
   }
 
 ];
