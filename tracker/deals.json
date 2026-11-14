@@ -1,7 +1,7 @@
 {
  "source": "https://suruchisethi6.github.io/tracker/",
  "updated": "2026-11-14",
- "count": 53,
+ "count": 65,
  "note": "One record per tracker row. buyers lists the companies behind buyer_label; tools that need one row per buyer split on it.",
  "deals": [
   {
@@ -1174,6 +1174,265 @@
    "summary": "XtalPi uses its AI and robotics platform to design novel small-molecule clinical candidates across several oncology programs, with dermatology and rare disease possible. Upfront, multiple milestones and downstream economic participation, none disclosed.",
    "signal": "First French pharma and first XtalPi deal in the tracker, aimed at historically hard-to-drug oncology targets.",
    "platform_about": "AI and robotics drug discovery company, listed in Hong Kong (2228.HK)."
+  },
+  {
+   "id": 54,
+   "buyer_label": "UCB",
+   "buyers": [
+    "UCB"
+   ],
+   "platform": "Cradle",
+   "type": "Collaboration",
+   "archetype": "License platform",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Undisclosed",
+   "date": "November 2026",
+   "sort_month": "2026-11",
+   "disclosed": false,
+   "summary": "UCB will use Cradle's protein-design platform in selected discovery projects, from hit generation through lead optimisation to preclinical readiness.",
+   "signal": "Cradle's fifth pharma buyer in the tracker, after the four in its 2025-2026 platform row.",
+   "platform_about": "AI protein-design platform for antibodies and enzymes."
+  },
+  {
+   "id": 55,
+   "buyer_label": "Pfizer",
+   "buyers": [
+    "Pfizer"
+   ],
+   "platform": "Edison Scientific",
+   "type": "Partnership",
+   "archetype": "AI research agent",
+   "areas": [
+    "discovery",
+    "enterprise"
+   ],
+   "maturity": "production",
+   "headline": "Undisclosed",
+   "date": "October 2026",
+   "sort_month": "2026-10",
+   "disclosed": false,
+   "summary": "Agreement to deploy the Edison AI Platform and Kosmos, its AI scientist, across Pfizer's R&D pipeline, with Edison scientists and engineers working inside Pfizer research teams.",
+   "signal": "Edison's second pharma deployment in the tracker after Incyte (May 2026), and the first across a whole pipeline: oncology, internal medicine and immunology.",
+   "platform_about": "AI-scientist company. Kosmos runs research across literature and data."
+  },
+  {
+   "id": 56,
+   "buyer_label": "AbbVie",
+   "buyers": [
+    "AbbVie"
+   ],
+   "platform": "Valkai",
+   "type": "Partnership",
+   "archetype": "Enterprise transformation",
+   "areas": [
+    "clinical",
+    "enterprise"
+   ],
+   "maturity": "production",
+   "headline": "Undisclosed",
+   "date": "September 2026",
+   "sort_month": "2026-09",
+   "disclosed": false,
+   "summary": "AbbVie will deploy Valkai's purpose-built AI across targeted areas of clinical research, part of its programme to embed AI across the enterprise.",
+   "signal": "A large pharma buying AI for clinical development, the thinnest part of the tracker: before this batch, 6 of 53 deals touched clinical development.",
+   "platform_about": "AI company building agentic tools for clinical development."
+  },
+  {
+   "id": 57,
+   "buyer_label": "Gilead Sciences",
+   "buyers": [
+    "Gilead Sciences"
+   ],
+   "platform": "Deepcell",
+   "type": "Collaboration",
+   "archetype": "Data partnership",
+   "areas": [
+    "manufacturing"
+   ],
+   "maturity": "research",
+   "headline": "Undisclosed",
+   "date": "August 2026",
+   "sort_month": "2026-08",
+   "disclosed": false,
+   "summary": "Deepcell and Gilead will co-develop a foundation model of CHO cell morphology, trained on Gilead's cell lines, to characterise the cell lines used to make biotherapeutics.",
+   "signal": "Gilead's first AI deal in the tracker, and a manufacturing one: before this batch, 5 of 53 deals touched manufacturing. The model is built on the pharma's own cell lines.",
+   "platform_about": "AI cell-imaging company."
+  },
+  {
+   "id": 58,
+   "buyer_label": "Roche",
+   "buyers": [
+    "Roche"
+   ],
+   "platform": "Manifold Bio",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "$55M up, $2B+ milestones",
+   "date": "November 2025",
+   "sort_month": "2025-11",
+   "disclosed": true,
+   "upfront_musd": 55,
+   "summary": "Research collaboration and licence: Manifold designs multiple blood-brain-barrier shuttles for selected Roche payloads, and Roche takes them through preclinical, clinical and commercial development, with tiered royalties.",
+   "signal": "Roche paying for a delivery problem, not a target: getting biologics into the brain is the bottleneck for neurology.",
+   "platform_about": "AI-guided protein design company working on brain delivery."
+  },
+  {
+   "id": 59,
+   "buyer_label": "AstraZeneca",
+   "buyers": [
+    "AstraZeneca"
+   ],
+   "platform": "Tremont AI",
+   "type": "Collaboration",
+   "archetype": "Data partnership",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Undisclosed",
+   "date": "October 2026",
+   "sort_month": "2026-10",
+   "disclosed": false,
+   "summary": "Research collaboration to develop and evaluate AI solutions for preclinical toxicologic pathology.",
+   "signal": "AstraZeneca's fourth AI deal in the tracker, after Modella AI, OWKIN and insitro, and the first in preclinical safety.",
+   "platform_about": "AI company building foundation models for toxicologic pathology."
+  },
+  {
+   "id": 60,
+   "buyer_label": "Takeda",
+   "buyers": [
+    "Takeda"
+   ],
+   "platform": "Weave Bio",
+   "type": "Enterprise AI",
+   "archetype": "Enterprise transformation",
+   "areas": [
+    "clinical",
+    "enterprise"
+   ],
+   "maturity": "production",
+   "headline": "Undisclosed",
+   "date": "September 2026",
+   "sort_month": "2026-09",
+   "disclosed": false,
+   "summary": "Takeda deploys Weave's regulatory-writing platform across 14 active programmes in several markets, for IND drafting and health-authority questions.",
+   "signal": "Regulatory writing is one of the most measurable AI uses in development: Weave reports IND drafting time down 97% in one evaluated use case.",
+   "platform_about": "AI-native regulatory automation company."
+  },
+  {
+   "id": 61,
+   "buyer_label": "argenx",
+   "buyers": [
+    "argenx"
+   ],
+   "platform": "BenchSci",
+   "type": "Licensing",
+   "archetype": "AI research agent",
+   "areas": [
+    "discovery",
+    "enterprise"
+   ],
+   "maturity": "production",
+   "headline": "2-year enterprise agreement",
+   "date": "September 2026",
+   "sort_month": "2026-09",
+   "disclosed": false,
+   "summary": "Two-year enterprise agreement to deploy BenchSci's EMET across argenx's preclinical, computational and drug-development workflows, chosen after a competitive evaluation by argenx scientists.",
+   "signal": "BenchSci's third pharma agreement in a year, after Sanofi and Merck: evidence platforms bought on multi-year terms, not piloted.",
+   "platform_about": "Toronto AI company. Its platforms map preclinical evidence for disease biology research."
+  },
+  {
+   "id": 62,
+   "buyer_label": "Sanofi",
+   "buyers": [
+    "Sanofi"
+   ],
+   "platform": "BenchSci",
+   "type": "Licensing",
+   "archetype": "AI research agent",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "production",
+   "headline": "3-year licence",
+   "date": "October 2025",
+   "sort_month": "2025-10",
+   "disclosed": false,
+   "summary": "Three-year licence to deploy ASCEND across Sanofi's global preclinical research organisation, for scientists and contractors at its sites worldwide.",
+   "signal": "Sanofi holds two AI research agent licences in the tracker: BenchSci (October 2025) and OWKIN (June 2026).",
+   "platform_about": "Toronto AI company. Its platforms map preclinical evidence for disease biology research."
+  },
+  {
+   "id": 63,
+   "buyer_label": "Merck / MSD",
+   "buyers": [
+    "Merck / MSD"
+   ],
+   "platform": "BenchSci",
+   "type": "Licensing",
+   "archetype": "AI research agent",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "production",
+   "headline": "2-year renewal",
+   "date": "December 2025",
+   "sort_month": "2025-12",
+   "disclosed": false,
+   "summary": "Renewed two-year contract for ongoing access to ASCEND in preclinical disease biology and early discovery.",
+   "signal": "A renewal, not a new deal: the first record in the tracker of a pharma paying again after the first term.",
+   "platform_about": "Toronto AI company. Its platforms map preclinical evidence for disease biology research."
+  },
+  {
+   "id": 64,
+   "buyer_label": "Bristol Myers Squibb",
+   "buyers": [
+    "Bristol Myers Squibb"
+   ],
+   "platform": "Tempus",
+   "type": "Licensing",
+   "archetype": "Data partnership",
+   "areas": [
+    "clinical"
+   ],
+   "maturity": "production",
+   "headline": "Up to $137.5M over 5 years",
+   "date": "November 2026",
+   "sort_month": "2026-11",
+   "disclosed": true,
+   "total_musd": 137.5,
+   "summary": "Tempus licenses oncology data and models directly to BMS for up to $137.5M over five years, disclosed in its Q3 2026 results. A separate $55M Alzheimer's data licence involves BMS and Pathos.",
+   "signal": "A public price for pharma's real-world data: a five-year ceiling for data and models, not a payment for molecules.",
+   "platform_about": "Precision-medicine and data company. Licenses de-identified clinical and molecular data to pharma."
+  },
+  {
+   "id": 65,
+   "buyer_label": "Bristol Myers Squibb",
+   "buyers": [
+    "Bristol Myers Squibb"
+   ],
+   "platform": "AI Proteins",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Up to $400M + royalties",
+   "date": "December 2024",
+   "sort_month": "2024-12",
+   "disclosed": true,
+   "total_musd": 400,
+   "summary": "Research collaboration and option agreement on miniprotein therapeutics against two undisclosed targets: upfront cash, an expansion fee and milestones up to $400M, plus royalties.",
+   "signal": "AI Proteins' first big pharma deal. Astellas followed in October 2026 with a $400M+ licence (id 50).",
+   "platform_about": "AI company designing de novo miniprotein therapeutics."
   }
  ]
 }
