@@ -1,0 +1,1179 @@
+{
+ "source": "https://suruchisethi6.github.io/tracker/",
+ "updated": "2026-11-14",
+ "count": 53,
+ "note": "One record per tracker row. buyers lists the companies behind buyer_label; tools that need one row per buyer split on it.",
+ "deals": [
+  {
+   "id": 1,
+   "buyer_label": "Roche / Genentech",
+   "buyers": [
+    "Roche"
+   ],
+   "platform": "Recursion",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "production",
+   "headline": "$150M up, $12B+",
+   "date": "December 2021",
+   "sort_month": "2021-12",
+   "disclosed": true,
+   "upfront_musd": 150,
+   "total_musd": 12150,
+   "summary": "Multi-year AI drug discovery across neuroscience and oncology. $500M+ cumulative milestones achieved.",
+   "signal": "Pharma increasingly outsources biological data generation to AI-native platforms.",
+   "platform_about": "Clinical-stage TechBio. Recursion OS combines automated biology, chemistry, and ML."
+  },
+  {
+   "id": 2,
+   "buyer_label": "Sanofi",
+   "buyers": [
+    "Sanofi"
+   ],
+   "platform": "Earendil Labs",
+   "type": "Collaboration",
+   "archetype": "Source pipeline",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Up to $2.56B",
+   "date": "January 2026",
+   "sort_month": "2026-01",
+   "disclosed": true,
+   "total_musd": 2560,
+   "summary": "Up to $2.56B for AI-driven bispecific antibody discovery across autoimmune and inflammatory diseases.",
+   "signal": "Sanofi repeatedly returning to an AI-native biologics platform — a repeat discovery partner.",
+   "platform_about": "AI-powered biotech focused on next-generation biologics."
+  },
+  {
+   "id": 3,
+   "buyer_label": "Eli Lilly",
+   "buyers": [
+    "Eli Lilly"
+   ],
+   "platform": "Isomorphic Labs",
+   "type": "Partnership",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "$45M up / $1.7B milestones",
+   "date": "January 2024",
+   "sort_month": "2024-01",
+   "disclosed": true,
+   "upfront_musd": 45,
+   "total_musd": 1745,
+   "summary": "Multi-target drug discovery using Isomorphic's AI-first drug design engine.",
+   "signal": "A structural shift from AI-as-tooling to AI-native drug creation.",
+   "platform_about": "Google DeepMind spinout. Raised $2.1B Series B in May 2026."
+  },
+  {
+   "id": 4,
+   "buyer_label": "J&J / AbbVie / Novo / Bayer",
+   "buyers": [
+    "Johnson & Johnson",
+    "AbbVie",
+    "Novo Nordisk",
+    "Bayer"
+   ],
+   "platform": "Cradle",
+   "type": "Platform licensing",
+   "archetype": "License platform",
+   "areas": [
+    "discovery",
+    "manufacturing"
+   ],
+   "maturity": "production",
+   "headline": "50+ programmes",
+   "date": "2025-2026",
+   "sort_month": "2026-12",
+   "disclosed": false,
+   "summary": "Protein-engineering platform running 50+ R&D programs across 6+ of the top 25 pharma.",
+   "signal": "AI making therapeutic molecules easier to build, optimise, and manufacture.",
+   "platform_about": "Enterprise-grade AI for protein engineering."
+  },
+  {
+   "id": 5,
+   "buyer_label": "GSK",
+   "buyers": [
+    "GSK"
+   ],
+   "platform": "NOETIK",
+   "type": "Licensing",
+   "archetype": "License platform",
+   "areas": [
+    "discovery",
+    "clinical"
+   ],
+   "maturity": "production",
+   "headline": "$50M up + milestones",
+   "date": "January 2026 (first milestone Aug 2026)",
+   "sort_month": "2026-01",
+   "disclosed": true,
+   "upfront_musd": 50,
+   "total_musd": 50,
+   "summary": "Licensed OCTO-VC spatial-biology foundation models for lung and colorectal cancer. First near-term milestone achieved (Aug 2026): OCTO-VC inference and fine-tuning deployed and in use by GSK for virtual-cell experiments and patient stratification.",
+   "signal": "Hitting the first milestone fast validates the subscription-style 'foundation-model-as-asset' model — GSK pays for ongoing access to a continuously improving virtual-cell platform, not a single molecule.",
+   "platform_about": "AI foundation models on spatial biology and multimodal oncology data. Builder of the OCTO-VC virtual-cell foundation models."
+  },
+  {
+   "id": 6,
+   "buyer_label": "Eli Lilly",
+   "buyers": [
+    "Eli Lilly"
+   ],
+   "platform": "Tamarind Bio",
+   "type": "Infrastructure",
+   "archetype": "Access compute",
+   "areas": [
+    "infrastructure"
+   ],
+   "maturity": "production",
+   "headline": "250+ AI tools",
+   "date": "June 2026",
+   "sort_month": "2026-06",
+   "disclosed": false,
+   "summary": "Technology partner for Lilly TuneLab 2.0, providing infrastructure for biomolecular AI.",
+   "signal": "The bottleneck may be deployment, governance, and workflow integration.",
+   "platform_about": "Infrastructure and workflow software for computational biology."
+  },
+  {
+   "id": 7,
+   "buyer_label": "CSL + others",
+   "buyers": [
+    "CSL"
+   ],
+   "platform": "Perceptic",
+   "type": "Enterprise AI",
+   "archetype": "Enterprise transformation",
+   "areas": [
+    "enterprise"
+   ],
+   "maturity": "production",
+   "headline": "$12M seed",
+   "date": "May 2026",
+   "sort_month": "2026-05",
+   "disclosed": true,
+   "total_musd": 12,
+   "summary": "Emerged from stealth with $12M seed and production deployments across top pharma.",
+   "signal": "From standalone AI tools to AI operating systems orchestrating enterprise decisions.",
+   "platform_about": "AI operating system for the drug development lifecycle."
+  },
+  {
+   "id": 8,
+   "buyer_label": "AstraZeneca",
+   "buyers": [
+    "AstraZeneca"
+   ],
+   "platform": "Modella AI",
+   "type": "Acquisition",
+   "archetype": "Acquire capability",
+   "areas": [
+    "discovery",
+    "clinical"
+   ],
+   "maturity": "production",
+   "headline": "Undisclosed",
+   "date": "January 2026",
+   "sort_month": "2026-01",
+   "disclosed": false,
+   "summary": "AZ acquired Modella AI — big pharma acquiring an AI-native company rather than licensing.",
+   "signal": "From partnership to ownership in six months.",
+   "platform_about": "Biomedical AI company building multimodal foundation models for oncology."
+  },
+  {
+   "id": 9,
+   "buyer_label": "Eli Lilly",
+   "buyers": [
+    "Eli Lilly"
+   ],
+   "platform": "NVIDIA",
+   "type": "Infrastructure",
+   "archetype": "Access compute",
+   "areas": [
+    "infrastructure",
+    "discovery",
+    "manufacturing"
+   ],
+   "maturity": "production",
+   "headline": "1,016 GPUs",
+   "date": "October 2025",
+   "sort_month": "2025-10",
+   "disclosed": false,
+   "summary": "LillyPod: DGX SuperPOD AI factory powered by 1,016 Blackwell Ultra GPUs.",
+   "signal": "Lilly treats AI infrastructure as strategic capability.",
+   "platform_about": "NVIDIA accelerated computing for AI training and inference."
+  },
+  {
+   "id": 10,
+   "buyer_label": "Roche",
+   "buyers": [
+    "Roche"
+   ],
+   "platform": "NVIDIA",
+   "type": "Infrastructure",
+   "archetype": "Access compute",
+   "areas": [
+    "infrastructure",
+    "discovery"
+   ],
+   "maturity": "production",
+   "headline": "3,500+ GPUs",
+   "date": "March 2026",
+   "sort_month": "2026-03",
+   "disclosed": false,
+   "summary": "2,176 Blackwell GPUs added, total 3,500+ — largest announced GPU footprint in pharma.",
+   "signal": "Roche assembling the broadest AI drug-development stack in industry.",
+   "platform_about": "NVIDIA accelerated computing across Roche R&D and diagnostics."
+  },
+  {
+   "id": 11,
+   "buyer_label": "Eli Lilly",
+   "buyers": [
+    "Eli Lilly"
+   ],
+   "platform": "Insilico Medicine",
+   "type": "Collaboration",
+   "archetype": "Source pipeline",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "$115M up, $2.75B+",
+   "date": "March 2026",
+   "sort_month": "2026-03",
+   "disclosed": true,
+   "upfront_musd": 115,
+   "total_musd": 2750,
+   "summary": "Exclusive worldwide license to AI-designed preclinical oral therapeutics. Third Lilly-Insilico deal.",
+   "signal": "Escalation: software licensing → collaboration → $2.75B asset-and-platform partnership.",
+   "platform_about": "End-to-end AI drug discovery with clinical-stage programmes."
+  },
+  {
+   "id": 12,
+   "buyer_label": "Merck / MSD",
+   "buyers": [
+    "Merck / MSD"
+   ],
+   "platform": "Google Cloud",
+   "type": "Enterprise AI",
+   "archetype": "Enterprise transformation",
+   "areas": [
+    "enterprise",
+    "manufacturing"
+   ],
+   "maturity": "pilot",
+   "headline": "Up to $1B",
+   "date": "April 2026",
+   "sort_month": "2026-04",
+   "disclosed": true,
+   "total_musd": 1000,
+   "summary": "Deploying Gemini Enterprise across 75,000 employees — R&D, manufacturing, commercial.",
+   "signal": "AI agents in GxP-regulated workflows create novel compliance questions.",
+   "platform_about": "Google Cloud Gemini Enterprise with embedded engineers."
+  },
+  {
+   "id": 13,
+   "buyer_label": "Novo Nordisk",
+   "buyers": [
+    "Novo Nordisk"
+   ],
+   "platform": "OpenAI",
+   "type": "Partnership",
+   "archetype": "Enterprise transformation",
+   "areas": [
+    "enterprise",
+    "discovery",
+    "manufacturing"
+   ],
+   "maturity": "pilot",
+   "headline": "Undisclosed",
+   "date": "April 2026",
+   "sort_month": "2026-04",
+   "disclosed": false,
+   "summary": "Integrating OpenAI across discovery, manufacturing, supply chain. Full integration by end 2026.",
+   "signal": "Multi-vendor strategy: Azure + NVIDIA + OpenAI, hedging against lock-in.",
+   "platform_about": "OpenAI enterprise platform across pharmaceutical operations."
+  },
+  {
+   "id": 14,
+   "buyer_label": "Daiichi Sankyo",
+   "buyers": [
+    "Daiichi Sankyo"
+   ],
+   "platform": "Imagene AI",
+   "type": "Collaboration",
+   "archetype": "Data partnership",
+   "areas": [
+    "clinical"
+   ],
+   "maturity": "research",
+   "headline": "Undisclosed",
+   "date": "April 2026",
+   "sort_month": "2026-04",
+   "disclosed": false,
+   "summary": "Multimodal biomarker discovery and response prediction in oncology.",
+   "signal": "Companion diagnostics becoming competitive requirements for ADC leaders.",
+   "platform_about": "Precision oncology AI using CanvOI model and 3.5M+ tissue samples."
+  },
+  {
+   "id": 15,
+   "buyer_label": "AstraZeneca",
+   "buyers": [
+    "AstraZeneca"
+   ],
+   "platform": "OWKIN",
+   "type": "Licensing",
+   "archetype": "AI research agent",
+   "areas": [
+    "discovery",
+    "enterprise"
+   ],
+   "maturity": "pilot",
+   "headline": "3-year deal",
+   "date": "May 2026",
+   "sort_month": "2026-05",
+   "disclosed": false,
+   "summary": "3-year licensing for Owkin's AI Scientist platform — hypothesis generation and research support.",
+   "signal": "Agentic AI participating in scientific workflow.",
+   "platform_about": "French AI biotech developing agentic AI Scientist platform."
+  },
+  {
+   "id": 16,
+   "buyer_label": "Bristol Myers Squibb",
+   "buyers": [
+    "Bristol Myers Squibb"
+   ],
+   "platform": "Anthropic",
+   "type": "Enterprise AI",
+   "archetype": "Enterprise transformation",
+   "areas": [
+    "enterprise",
+    "discovery",
+    "clinical",
+    "manufacturing"
+   ],
+   "maturity": "production",
+   "headline": "Undisclosed",
+   "date": "May 2026",
+   "sort_month": "2026-05",
+   "disclosed": false,
+   "summary": "Claude deployed across 30,000+ BMS employees — discovery, clinical, regulatory, manufacturing.",
+   "signal": "Claude Code in engineering, AI agents in R&D/manufacturing, root-cause investigations in GxP.",
+   "platform_about": "Anthropic's Claude as enterprise intelligence platform."
+  },
+  {
+   "id": 17,
+   "buyer_label": "Incyte",
+   "buyers": [
+    "Incyte"
+   ],
+   "platform": "Edison Scientific",
+   "type": "Collaboration",
+   "archetype": "AI research agent",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "pilot",
+   "headline": "Undisclosed",
+   "date": "May 2026",
+   "sort_month": "2026-05",
+   "disclosed": false,
+   "summary": "Deploying Kosmos AI scientist platform across Incyte's discovery lifecycle.",
+   "signal": "Emerging 'AI scientist' category. Outcomes will matter more than capabilities.",
+   "platform_about": "AI platform for scientific R&D decisions and workflows."
+  },
+  {
+   "id": 18,
+   "buyer_label": "Sanofi",
+   "buyers": [
+    "Sanofi"
+   ],
+   "platform": "CytoReason",
+   "type": "Partnership",
+   "archetype": "License platform",
+   "areas": [
+    "discovery",
+    "clinical"
+   ],
+   "maturity": "production",
+   "headline": "Up to $16M",
+   "date": "January 2026",
+   "sort_month": "2026-01",
+   "disclosed": true,
+   "total_musd": 16,
+   "summary": "Third expansion of Sanofi-CytoReason collaboration for computational disease models.",
+   "signal": "Repeated expansion: renewals are stronger validation than headline-grabbing first deals.",
+   "platform_about": "AI computational disease models across genes, pathways, cells."
+  },
+  {
+   "id": 19,
+   "buyer_label": "Pfizer",
+   "buyers": [
+    "Pfizer"
+   ],
+   "platform": "Chai Discovery",
+   "type": "Licensing",
+   "archetype": "License platform",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Undisclosed",
+   "date": "June 2026",
+   "sort_month": "2026-06",
+   "disclosed": false,
+   "summary": "Chai-3 access plus custom model trained on Pfizer's proprietary data.",
+   "signal": "Competitive advantage from proprietary fine-tuning, not the generic model.",
+   "platform_about": "AI models for molecular design. Developer of Chai-3. Raised $400M Series C at $3.8B valuation (Jul 2026, Index Ventures, Kleiner Perkins, Sequoia). ~$630M total raised."
+  },
+  {
+   "id": 20,
+   "buyer_label": "Pfizer",
+   "buyers": [
+    "Pfizer"
+   ],
+   "platform": "Boltz Bio",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Multi-year",
+   "date": "January 2026",
+   "sort_month": "2026-01",
+   "disclosed": false,
+   "summary": "Refining Boltz foundation models on Pfizer data for structure prediction and biologics.",
+   "signal": "Open-source model + proprietary fine-tuning entering molecular biology.",
+   "platform_about": "Public benefit corp building open-source biomolecular AI models."
+  },
+  {
+   "id": 21,
+   "buyer_label": "Merck / MSD",
+   "buyers": [
+    "Merck / MSD"
+   ],
+   "platform": "Protillion Biosciences",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Up to $510M",
+   "date": "June 2026",
+   "sort_month": "2026-06",
+   "disclosed": true,
+   "total_musd": 510,
+   "summary": "Multi-target discovery collaboration combining Protillion's Prot-MaP platform with Merck.",
+   "signal": "High-quality experimental data becoming as important as algorithms.",
+   "platform_about": "Lab-in-the-loop AI drug design. Megascale training datasets."
+  },
+  {
+   "id": 22,
+   "buyer_label": "Boehringer Ingelheim",
+   "buyers": [
+    "Boehringer Ingelheim"
+   ],
+   "platform": "Variant Bio",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "$120M+",
+   "date": "January 2026",
+   "sort_month": "2026-01",
+   "disclosed": true,
+   "total_musd": 120,
+   "summary": "Target discovery and license agreement for cardiorenal and kidney disease.",
+   "signal": "AI-driven target discovery meets genetically validated drug targets.",
+   "platform_about": "Genomics-driven AI. Proprietary data from diverse populations."
+  },
+  {
+   "id": 23,
+   "buyer_label": "Incyte",
+   "buyers": [
+    "Incyte"
+   ],
+   "platform": "Genesis Therapeutics",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "$120M up; $1B+",
+   "date": "May 2026",
+   "sort_month": "2026-05",
+   "disclosed": true,
+   "upfront_musd": 120,
+   "total_musd": 1000,
+   "summary": "Expanded AI collaboration adding 5+ targets. Incyte shares proprietary data to train GEMS.",
+   "signal": "Pharma using internal datasets as differentiating assets in AI partnerships.",
+   "platform_about": "Generative and predictive foundation models. GEMS platform."
+  },
+  {
+   "id": 24,
+   "buyer_label": "Novartis",
+   "buyers": [
+    "Novartis"
+   ],
+   "platform": "Isomorphic Labs",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "$37.5M up, $1.2B",
+   "date": "January 2024",
+   "sort_month": "2024-01",
+   "disclosed": true,
+   "upfront_musd": 37.5,
+   "total_musd": 1200,
+   "summary": "Strategic collaboration for small-molecule therapeutics. Expanded February 2025.",
+   "signal": "First to validate Isomorphic's AI-native co-development model.",
+   "platform_about": "Google DeepMind spinout. AI-first drug design engine."
+  },
+  {
+   "id": 25,
+   "buyer_label": "Johnson & Johnson",
+   "buyers": [
+    "Johnson & Johnson"
+   ],
+   "platform": "Isomorphic Labs",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Undisclosed",
+   "date": "January 2026",
+   "sort_month": "2026-01",
+   "disclosed": false,
+   "summary": "Cross-modality, multi-target collaboration expanding into biologics design.",
+   "signal": "Isomorphic evolving from structure prediction into broader molecular design.",
+   "platform_about": "DeepMind spinout. J&J extends into biologics."
+  },
+  {
+   "id": 26,
+   "buyer_label": "Eli Lilly",
+   "buyers": [
+    "Eli Lilly"
+   ],
+   "platform": "Chai Discovery",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Undisclosed",
+   "date": "January 2026",
+   "sort_month": "2026-01",
+   "disclosed": false,
+   "summary": "Biologics discovery using Chai's AI, expanded through Lilly's TuneLab platform.",
+   "signal": "From 'best model' to 'strongest AI-enabled discovery network.'",
+   "platform_about": "AI models for molecular design. Developer of Chai-3. $400M Series C at $3.8B (Jul 2026). ~$630M total raised. Backed by Index, Kleiner Perkins, Sequoia, OpenAI."
+  },
+  {
+   "id": 27,
+   "buyer_label": "Sanofi",
+   "buyers": [
+    "Sanofi"
+   ],
+   "platform": "OWKIN",
+   "type": "Licensing",
+   "archetype": "AI research agent",
+   "areas": [
+    "discovery",
+    "enterprise"
+   ],
+   "maturity": "pilot",
+   "headline": "5-year licence",
+   "date": "June 2026",
+   "sort_month": "2026-06",
+   "disclosed": false,
+   "summary": "5-year K Pro licence for research, target evaluation, clinical decisions, and CI.",
+   "signal": "Two major pharma licensing same platform within weeks: strong validation.",
+   "platform_about": "French AI biotech. K Pro agentic AI Scientist platform."
+  },
+  {
+   "id": 28,
+   "buyer_label": "Takeda",
+   "buyers": [
+    "Takeda"
+   ],
+   "platform": "Boltz Bio",
+   "type": "Platform licensing",
+   "archetype": "License platform",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "production",
+   "headline": "Org-wide",
+   "date": "June 2026",
+   "sort_month": "2026-06",
+   "disclosed": false,
+   "summary": "Org-wide BoltzMol-1 and BoltzProt-1 deployment with API integration and fine-tuning.",
+   "signal": "Some pharma prefer infrastructure they can customise and control.",
+   "platform_about": "Public benefit corp. Open-source biomolecular AI models."
+  },
+  {
+   "id": 29,
+   "buyer_label": "GSK",
+   "buyers": [
+    "GSK"
+   ],
+   "platform": "Boltz Bio",
+   "type": "Collaboration",
+   "archetype": "License platform",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Undisclosed",
+   "date": "July 2026",
+   "sort_month": "2026-07",
+   "disclosed": false,
+   "summary": "Boltz foundation models, Lab/API, and LLM agent workflows across GSK's discovery pipeline.",
+   "signal": "Third top-20 pharma deal in six months. LLM agents for natural-language workflows.",
+   "platform_about": "Boltz Lab, API, and LLM agent workflows."
+  },
+  {
+   "id": 30,
+   "buyer_label": "Takeda",
+   "buyers": [
+    "Takeda"
+   ],
+   "platform": "Iambic Therapeutics",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "$1.7B+ + royalties",
+   "date": "February 2026",
+   "sort_month": "2026-02",
+   "disclosed": true,
+   "total_musd": 1700,
+   "summary": "AI platform and wet lab for small molecule programs in oncology, GI, inflammation. Broader NeuralPLexer access.",
+   "signal": "Takeda assembling one of the most diversified AI discovery portfolios in pharma.",
+   "platform_about": "Clinical-stage. NeuralPLexer + Enchant with automated wet lab."
+  },
+  {
+   "id": 31,
+   "buyer_label": "Eli Lilly",
+   "buyers": [
+    "Eli Lilly"
+   ],
+   "platform": "Profluent",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Up to $2.25B",
+   "date": "April 2026",
+   "sort_month": "2026-04",
+   "disclosed": true,
+   "total_musd": 2250,
+   "summary": "AI-designed site-specific recombinases for genetic medicine. Lilly gets exclusive worldwide rights.",
+   "signal": "Generative AI designing entirely new therapeutic proteins for kilobase-scale DNA editing.",
+   "platform_about": "Protein language models for novel recombinases. $106M from Altimeter, Bezos."
+  },
+  {
+   "id": 32,
+   "buyer_label": "Novartis",
+   "buyers": [
+    "Novartis"
+   ],
+   "platform": "Orionis Biosciences",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "$40M up, $1.4B+",
+   "date": "June 2026",
+   "sort_month": "2026-06",
+   "disclosed": true,
+   "upfront_musd": 40,
+   "total_musd": 1400,
+   "summary": "Second collaboration expanding AI-driven Allo-Glue platform for molecular glue drugs.",
+   "signal": "Novartis returning to a 2020 partner — repeat deal signals delivered value.",
+   "platform_about": "Clinical-stage. Proximity-induced therapeutics with AI-driven molecular glue design."
+  },
+  {
+   "id": 33,
+   "buyer_label": "SK Biopharmaceuticals",
+   "buyers": [
+    "SK Biopharmaceuticals"
+   ],
+   "platform": "Insilico Medicine",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "$18M up, $2.5B+",
+   "date": "June 2026",
+   "sort_month": "2026-06",
+   "disclosed": true,
+   "upfront_musd": 18,
+   "total_musd": 2500,
+   "summary": "AI drug discovery for neuroimmune CNS disorders. Insilico's largest APAC partnership.",
+   "signal": "Insilico's deal velocity: Lilly ($2.75B), SK ($2.5B), Takeda (~$600M) in four months.",
+   "platform_about": "Generative AI drug discovery (HKEX: 3696). Pharma.AI platform."
+  },
+  {
+   "id": 34,
+   "buyer_label": "Bayer",
+   "buyers": [
+    "Bayer"
+   ],
+   "platform": "Iambic Therapeutics",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Upfront + miles + royalties",
+   "date": "June 2026",
+   "sort_month": "2026-06",
+   "disclosed": false,
+   "summary": "AI platform for novel drug entry points and small molecules against hard-to-drug targets.",
+   "signal": "Second major pharma deal (after Takeda $1.7B) validates Iambic's positioning.",
+   "platform_about": "NeuralPLexer and Enchant with automated wet lab."
+  },
+  {
+   "id": 35,
+   "buyer_label": "Takeda",
+   "buyers": [
+    "Takeda"
+   ],
+   "platform": "Insilico Medicine",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "$60M up, ~$600M+",
+   "date": "July 2026",
+   "sort_month": "2026-07",
+   "disclosed": true,
+   "upfront_musd": 60,
+   "total_musd": 600,
+   "summary": "Pharma.AI to discover clinically differentiated candidates across Takeda's therapeutic areas.",
+   "signal": "Takeda's CSO: transitioning to 'AI-native discovery model.' Insilico's 4th major deal in 18 months.",
+   "platform_about": "End-to-end Pharma.AI platform (HKEX: 3696)."
+  },
+  {
+   "id": 36,
+   "buyer_label": "Novartis",
+   "buyers": [
+    "Novartis"
+   ],
+   "platform": "Chai Discovery",
+   "type": "Collaboration",
+   "archetype": "License platform",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Undisclosed",
+   "date": "July 2026",
+   "sort_month": "2026-07",
+   "disclosed": false,
+   "summary": "Novartis gains access to Chai-3 and AI design models for therapeutic antibody discovery across multiple targets. Builds on 1+ year of technical engagement.",
+   "signal": "Chai now partnered with Pfizer, Lilly, and Novartis — three of the top five pharma companies. Foundation model access plus proprietary deployment across antibody programmes.",
+   "platform_about": "AI company building a computer-aided design suite for molecules. Developer of Chai-3. Raised $400M Series C at $3.8B valuation (Jul 2026) led by Index Ventures, Kleiner Perkins, Sequoia. ~$630M total raised."
+  },
+  {
+   "id": 37,
+   "buyer_label": "argenx",
+   "buyers": [
+    "argenx"
+   ],
+   "platform": "Chai Discovery",
+   "type": "Collaboration",
+   "archetype": "License platform",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Undisclosed",
+   "date": "July 2026",
+   "sort_month": "2026-07",
+   "disclosed": false,
+   "summary": "argenx gains access to Chai's Chai-3 platform for de novo antibody discovery across immunology targets, extending its antibody-engineering expertise with AI.",
+   "signal": "Chai's fourth pharma partnership in ~7 months (after Lilly, Pfizer, Novartis), landing one day after its $400M Series C. Immunology-focused de novo antibody design.",
+   "platform_about": "AI company building a computer-aided design suite for molecules. Developer of Chai-3. Founded 2024. Raised $400M Series C at $3.8B valuation (Jul 2026). ~$630M total raised. Also partnered with Pfizer, Lilly, Novartis and BMS."
+  },
+  {
+   "id": 38,
+   "buyer_label": "Bristol Myers Squibb",
+   "buyers": [
+    "Bristol Myers Squibb"
+   ],
+   "platform": "Chai Discovery",
+   "type": "Collaboration",
+   "archetype": "License platform",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Undisclosed",
+   "date": "August 2026",
+   "sort_month": "2026-08",
+   "disclosed": false,
+   "summary": "BMS integrates Chai's molecular folding and generative antibody-design models across its discovery portfolio to build an AI-driven, continuously-learning discovery system.",
+   "signal": "Chai now partnered with BMS, Pfizer, Lilly, Novartis and argenx. De novo antibody design targeting undruggable epitopes, aiming to compress early discovery from months to weeks.",
+   "platform_about": "AI company building a computer-aided design suite for molecules. Developer of Chai-3. Founded 2024 by an ex-Meta FAIR/OpenAI/Stripe/Absci team. Raised $400M Series C at $3.8B valuation (Jul 2026). ~$630M total raised."
+  },
+  {
+   "id": 39,
+   "buyer_label": "Novo Nordisk",
+   "buyers": [
+    "Novo Nordisk"
+   ],
+   "platform": "Anthropic",
+   "type": "Partnership",
+   "archetype": "AI research agent",
+   "areas": [
+    "discovery",
+    "enterprise"
+   ],
+   "maturity": "pilot",
+   "headline": "Undisclosed",
+   "date": "September 2026",
+   "sort_month": "2026-09",
+   "disclosed": false,
+   "summary": "Novo to test Claude Science in specific R&D workflows and use Anthropic's frontier models for AI-driven software development.",
+   "signal": "Novo adds a second frontier-model vendor five months after OpenAI: the multi-vendor strategy now reaches R&D reasoning itself.",
+   "platform_about": "Frontier AI lab. Claude models and the Claude Science workbench for research workflows."
+  },
+  {
+   "id": 40,
+   "buyer_label": "AbbVie",
+   "buyers": [
+    "AbbVie"
+   ],
+   "platform": "Iambic Therapeutics",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Undisclosed; milestones + royalties",
+   "date": "September 2026",
+   "sort_month": "2026-09",
+   "disclosed": false,
+   "summary": "Multi-year collaboration on small molecules across immunology, neuroscience and oncology, using Iambic's Enchant v3 model.",
+   "signal": "Third major pharma deal in 2026 after Takeda and Bayer: Iambic is becoming a default small-molecule AI partner.",
+   "platform_about": "Clinical-stage. NeuralPLexer + Enchant with automated wet lab."
+  },
+  {
+   "id": 41,
+   "buyer_label": "Boehringer Ingelheim",
+   "buyers": [
+    "Boehringer Ingelheim"
+   ],
+   "platform": "Envisagenics",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "$1B+ in milestones",
+   "date": "September 2026",
+   "sort_month": "2026-09",
+   "disclosed": true,
+   "total_musd": 1000,
+   "summary": "Multi-year research collaboration and option to validate tumour-specific RNA-splicing targets for solid tumours, using the SpliceCore platform.",
+   "signal": "AI target discovery moving into RNA splicing: pharma paying for new target classes, not just faster chemistry.",
+   "platform_about": "AI-driven biotech. SpliceCore screens 14M+ RNA splicing events to find disease-specific targets."
+  },
+  {
+   "id": 42,
+   "buyer_label": "GSK",
+   "buyers": [
+    "GSK"
+   ],
+   "platform": "Chai Discovery",
+   "type": "Collaboration",
+   "archetype": "License platform",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Undisclosed",
+   "date": "October 2026",
+   "sort_month": "2026-10",
+   "disclosed": false,
+   "summary": "GSK gains access to Chai's platform, including its protein folding and design models, across its discovery pipeline. Signed after GSK's own wet-lab evaluation, which found binders to all tested targets.",
+   "signal": "Chai's sixth pharma partner in nine months, and GSK's third foundation-model vendor in 2026 after Noetik and Boltz. Pharma is buying several external models and running them beside its own.",
+   "platform_about": "AI company building a computer-aided design suite for molecules. Developer of Chai-3. Founded 2024. Raised $400M Series C at $3.8B valuation (Jul 2026). Also partnered with Pfizer, Lilly, Novartis, argenx and BMS."
+  },
+  {
+   "id": 43,
+   "buyer_label": "Sanofi",
+   "buyers": [
+    "Sanofi"
+   ],
+   "platform": "Recursion",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "production",
+   "headline": "$144M received, $300M+ more",
+   "date": "October 2026",
+   "sort_month": "2026-10",
+   "disclosed": true,
+   "summary": "Sanofi optioned the first development candidate from the two companies' multi-program research collaboration: a potential first-in-class oral small molecule against a dual target in inflammatory disease. Phase 1 is planned for 2027.",
+   "signal": "Payment for a molecule a pharma chose to develop, not for platform access. Recursion's second pharma co-develop partner in the tracker, after Roche / Genentech.",
+   "platform_about": "Clinical-stage TechBio. Recursion OS combines automated biology, chemistry, and ML."
+  },
+  {
+   "id": 44,
+   "buyer_label": "Roche / Genentech",
+   "buyers": [
+    "Roche"
+   ],
+   "platform": "Earendil Labs",
+   "type": "Collaboration",
+   "archetype": "Source pipeline",
+   "areas": [
+    "discovery",
+    "clinical"
+   ],
+   "maturity": "research",
+   "headline": "$55M up, $1.5B+",
+   "date": "September 2026",
+   "sort_month": "2026-09",
+   "disclosed": true,
+   "upfront_musd": 55,
+   "total_musd": 1500,
+   "summary": "Research collaboration on multiple bispecific antibody programs in oncology. Earendil leads discovery through early clinical development on pre-agreed target pairs. Genentech then takes global development and commercialisation.",
+   "signal": "Earendil's second big pharma deal of 2026, after Sanofi in January. The same AI biologics platform now sells into oncology as well as immunology.",
+   "platform_about": "AI-powered biotech focused on next-generation biologics."
+  },
+  {
+   "id": 45,
+   "buyer_label": "Boehringer Ingelheim",
+   "buyers": [
+    "Boehringer Ingelheim"
+   ],
+   "platform": "OWKIN",
+   "type": "Licensing",
+   "archetype": "AI research agent",
+   "areas": [
+    "discovery",
+    "enterprise"
+   ],
+   "maturity": "production",
+   "headline": "Undisclosed",
+   "date": "September 2026",
+   "sort_month": "2026-09",
+   "disclosed": false,
+   "summary": "Licence for Owkin's K Pro AI Scientist and multimodal oncology data. Owkin will also generate new multimodal data in immunology. Builds on a 2025 pilot.",
+   "signal": "Owkin's third AI Scientist licence with a top pharma in the tracker in four months, after AstraZeneca (May) and Sanofi (June). Boehringer moved from a pilot to a licence.",
+   "platform_about": "French AI biotech. K Pro agentic AI Scientist platform."
+  },
+  {
+   "id": 46,
+   "buyer_label": "Zealand Pharma",
+   "buyers": [
+    "Zealand Pharma"
+   ],
+   "platform": "Generate Biomedicines",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "$30M up, ~$1.2B milestones",
+   "date": "October 2026",
+   "sort_month": "2026-10",
+   "disclosed": true,
+   "upfront_musd": 30,
+   "total_musd": 1200,
+   "summary": "Joint design and development of multispecific protein therapeutics for obesity and other metabolic diseases, using Generate's generative AI platform. Two initial programs with an option to add a third. $30M upfront, up to $35M in early preclinical milestones and nearly $1.2B in total milestones.",
+   "signal": "Obesity is the first indication. Pharma is commissioning AI-designed proteins for it, not only licensing finished assets.",
+   "platform_about": "Generative AI company designing protein therapeutics."
+  },
+  {
+   "id": 47,
+   "buyer_label": "AstraZeneca",
+   "buyers": [
+    "AstraZeneca"
+   ],
+   "platform": "insitro",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "$40M up, $1.46B milestones",
+   "date": "October 2026",
+   "sort_month": "2026-10",
+   "disclosed": true,
+   "upfront_musd": 40,
+   "total_musd": 1500,
+   "summary": "Strategic collaboration to identify new drug targets and advance new therapeutics for MASH and cardiomyopathies. $40M upfront and up to about $1.46B in discovery, development and commercial milestones, plus tiered royalties.",
+   "signal": "AstraZeneca's third AI deal in the tracker, after Modella and Owkin. Each buys a different layer: a company, a research agent, and now target discovery in liver and heart disease.",
+   "platform_about": "AI-driven drug discovery company."
+  },
+  {
+   "id": 48,
+   "buyer_label": "Eli Lilly",
+   "buyers": [
+    "Eli Lilly"
+   ],
+   "platform": "METiS TechBio",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Low double-digit $M up, ~$1.1B",
+   "date": "October 2026",
+   "sort_month": "2026-10",
+   "disclosed": true,
+   "total_musd": 1100,
+   "summary": "Strategic collaboration on tissue-specific lipid nanoparticle delivery technologies. Upfront in the low double-digit millions of dollars and up to about $1.1B in milestones.",
+   "signal": "Lilly's seventh AI deal in the tracker, and a delivery deal, not a molecule deal. AI is being pointed at how a drug reaches its tissue.",
+   "platform_about": "AI-powered drug delivery company, listed in Hong Kong (7666.HK)."
+  },
+  {
+   "id": 49,
+   "buyer_label": "Bristol Myers Squibb",
+   "buyers": [
+    "Bristol Myers Squibb"
+   ],
+   "platform": "Boltz Bio",
+   "type": "Platform licensing",
+   "archetype": "License platform",
+   "areas": [
+    "discovery",
+    "infrastructure"
+   ],
+   "maturity": "research",
+   "headline": "Undisclosed",
+   "date": "October 2026",
+   "sort_month": "2026-10",
+   "disclosed": false,
+   "summary": "BMS deploys the Boltz platform and custom-built models on its own NVIDIA DGX SuperPOD compute, widening researcher access to biomolecular AI.",
+   "signal": "Boltz's fourth pharma partner in the tracker, after Pfizer, Takeda and GSK. BMS scientists were already using the open-source models before the agreement.",
+   "platform_about": "Applied AI research lab building open biomolecular models. Also partnered with Pfizer, Takeda and GSK."
+  },
+  {
+   "id": 50,
+   "buyer_label": "Astellas Pharma",
+   "buyers": [
+    "Astellas Pharma"
+   ],
+   "platform": "AI Proteins",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "$400M+ upfront and milestones",
+   "date": "October 2026",
+   "sort_month": "2026-10",
+   "disclosed": true,
+   "total_musd": 400,
+   "summary": "AI Proteins designs de novo miniproteins against targets selected by Astellas. Astellas holds an exclusive worldwide licence to the candidates. Over $400M in upfront and milestone payments, plus royalties.",
+   "signal": "First Astellas deal in the tracker. AI-designed miniproteins join antibodies and small molecules as a target class.",
+   "platform_about": "AI company designing de novo miniprotein therapeutics."
+  },
+  {
+   "id": 51,
+   "buyer_label": "Merck / MSD",
+   "buyers": [
+    "Merck / MSD"
+   ],
+   "platform": "Variational AI",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Up to $349M",
+   "date": "November 2026",
+   "sort_month": "2026-11",
+   "disclosed": true,
+   "total_musd": 349,
+   "summary": "Variational AI designs and optimises small molecule candidates against two undisclosed targets. Merck develops and commercialises the compounds. Upfront payment plus milestones, total potential up to $349M.",
+   "signal": "Third Merck / MSD deal in the tracker, after Google Cloud and Protillion. Two targets and a capped value: a test of a vendor, not a platform bet.",
+   "platform_about": "Generative AI drug discovery company based in Vancouver."
+  },
+  {
+   "id": 52,
+   "buyer_label": "Roche",
+   "buyers": [
+    "Roche"
+   ],
+   "platform": "Chai Discovery",
+   "type": "Collaboration",
+   "archetype": "License platform",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Undisclosed",
+   "date": "November 2026",
+   "sort_month": "2026-11",
+   "disclosed": false,
+   "summary": "Roche will use Chai's AI models and platform in a number of drug discovery programs across its therapeutic areas.",
+   "signal": "Chai's seventh pharma partner, after Pfizer, Lilly, Novartis, argenx, BMS and GSK. Roche now sits in the tracker with Recursion, NVIDIA, Earendil and Chai.",
+   "platform_about": "AI company building a computer-aided design suite for molecules. Developer of Chai-3."
+  },
+  {
+   "id": 53,
+   "buyer_label": "Laboratoires Pierre Fabre",
+   "buyers": [
+    "Laboratoires Pierre Fabre"
+   ],
+   "platform": "XtalPi",
+   "type": "Collaboration",
+   "archetype": "Co-develop molecules",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "research",
+   "headline": "Upfront + milestones, undisclosed",
+   "date": "November 2026",
+   "sort_month": "2026-11",
+   "disclosed": false,
+   "summary": "XtalPi uses its AI and robotics platform to design novel small-molecule clinical candidates across several oncology programs, with dermatology and rare disease possible. Upfront, multiple milestones and downstream economic participation, none disclosed.",
+   "signal": "First French pharma and first XtalPi deal in the tracker, aimed at historically hard-to-drug oncology targets.",
+   "platform_about": "AI and robotics drug discovery company, listed in Hong Kong (2228.HK)."
+  }
+ ]
+}
