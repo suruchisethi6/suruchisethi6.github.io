@@ -1,7 +1,7 @@
 {
  "source": "https://suruchisethi6.github.io/tracker/",
- "updated": "2026-11-14",
- "count": 65,
+ "updated": "2026-11-18",
+ "count": 67,
  "note": "One record per tracker row. buyers lists the companies behind buyer_label; tools that need one row per buyer split on it.",
  "deals": [
   {
@@ -1433,6 +1433,49 @@
    "summary": "Research collaboration and option agreement on miniprotein therapeutics against two undisclosed targets: upfront cash, an expansion fee and milestones up to $400M, plus royalties.",
    "signal": "AI Proteins' first big pharma deal. Astellas followed in October 2026 with a $400M+ licence (id 50).",
    "platform_about": "AI company designing de novo miniprotein therapeutics."
+  },
+  {
+   "id": 66,
+   "buyer_label": "argenx",
+   "buyers": [
+    "argenx"
+   ],
+   "platform": "Cradle",
+   "type": "Platform licensing",
+   "archetype": "License platform",
+   "areas": [
+    "discovery"
+   ],
+   "maturity": "production",
+   "headline": "Undisclosed",
+   "date": "November 2026",
+   "sort_month": "2026-11",
+   "disclosed": false,
+   "summary": "argenx is extending Cradle's protein-engineering platform to more scientists and more antibody discovery programmes, after successful results from its first programmes.",
+   "signal": "A pharma going back for more after a first round of results. Cradle's sixth pharma buyer in the tracker and argenx's third AI deal in four months, after Chai and BenchSci.",
+   "platform_about": "AI protein-design platform for antibodies and enzymes."
+  },
+  {
+   "id": 67,
+   "buyer_label": "Novo Nordisk",
+   "buyers": [
+    "Novo Nordisk"
+   ],
+   "platform": "nference",
+   "type": "Collaboration",
+   "archetype": "Data partnership",
+   "areas": [
+    "discovery",
+    "clinical"
+   ],
+   "maturity": "research",
+   "headline": "Undisclosed",
+   "date": "November 2026",
+   "sort_month": "2026-11",
+   "disclosed": false,
+   "summary": "Novo's clinical trial data combined with nference's AI technology and federated healthcare data network, for research on cardiometabolic disease and healthy ageing, plus a framework to co-create AI-native companies.",
+   "signal": "Novo's third AI row in the tracker, after OpenAI and Anthropic, and the first built on its own trial data rather than a model licence.",
+   "platform_about": "AI and federated healthcare data platform."
   }
  ]
 }
